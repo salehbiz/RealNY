@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* Rexton Headline Font Definitions */
+@font-face {
+  font-family: 'Rexton';
+  src: url('/fonts/Rexton-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rexton';
+  src: url('/fonts/Rexton-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rexton';
+  src: url('/fonts/Rexton-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rexton';
+  src: url('/fonts/Rexton-Extra-Bold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Sora', sans-serif;
+  }
+  
+  body {
+    background-color: #101535;
+    color: #F4F5F8;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  /* GPU Hardware Acceleration & Crisp Image Rendering Rules */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Custom Typography Utilities for The Eastline New York */
+.font-serif-luxury, .font-rexton {
+  font-family: 'Rexton', -apple-system, sans-serif;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.font-sans-clean, .font-sora {
+  font-family: 'Sora', -apple-system, sans-serif;
+  letter-spacing: -0.015em;
+}
+
+/* Glassmorphism & Header Styling */
+.glass-header-scrolled {
+  background-color: rgba(16, 21, 53, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(214, 181, 133, 0.2);
+}
+
+.glass-dark-card {
+  background-color: rgba(16, 21, 53, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(214, 181, 133, 0.25);
+}
+
+/* Custom Gold Accent Button */
+.btn-gold {
+  background-color: #D6B585;
+  color: #101535;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-gold:hover {
+  background-color: #E8CA9D;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(214, 181, 133, 0.35);
+}
+
+/* Primary Navy Button */
+.btn-navy {
+  background-color: #101535;
+  color: #F4F5F8;
+  border: 1px solid rgba(214, 181, 133, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-navy:hover {
+  background-color: #242C5B;
+  border-color: #D6B585;
+  color: #D6B585;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4F5F8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D6B585;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #101535;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Sharp Corners Everywhere Reset for luxurious sharp architectural aesthetic */
+button, input, select, textarea, img, div, span, a {
+  border-radius: 0 !important;
+}
