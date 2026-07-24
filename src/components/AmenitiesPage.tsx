@@ -1,5 +1,5 @@
 import { media } from '../lib/media';
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { InquireSection } from './InquireSection';
 import { Footer } from './Footer';
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
@@ -46,6 +46,12 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollLeft = 0;
+    }
+  }, []);
   const [tier] = useState<FrameTier>(getFrameTier);
   const [progress, setProgress] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(1);

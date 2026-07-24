@@ -1,5 +1,5 @@
 import { media } from '../lib/media';
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { AvailabilitySection } from './AvailabilitySection';
 import type { Residence } from './AvailabilitySection';
 import { InquireSection } from './InquireSection';
@@ -79,6 +79,12 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollLeft = 0;
+    }
+  }, []);
 
   const [tier] = useState<FrameTier>(getFrameTier);
   const [progress, setProgress] = useState(0);

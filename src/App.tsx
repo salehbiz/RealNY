@@ -21,6 +21,7 @@ import { LightBoxModal } from './components/LightBoxModal';
 import { FloorplanModal } from './components/FloorplanModal';
 import { ExploreModal } from './components/ExploreModal';
 import type { ExploreType } from './components/ExploreModal';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export function App() {
   // URL-based routing
@@ -55,11 +56,12 @@ export function App() {
   const handleNavigatePage = (page: PageType) => {
     const path = page === 'home' ? '/' : `/${page}`;
     navigate(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   };
 
   return (
     <div className="min-h-screen bg-[#ECE7DF] text-[#1F261E] flex flex-col relative font-sans-clean">
+      <ScrollToTop />
       {/* Header & Drawer Navigation */}
       <Navbar
         currentPage={currentPage}
