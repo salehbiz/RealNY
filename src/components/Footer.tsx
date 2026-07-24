@@ -79,9 +79,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenInquire
 
           {/* Col 2: Navigation Links (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
+            <h2 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
               Explore Residence
-            </h4>
+            </h2>
             <ul className="space-y-2.5 font-sora text-xs text-[#F4F5F8]/80">
               {navItems.map((item) => (
                 <li key={item.id}>
@@ -108,9 +108,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenInquire
 
           {/* Col 3: Development Team (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
+            <h2 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
               Development Partners
-            </h4>
+            </h2>
             
             <div className="space-y-5 pt-1">
               <div className="space-y-1">
@@ -151,9 +151,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenInquire
           {/* Col 4: Sales Hours & Back to Top (2 cols) */}
           <div className="lg:col-span-2 space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
-              <h4 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
+              <h2 className="font-sora text-xs tracking-[0.25em] font-semibold text-[#D6B585] uppercase border-b border-[#D6B585]/20 pb-3">
                 Sales Gallery
-              </h4>
+              </h2>
               <div className="font-sora text-xs text-[#F4F5F8]/70 space-y-1.5">
                 <p className="font-medium text-white">Hours of Operation:</p>
                 <p>Monday – Sunday</p>

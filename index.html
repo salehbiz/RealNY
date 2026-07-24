@@ -9,16 +9,20 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/brand/Icon_Gold.svg" />
 
-    <!-- Google Fonts for Sora -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical local fonts -->
+    <link rel="preload" href="/fonts/Sora-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Rexton-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Rexton-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <script>
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
       window.scrollTo(0, 0);
     </script>
+    <link rel="preload" as="image" href="/frames/hero/mobile-poster.avif"
+          type="image/avif" fetchpriority="high" media="(max-width: 767px)">
+    <link rel="preload" as="image" href="/frames/hero/poster.avif"
+          type="image/avif" fetchpriority="high" media="(min-width: 768px)">
   </head>
   <body class="bg-[#101535] text-[#F4F5F8] antialiased selection:bg-[#D6B585] selection:text-[#101535]">
     <div id="root"></div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import confetti from 'canvas-confetti';
 import { CheckCircle2, Send } from 'lucide-react';
 
 interface InquireSectionProps {
@@ -48,9 +47,10 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setIsSubmitting(false);
       setSubmitted(true);
+      const confetti = (await import('canvas-confetti')).default;
       confetti({
         particleCount: 80,
         spread: 70,
@@ -225,10 +225,12 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Row 5: How did you hear about us? */}
                 <div className="space-y-2">
-                  <label className="block font-sora text-xs font-semibold text-[#101535]">
+                  <label htmlFor="hear-about" className="block font-sora text-xs font-semibold text-[#101535]">
                     How Did You Hear About Us?
                   </label>
                   <select
+                    id="hear-about"
+                    name="hearAbout"
                     value={formData.hearAbout}
                     onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })}
                     className="w-full bg-transparent border-b border-[#101535]/30 focus:border-[#D6B585] py-2.5 text-sm font-sora text-[#101535] focus:outline-none cursor-pointer"

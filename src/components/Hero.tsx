@@ -40,8 +40,11 @@ export const Hero: React.FC<HeroProps> = ({ onScheduleClick, onExploreClick }) =
         framePath={framePath}
         fallbackFramePath={tier && tier.dir === 'desktop-hq' ? fallbackFramePath : undefined}
         poster={media("/frames/hero/poster.webp")}
+        posterBase="/frames/hero"
         scrollLengthVh={350}
         className="w-full"
+        eager={true}
+        deferUntilLoad={true}
         tierResolved={!!tier}
         pathKey={tier ? tier.dir : ''}
         onProgress={(prog) => setProgress(prog)}

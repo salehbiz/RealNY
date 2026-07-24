@@ -179,6 +179,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           framePath={framePath}
           fallbackFramePath={tier && tier.dir === 'desktop-hq' ? fallbackFramePath : undefined}
           poster={media("/frames/residences/poster.webp")}
+          posterBase="/frames/residences"
           scrollLengthVh={400}
           className="w-full"
           tierResolved={!!tier}

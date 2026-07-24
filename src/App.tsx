@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import type { PageType } from './components/Navbar';
@@ -12,16 +12,14 @@ import { NeighborhoodSection } from './components/NeighborhoodSection';
 import type { Residence } from './components/AvailabilitySection';
 import { InquireSection } from './components/InquireSection';
 import { Footer } from './components/Footer';
-
-
-import { ResidencesPage } from './components/ResidencesPage';
-import { AmenitiesPage } from './components/AmenitiesPage';
-
-import { LightBoxModal } from './components/LightBoxModal';
-import { FloorplanModal } from './components/FloorplanModal';
-import { ExploreModal } from './components/ExploreModal';
-import type { ExploreType } from './components/ExploreModal';
 import { ScrollToTop } from './components/ScrollToTop';
+import type { ExploreType } from './components/ExploreModal';
+
+const ResidencesPage = React.lazy(() => import('./components/ResidencesPage').then(m => ({ default: m.ResidencesPage })));
+const AmenitiesPage = React.lazy(() => import('./components/AmenitiesPage').then(m => ({ default: m.AmenitiesPage })));
+const LightBoxModal = React.lazy(() => import('./components/LightBoxModal').then(m => ({ default: m.LightBoxModal })));
+const FloorplanModal = React.lazy(() => import('./components/FloorplanModal').then(m => ({ default: m.FloorplanModal })));
+const ExploreModal = React.lazy(() => import('./components/ExploreModal').then(m => ({ default: m.ExploreModal })));
 
 export function App() {
   // URL-based routing
@@ -79,199 +77,102 @@ export function App() {
 
       {/* Main Page Content */}
       <main id="main-content" className="flex-grow">
-        <Routes>
-          <Route path="/" element={
-            <>
-              {/* Hero Banner */}
-              <Hero
-                onScheduleClick={() => handleOpenInquireWithName('')}
-                onExploreClick={() => scrollToSection('intro')}
-              />
+        <Suspense fallback={<div className="min-h-screen bg-[#101535]" />}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                {/* Hero Banner */}
+                <Hero
+                  onScheduleClick={() => handleOpenInquireWithName('')}
+                  onExploreClick={() => scrollToSection('intro')}
+                />
 
-              {/* Intro Paragraph & Quote */}
-              <div id="intro">
-                <IntroSection onScheduleClick={() => handleOpenInquireWithName('')} />
-              </div>
+                {/* Intro Paragraph & Quote */}
+                <div id="intro">
+                  <IntroSection onScheduleClick={() => handleOpenInquireWithName('')} />
+                </div>
 
-              {/* Skyline & City Aligns */}
-              <SkylineSection
-                onExploreBuilding={() => setExploreType('building')}
+                {/* Skyline & City Aligns */}
+                <SkylineSection
+                  onExploreBuilding={() => setExploreType('building')}
+                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                />
+
+                {/* Thoughtfully Considered Lifestyle & Amenities */}
+                <LifestyleSection
+                  onExploreAmenities={() => handleNavigatePage('amenities')}
+                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                />
+
+                {/* Upper Exterior Full-Width Hero Image */}
+                <ExteriorHeroImage
+                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                />
+
+                {/* Neighborhood Highlights */}
+                <NeighborhoodSection
+                  onExploreNeighborhood={() => setExploreType('neighborhood')}
+                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                />
+
+                {/* Entrance Hero Full-Width Image */}
+                <EntranceHeroImage
+                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                />
+
+                {/* Inquiry Form */}
+                <InquireSection initialResidence={inquireResidenceName} sideImage={'/images/skyline-architecture.webp'} />
+
+
+                {/* Footer */}
+                <Footer
+                  onNavigateSection={scrollToSection}
+                  onOpenInquire={() => handleOpenInquireWithName('')}
+                />
+              </>
+            } />
+
+            <Route path="/residences" element={
+              <ResidencesPage
+                onSelectResidence={(res) => setSelectedResidence(res)}
+                onOpenInquireWithName={handleOpenInquireWithName}
+                onNavigatePage={handleNavigatePage}
                 onImageClick={(src, title) => setLightBoxImage({ src, title })}
               />
+            } />
 
-              {/* Thoughtfully Considered Lifestyle & Amenities */}
-              <LifestyleSection
-                onExploreAmenities={() => handleNavigatePage('amenities')}
+            <Route path="/amenities" element={
+              <AmenitiesPage
+                onOpenInquireWithName={handleOpenInquireWithName}
+                onNavigatePage={handleNavigatePage}
                 onImageClick={(src, title) => setLightBoxImage({ src, title })}
               />
-
-              {/* Upper Exterior Full-Width Hero Image */}
-              <ExteriorHeroImage
-                onImageClick={(src, title) => setLightBoxImage({ src, title })}
-              />
-
-              {/* Neighborhood Highlights */}
-              <NeighborhoodSection
-                onExploreNeighborhood={() => setExploreType('neighborhood')}
-                onImageClick={(src, title) => setLightBoxImage({ src, title })}
-              />
-
-              {/* Entrance Hero Full-Width Image */}
-              <EntranceHeroImage
-                onImageClick={(src, title) => setLightBoxImage({ src, title })}
-              />
-
-              {/* Inquiry Form */}
-              <InquireSection initialResidence={inquireResidenceName} sideImage={'/images/skyline-architecture.webp'} />
-
-
-              {/* Footer */}
-              <Footer
-                onNavigateSection={scrollToSection}
-                onOpenInquire={() => handleOpenInquireWithName('')}
-              />
-            </>
-          } />
-
-          <Route path="/residences" element={
-            <ResidencesPage
-              onSelectResidence={(res) => setSelectedResidence(res)}
-              onOpenInquireWithName={handleOpenInquireWithName}
-              onNavigatePage={handleNavigatePage}
-              onImageClick={(src, title) => setLightBoxImage({ src, title })}
-            />
-          } />
-
-          <Route path="/amenities" element={
-            <AmenitiesPage
-              onOpenInquireWithName={handleOpenInquireWithName}
-              onNavigatePage={handleNavigatePage}
-              onImageClick={(src, title) => setLightBoxImage({ src, title })}
-            />
-          } />
-        </Routes>
+            } />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* Interactive Modals */}
-      <LightBoxModal
-        src={lightBoxImage?.src || null}
-        title={lightBoxImage?.title}
-        onClose={() => setLightBoxImage(null)}
-      />
+      <Suspense fallback={null}>
+        <LightBoxModal
+          src={lightBoxImage?.src || null}
+          title={lightBoxImage?.title}
+          onClose={() => setLightBoxImage(null)}
+        />
 
-      <FloorplanModal
-        residence={selectedResidence}
-        onClose={() => setSelectedResidence(null)}
-        onInquire={(resName) => handleOpenInquireWithName(resName)}
-      />
+        <FloorplanModal
+          residence={selectedResidence}
+          onClose={() => setSelectedResidence(null)}
+          onInquire={(resName) => handleOpenInquireWithName(resName)}
+        />
 
-      <ExploreModal
-        type={exploreType}
-        onClose={() => setExploreType(null)}
-        onOpenInquire={() => handleOpenInquireWithName('')}
-        onSelectImage={(src, title) => setLightBoxImage({ src, title })}
-      />
-
-      {/* Permanent Custom Typography & Spacing Configuration */}
-      <style>
-        {`
-          /* Hero Section Spacing Overrides */
-          @media (min-width: 1024px) {
-            #hero h1 { font-size: 49px !important; }
-            #hero p.font-rexton { font-size: 29.4px !important; }
-          }
-          #hero h1, #hero p.font-rexton {
-            letter-spacing: -0.08em !important;
-            line-height: 1.08 !important;
-          }
-          #hero p.font-sora {
-            font-size: 16px !important;
-            letter-spacing: 0em !important;
-          }
-
-          /* Intro Section Spacing Overrides */
-          #intro p {
-            font-size: 21px !important;
-            letter-spacing: -0.04em !important;
-            line-height: 1.34 !important;
-          }
-
-          /* Skyline Showcase Spacing Overrides */
-          @media (min-width: 1024px) {
-            #skyline h3 { font-size: 34px !important; }
-            #skyline p { font-size: 18px !important; }
-          }
-          @media (max-width: 1023px) {
-            #skyline h3 { font-size: 20px !important; }
-            #skyline p { font-size: 13px !important; }
-          }
-          #skyline h3 {
-            letter-spacing: -0.08em !important;
-            line-height: 1.14 !important;
-          }
-          #skyline p {
-            letter-spacing: -0.015em !important;
-          }
-
-          /* Crossroads Heading Banner Spacing Overrides */
-          @media (min-width: 1024px) {
-            #crossroads-heading { font-size: 26px !important; }
-          }
-          #crossroads-heading {
-            letter-spacing: -0.12em !important;
-            line-height: 1.15 !important;
-          }
-
-          /* Lifestyle (Amenities) Spacing Overrides */
-          @media (min-width: 1024px) {
-            #amenities h2 { font-size: 33px !important; }
-          }
-          #amenities h2 {
-            letter-spacing: -0.12em !important;
-            line-height: 1.46 !important;
-          }
-          #amenities p {
-            font-size: 18px !important;
-            letter-spacing: -0.015em !important;
-          }
-
-          /* Interiors (Residences) Spacing Overrides */
-          #residences p {
-            font-size: 20px !important;
-            letter-spacing: -0.035em !important;
-            line-height: 1.62 !important;
-          }
-
-          /* Neighborhood Spacing Overrides */
-          @media (min-width: 1024px) {
-            #neighborhood h2 { font-size: 34px !important; }
-          }
-          #neighborhood h2 {
-            letter-spacing: -0.08em !important;
-            line-height: 1.14 !important;
-          }
-          #neighborhood p {
-            font-size: 18px !important;
-            letter-spacing: -0.015em !important;
-          }
-
-          /* Global Matching Page Typography & Line Spacing Rules */
-          .page-intro-p {
-            font-size: 21px !important;
-            letter-spacing: -0.04em !important;
-            line-height: 1.34 !important;
-          }
-          .page-body-p {
-            font-size: 18px !important;
-            letter-spacing: -0.015em !important;
-            line-height: 1.45 !important;
-          }
-          .page-heading {
-            letter-spacing: -0.08em !important;
-            line-height: 1.14 !important;
-          }
-        `}
-      </style>
+        <ExploreModal
+          type={exploreType}
+          onClose={() => setExploreType(null)}
+          onOpenInquire={() => handleOpenInquireWithName('')}
+          onSelectImage={(src, title) => setLightBoxImage({ src, title })}
+        />
+      </Suspense>
     </div>
   );
 }

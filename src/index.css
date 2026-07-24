@@ -6,6 +6,7 @@
   src: url('/fonts/Rexton-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -13,6 +14,7 @@
   src: url('/fonts/Rexton-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +22,7 @@
   src: url('/fonts/Rexton-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -27,6 +30,16 @@
   src: url('/fonts/Rexton-Extra-Bold.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
+}
+
+/* Sora Body Font Definition */
+@font-face {
+  font-family: 'Sora';
+  src: url('/fonts/Sora-Variable.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @layer base {
@@ -47,14 +60,108 @@
     line-height: 1.15;
   }
 
-  /* GPU Hardware Acceleration & Crisp Image Rendering Rules */
-  img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+  /* GPU Hardware Acceleration Utility Class */
+  .gpu-layer {
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
+}
+
+/* Custom Typography & Spacing Configuration */
+@media (min-width: 1024px) {
+  #hero h1 { font-size: 49px !important; }
+  #hero p.font-rexton { font-size: 29.4px !important; }
+}
+#hero h1, #hero p.font-rexton {
+  letter-spacing: -0.08em !important;
+  line-height: 1.08 !important;
+}
+#hero p.font-sora {
+  font-size: 16px !important;
+  letter-spacing: 0em !important;
+}
+
+/* Intro Section Spacing Overrides */
+#intro p {
+  font-size: 21px !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.34 !important;
+}
+
+/* Skyline Showcase Spacing Overrides */
+@media (min-width: 1024px) {
+  #skyline h2 { font-size: 34px !important; }
+  #skyline p { font-size: 18px !important; }
+}
+@media (max-width: 1023px) {
+  #skyline h2 { font-size: 20px !important; }
+  #skyline p { font-size: 13px !important; }
+}
+#skyline h2 {
+  letter-spacing: -0.08em !important;
+  line-height: 1.14 !important;
+}
+#skyline p {
+  letter-spacing: -0.015em !important;
+}
+
+/* Crossroads Heading Banner Spacing Overrides */
+@media (min-width: 1024px) {
+  #crossroads-heading { font-size: 26px !important; }
+}
+#crossroads-heading {
+  letter-spacing: -0.12em !important;
+  line-height: 1.15 !important;
+}
+
+/* Lifestyle (Amenities) Spacing Overrides */
+@media (min-width: 1024px) {
+  #amenities h2 { font-size: 33px !important; }
+}
+#amenities h2 {
+  letter-spacing: -0.12em !important;
+  line-height: 1.46 !important;
+}
+#amenities p {
+  font-size: 18px !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Interiors (Residences) Spacing Overrides */
+#residences p {
+  font-size: 20px !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.62 !important;
+}
+
+/* Neighborhood Spacing Overrides */
+@media (min-width: 1024px) {
+  #neighborhood h2 { font-size: 34px !important; }
+}
+#neighborhood h2 {
+  letter-spacing: -0.08em !important;
+  line-height: 1.14 !important;
+}
+#neighborhood p {
+  font-size: 18px !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Global Matching Page Typography & Line Spacing Rules */
+.page-intro-p {
+  font-size: 21px !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.34 !important;
+}
+.page-body-p {
+  font-size: 18px !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.45 !important;
+}
+.page-heading {
+  letter-spacing: -0.08em !important;
+  line-height: 1.14 !important;
 }
 
 /* Custom Typography Utilities for The Eastline New York */

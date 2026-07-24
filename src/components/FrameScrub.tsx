@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { media } from '../lib/media';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,11 +9,13 @@ type Props = {
   frameCount: number;
   framePath: (i: number) => string;
   poster: string;
+  posterBase?: string;
   className?: string;
   scrollLengthVh?: number;
   children?: React.ReactNode;
   onProgress?: (progress: number, frame: number) => void;
   eager?: boolean;
+  deferUntilLoad?: boolean;
   tierResolved?: boolean;
   fallbackFramePath?: (i: number) => string;
   pathKey?: string;
@@ -20,17 +23,18 @@ type Props = {
 };
 
 const LERP = 0.18;
-const CONCURRENCY = 6;
 
 export default function FrameScrub({
   frameCount,
   framePath,
   poster,
+  posterBase,
   className = '',
   scrollLengthVh = 350,
   children,
   onProgress,
   eager = true,
+  deferUntilLoad = false,
   tierResolved = true,
   fallbackFramePath,
   pathKey = '',
@@ -86,8 +90,51 @@ export default function FrameScrub({
 
   useEffect(() => {
     if (eager) {
-      setVisible(true);
-      return;
+      if (deferUntilLoad) {
+        let idleId: number | null = null;
+        let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+        const scheduleIdle = () => {
+          if ('requestIdleCallback' in window) {
+            idleId = (window as any).requestIdleCallback(
+              () => setVisible(true),
+              { timeout: 1200 }
+            );
+          } else {
+            timeoutId = setTimeout(() => setVisible(true), 200);
+          }
+        };
+
+        if (document.readyState === 'complete') {
+          scheduleIdle();
+        } else {
+          const onLoad = () => {
+            scheduleIdle();
+          };
+          window.addEventListener('load', onLoad, { once: true });
+          return () => {
+            window.removeEventListener('load', onLoad);
+            if (idleId !== null && 'cancelIdleCallback' in window) {
+              (window as any).cancelIdleCallback(idleId);
+            }
+            if (timeoutId !== null) {
+              clearTimeout(timeoutId);
+            }
+          };
+        }
+
+        return () => {
+          if (idleId !== null && 'cancelIdleCallback' in window) {
+            (window as any).cancelIdleCallback(idleId);
+          }
+          if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+          }
+        };
+      } else {
+        setVisible(true);
+        return;
+      }
     }
     const track = trackRef.current;
     if (!track) return;
@@ -102,7 +149,7 @@ export default function FrameScrub({
     );
     observer.observe(track);
     return () => observer.disconnect();
-  }, [eager]);
+  }, [eager, deferUntilLoad]);
 
   useEffect(() => {
     const bitmaps = decodedBitmaps.current;
@@ -145,6 +192,7 @@ export default function FrameScrub({
 
     let idx = 0;
     let inFlight = 0;
+    const inSet = (f: number) => !isMobile || (f - 1) % step === 0;
 
     const findPriorityFrame = (center: number, maxDistance = 15): number | null => {
       for (let dist = 0; dist <= maxDistance; dist++) {
@@ -152,6 +200,7 @@ export default function FrameScrub({
         if (
           framePlus >= 1 &&
           framePlus <= frameCount &&
+          inSet(framePlus) &&
           !fetchedOrInFlight.current.has(framePlus)
         ) {
           return framePlus;
@@ -161,6 +210,7 @@ export default function FrameScrub({
           if (
             frameMinus >= 1 &&
             frameMinus <= frameCount &&
+            inSet(frameMinus) &&
             !fetchedOrInFlight.current.has(frameMinus)
           ) {
             return frameMinus;
@@ -172,7 +222,8 @@ export default function FrameScrub({
 
     const pump = () => {
       if (cancelled) return;
-      while (inFlight < CONCURRENCY) {
+      const concurrency = isMobile ? 4 : 6;
+      while (inFlight < concurrency) {
         const center = Math.round(playhead.current);
         let frame = findPriorityFrame(center, 15);
 
@@ -415,6 +466,38 @@ export default function FrameScrub({
     };
   }, [ready, findNearestFrame, decodeFrames, tierResolved]);
 
+  const renderPoster = (style: React.CSSProperties) => {
+    if (posterBase) {
+      return (
+        <picture>
+          <source srcSet={media(`${posterBase}/mobile-poster.avif`)} type="image/avif" media="(max-width: 767px)" />
+          <source srcSet={media(`${posterBase}/mobile-poster.webp`)} type="image/webp" media="(max-width: 767px)" />
+          <source srcSet={media(`${posterBase}/poster.avif`)} type="image/avif" />
+          <img
+            src={media(`${posterBase}/poster.webp`)}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            width={1920}
+            height={1080}
+            style={style}
+          />
+        </picture>
+      );
+    }
+    return (
+      <img
+        src={poster}
+        alt=""
+        fetchPriority="high"
+        decoding="async"
+        width={1920}
+        height={1080}
+        style={style}
+      />
+    );
+  };
+
   return (
     <div ref={trackRef} className={className} style={{ position: 'relative' }}>
       <div
@@ -422,16 +505,12 @@ export default function FrameScrub({
         style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}
       >
         {reduced ? (
-          <img
-            src={poster}
-            alt=""
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
-            }}
-          />
+          renderPoster({
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
+          })
         ) : (
           <>
             <canvas
@@ -449,22 +528,18 @@ export default function FrameScrub({
                 filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
               }}
             />
-            <img
-              src={poster}
-              alt=""
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                opacity: firstFrameDrawn ? 0 : 1,
-                transition: 'opacity 0.4s ease-out',
-                pointerEvents: 'none',
-                display: 'block',
-                filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
-              }}
-            />
+            {renderPoster({
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: firstFrameDrawn ? 0 : 1,
+              transition: 'opacity 0.4s ease-out',
+              pointerEvents: 'none',
+              display: 'block',
+              filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
+            })}
           </>
         )}
         <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between">

@@ -144,7 +144,8 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
           frameCount={180}
           framePath={framePath}
           fallbackFramePath={tier && tier.dir === 'desktop-hq' ? fallbackFramePath : undefined}
-          poster={tier?.dir === 'mobile' ? '/frames/amenities/mobile-poster.webp' : media('/frames/amenities/poster.webp')}
+          poster={media('/frames/amenities/poster.webp')}
+          posterBase="/frames/amenities"
           scrollLengthVh={400}
           className="w-full"
           tierResolved={!!tier}
