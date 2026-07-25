@@ -353,6 +353,8 @@ export default function FrameScrub({
         trigger: track,
         start: 'top top',
         end: () => `+=${window.innerHeight * (scrollLengthVh / 100 - 1)}`,
+        pin: true,
+        anticipatePin: 1,
         scrub: 0,
         snap:
           snapPoints && snapPoints.length > 0
