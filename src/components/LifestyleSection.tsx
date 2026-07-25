@@ -89,8 +89,8 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
       <div className="w-full space-y-8">
         {/* Centered Heading */}
         <div className="text-center max-w-4xl mx-auto px-4">
-          <h2 id="crossroads-heading" className="font-rexton text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#101535] leading-tight tracking-tight uppercase [text-wrap:balance]">
-            At the crossroads of <span className="text-[#D6B585]">Midtown Manhattan’s</span> <br className="hidden md:inline" />
+          <h2 id="crossroads-heading" className="font-rexton text-[19px] font-bold text-[#101535] leading-[1.3] tracking-[-0.15em] uppercase [text-wrap:balance]">
+            At the crossroads of <span className="text-[16px] text-[#101535] tracking-[-0.15em] leading-[1.1] font-bold uppercase">Midtown Manhattan’s</span> <br className="hidden md:inline" />
             energy and evolution.
           </h2>
         </div>
@@ -162,8 +162,8 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
 
         {/* Text & Action CTA */}
         <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
-          <p className="font-sora text-base md:text-lg leading-relaxed text-[#101535]/80 font-light">
-            Residents at The Eastline New York enjoy more than 10,000 square feet of amenities surrounding an enchanting private garden courtyard, all beautifully envisioned by renowned hospitality designer Paul Duesing & Partners.
+          <p className="font-sora text-[15px] tracking-[-0.05em] leading-[1.0] text-[#101535]/80 font-light max-w-2xl mx-auto text-center [text-wrap:balance]">
+            Residents at The Eastline New York enjoy more than 10,000 square feet of amenities surrounding an enchanting private garden courtyard, all beautifully envisioned by renowned hospitality designer Paul Duesing &amp; Partners.
           </p>
 
           <div>

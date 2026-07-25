@@ -109,10 +109,10 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
         {/* Bottom Text-Only Gradient Overlay & Content Container */}
         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pt-12 pb-5 md:pt-16 md:pb-8 px-4 sm:px-6 z-20 flex flex-col items-center text-center text-white pointer-events-none">
           <div className="max-w-2xl mx-auto flex flex-col items-center space-y-1.5 md:space-y-2 drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)]">
-            <h2 className="font-rexton text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-widest uppercase">
+            <h2 className="font-rexton text-[22px] font-bold text-white tracking-[-0.15em] leading-[1.0] uppercase">
               {currentCategory.title}
             </h2>
-            <p className="font-sora text-xs sm:text-sm md:text-base text-white/95 font-light leading-snug md:leading-relaxed max-w-lg md:max-w-xl line-clamp-2 [text-wrap:balance]">
+            <p className="font-sora text-[15px] text-white/95 font-light tracking-[-0.01em] leading-[1.3] max-w-lg md:max-w-xl line-clamp-2 [text-wrap:balance]">
               {currentCategory.description}
             </p>
           </div>

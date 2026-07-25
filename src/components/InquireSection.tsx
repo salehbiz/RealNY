@@ -84,7 +84,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
               <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#D6B585] uppercase">
                 38 East 35th Street • New York, NY 10016
               </span>
-              <h2 className="font-rexton text-3xl sm:text-5xl font-bold text-[#101535]">
+              <h2 className="font-rexton text-[35px] font-bold text-[#101535] leading-[1.0] tracking-[-0.15em]">
                 Inquire Now
               </h2>
               <p className={`font-sora text-xs sm:text-sm tracking-wider text-[#101535]/70 ${sideImage ? 'max-w-md' : 'max-w-lg mx-auto'}`}>

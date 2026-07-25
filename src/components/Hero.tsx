@@ -231,7 +231,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         >
           {/* Centered Scroll to Explore on Desktop */}
           <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
-            <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+            <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-[#D6B585] uppercase">
               Scroll to Explore
             </span>
             <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D6B585] animate-bounce" />
@@ -243,7 +243,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             className="sm:absolute sm:right-10 flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
             aria-label="Skip the intro"
           >
-            <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+            <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-[#D6B585] uppercase">
               Skip the intro
             </span>
             <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D6B585] animate-bounce group-hover:translate-y-0.5 transition-transform" />

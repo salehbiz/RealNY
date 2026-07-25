@@ -33,7 +33,7 @@ export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
       <div className="w-full space-y-10">
         {/* Centered Heading */}
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="font-rexton text-3xl sm:text-4xl lg:text-5xl font-bold text-[#101535] leading-tight tracking-tight">
+          <h2 className="font-rexton text-[19px] font-bold text-[#101535] leading-[1.05] tracking-[-0.15em]">
             Where the Best of Manhattan <span className="text-[#D6B585]">Reveals Itself</span>
           </h2>
         </div>
@@ -58,7 +58,7 @@ export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
 
         {/* Text & Action CTA */}
         <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
-          <p className="font-sora text-base md:text-lg leading-relaxed text-[#101535]/80 font-light">
+          <p className="font-sora text-[15.5px] tracking-[-0.05em] leading-[1.0] text-[#101535]/80 font-light max-w-2xl mx-auto text-center [text-wrap:balance]">
             Moments from Madison Square Park, Bryant Park, Midtown, and the cultural energy of NoMad, The Eastline New York offers a rare convergence of intimacy and access.
           </p>
 
