@@ -138,7 +138,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <img
                   src={media("/img/chess-logo.png")}
                   alt="CHESS"
-                  className="h-5 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
+                  className="h-3 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
                 />
               </div>
 
@@ -146,18 +146,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <span className="block font-sora text-[10px] tracking-wider uppercase text-[#F4F5F8]/50">
                   Exclusive Leasing & Marketing
                 </span>
-                <div className="flex flex-col gap-3">
-                  <img
-                    src={media("/img/realny-logo.png")}
-                    alt="REAL NY"
-                    className="h-6 w-auto object-contain self-start brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                  <img
-                    src={media("/img/eho-logo-trimmed.png")}
-                    alt="Equal Housing Opportunity"
-                    className="h-5 w-auto object-contain self-start brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                </div>
+                <img
+                  src={media("/img/realny-logo.png")}
+                  alt="REAL NY"
+                  className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
+                />
               </div>
             </div>
           </div>
@@ -175,14 +168,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
               </div>
             </div>
 
-            <button
-              onClick={scrollToTop}
-              className="flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-white/20 hover:border-white text-[10px] font-sora tracking-wider text-white/80 hover:text-white hover:bg-[#1A224B] transition-all cursor-pointer group"
-              title="Return to top of page"
-            >
-              <span>Back To Top</span>
-              <ArrowUp className="w-3 h-3 text-white/80 group-hover:text-white group-hover:-translate-y-0.5 transition-transform" />
-            </button>
+            <div className="flex flex-col gap-4 items-start">
+              <button
+                onClick={scrollToTop}
+                className="flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-white/20 hover:border-white text-[10px] font-sora tracking-wider text-white/80 hover:text-white hover:bg-[#1A224B] transition-all cursor-pointer group"
+                title="Return to top of page"
+              >
+                <span>Back To Top</span>
+                <ArrowUp className="w-3 h-3 text-white/80 group-hover:text-white group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+
+              <img
+                src={media("/img/eho-logo-trimmed.png")}
+                alt="Equal Housing Opportunity"
+                className="h-4.5 w-auto object-contain brightness-200 contrast-125 opacity-35 hover:opacity-80 transition-opacity"
+              />
+            </div>
           </div>
         </div>
 
