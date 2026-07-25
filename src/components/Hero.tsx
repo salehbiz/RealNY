@@ -189,13 +189,13 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Top Header Spacer */}
         <div className="pt-24 z-20 pointer-events-auto" />
 
-        {/* Bottom Hero CTAs Bar (Parallel baseline alignment - Left & Right aligned) */}
+        {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
         <div
-          className="absolute bottom-5 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-4 sm:px-10 flex items-center justify-between pointer-events-none transition-opacity duration-300 ease-out"
+          className="absolute bottom-5 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-4 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
           style={{ opacity: contentOpacity }}
         >
-          {/* Left-Aligned Scroll to Explore */}
-          <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          {/* Centered Scroll to Explore on Desktop */}
+          <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
             <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
               Scroll to Explore
             </span>
@@ -205,7 +205,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           {/* Right-Aligned Skip Intro Button */}
           <button
             onClick={handleSkipIntro}
-            className="flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+            className="sm:absolute sm:right-10 flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
             aria-label="Skip the intro"
           >
             <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
