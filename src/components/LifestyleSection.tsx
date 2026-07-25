@@ -87,10 +87,10 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
   return (
     <section id="amenities" className="bg-[#F4F5F8] text-[#101535] py-16 md:py-20 px-4 sm:px-8 lg:px-16 w-full border-b border-[#101535]/10 select-none">
       <div className="w-full space-y-8">
-        {/* Centered Heading */}
-        <div className="text-center max-w-4xl mx-auto px-4">
-          <h2 id="crossroads-heading" className="font-rexton text-[19px] font-bold text-[#101535] leading-[1.3] tracking-[-0.15em] uppercase [text-wrap:balance]">
-            At the crossroads of <span className="text-[16px] text-[#101535] tracking-[-0.15em] leading-[1.1] font-bold uppercase">Midtown Manhattan’s</span> <br className="hidden md:inline" />
+        {/* Centered Heading with Equal Padding */}
+        <div className="text-center max-w-4xl mx-auto px-4 py-4 md:py-6 flex justify-center items-center">
+          <h2 id="crossroads-heading" className="font-rexton text-[20.5px] font-bold text-[#101535] leading-[1.35] tracking-[-0.15em] uppercase text-center [text-wrap:balance]">
+            At the crossroads of <span className="text-[16px] text-[#D6B585] tracking-[-0.15em] leading-[1.1] font-bold uppercase">Midtown Manhattan’s</span> <br className="hidden md:inline" />
             energy and evolution.
           </h2>
         </div>
