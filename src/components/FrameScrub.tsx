@@ -567,11 +567,9 @@ export default function FrameScrub({
     );
   };
 
-  const activeFilter = filterStyle || 'none';
-
   return (
-    <div ref={trackRef} className={className} style={trackStyle}>
-      <div ref={stickyRef} style={stickyStyle}>
+    <div ref={trackRef} className={className} style={{ position: 'relative' }}>
+      <div ref={stickyRef} style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}>
         {reduced ? (
           renderPoster({
             width: '100%',
