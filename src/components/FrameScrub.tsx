@@ -500,7 +500,7 @@ export default function FrameScrub({
     );
   };
 
-  const activeFilter = filterStyle || 'brightness(1.16) contrast(0.84) saturate(0.88)';
+  const activeFilter = filterStyle || 'none';
 
   return (
     <div ref={trackRef} className={className} style={{ position: 'relative' }}>

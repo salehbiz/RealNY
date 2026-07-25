@@ -14,8 +14,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
   const [progress, setProgress] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(1);
 
-  // Exact tuned filter: brightness(1.16) contrast(0.84) saturate(0.88)
-  const activeFilterStyle = 'brightness(1.16) contrast(0.84) saturate(0.88)';
+
 
   const framePath = useCallback(
     (i: number) => {
@@ -116,7 +115,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         deferUntilLoad={true}
         tierResolved={!!tier}
         pathKey={tier ? tier.dir : ''}
-        filterStyle={activeFilterStyle}
         onProgress={(prog, frame) => {
           setProgress(prog);
           if (frame) setCurrentFrame(frame);

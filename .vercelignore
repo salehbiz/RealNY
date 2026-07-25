@@ -4,3 +4,7 @@ dist
 .DS_Store
 tmp
 /sharp
+/sharp_*
+/tmp_*
+/scripts
+s3-halo-check.png
