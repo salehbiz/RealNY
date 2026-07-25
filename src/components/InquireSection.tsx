@@ -83,7 +83,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
           <div className={`space-y-10 bg-[#ECE7DF] ${sideImage ? 'px-8 md:px-16 lg:px-20 py-14 md:py-20' : ''}`}>
             {/* Header */}
             <div className={`space-y-3 ${sideImage ? 'text-left' : 'text-center'}`}>
-              <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#D6B585] uppercase">
+              <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#745831] uppercase">
                 355 East 86th Street • New York, NY 10028
               </span>
               <h2 className="font-rexton text-[35px] font-bold text-[#101535] leading-[1.0] tracking-[-0.15em]">
@@ -120,10 +120,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 {/* Row 1: First Name & Last Name */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="firstName" className="block font-sora text-xs font-semibold text-[#745831]">
                       First Name *
                     </label>
                     <input
+                      id="firstName"
                       type="text"
                       required
                       placeholder="John"
@@ -134,10 +135,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="lastName" className="block font-sora text-xs font-semibold text-[#745831]">
                       Last Name *
                     </label>
                     <input
+                      id="lastName"
                       type="text"
                       required
                       placeholder="Smith"
@@ -151,10 +153,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 {/* Row 2: Email & Phone */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="email" className="block font-sora text-xs font-semibold text-[#745831]">
                       Email Address *
                     </label>
                     <input
+                      id="email"
                       type="email"
                       required
                       placeholder="john.smith@example.com"
@@ -165,10 +168,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="phone" className="block font-sora text-xs font-semibold text-[#745831]">
                       Phone Number *
                     </label>
                     <input
+                      id="phone"
                       type="tel"
                       required
                       placeholder="(212) 555-0199"
@@ -182,12 +186,13 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 {/* Row 3: Budget & Move-In Date */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="budget" className="block font-sora text-xs font-semibold text-[#745831]">
                       Budget (USD) *
                     </label>
                     <div className="relative flex items-center">
                       <span className="absolute left-0 text-sm font-sora text-[#101535]/60">$</span>
                       <input
+                        id="budget"
                         type="text"
                         required
                         placeholder="e.g. 5,000"
@@ -202,10 +207,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                    <label htmlFor="moveInDate" className="block font-sora text-xs font-semibold text-[#745831]">
                       Move-In Date *
                     </label>
                     <input
+                      id="moveInDate"
                       type="date"
                       required
                       value={formData.moveInDate}
@@ -217,7 +223,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Row 4: Are you a broker? */}
                 <div className="space-y-2">
-                  <label className="block font-sora text-xs font-semibold text-[#101535]">
+                  <label className="block font-sora text-xs font-semibold text-[#745831]">
                     Are You A Broker? *
                   </label>
                   <div className="flex gap-3">
@@ -240,7 +246,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Row 4: Residence Size Pills */}
                 <div className="space-y-2">
-                  <label className="block font-sora text-xs font-semibold text-[#101535]">
+                  <label className="block font-sora text-xs font-semibold text-[#745831]">
                     Residence Size *
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -263,7 +269,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Row 5: How did you hear about us? */}
                 <div className="space-y-2">
-                  <label htmlFor="hear-about" className="block font-sora text-xs font-semibold text-[#101535]">
+                  <label htmlFor="hear-about" className="block font-sora text-xs font-semibold text-[#745831]">
                     How Did You Hear About Us?
                   </label>
                   <select
@@ -283,10 +289,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Comments */}
                 <div className="space-y-1.5">
-                  <label className="block font-sora text-xs font-semibold text-[#101535]">
+                  <label htmlFor="comments" className="block font-sora text-xs font-semibold text-[#745831]">
                     Add more information about your inquiry
                   </label>
                   <textarea
+                    id="comments"
                     rows={3}
                     placeholder="Tell us more details about your inquiry, preferences, or timing..."
                     value={formData.comments}

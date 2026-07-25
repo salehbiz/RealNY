@@ -21,6 +21,10 @@ export const EntranceHeroImage: React.FC<EntranceHeroImageProps> = ({ onImageCli
           <img
             src={imageSrc}
             alt={title}
+            loading="lazy"
+            decoding="async"
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
           />
         </picture>

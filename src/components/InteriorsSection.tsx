@@ -29,6 +29,10 @@ export const InteriorsSection: React.FC<InteriorsSectionProps> = ({
               <img
                 src={livingRoomSrc}
                 alt={livingRoomTitle}
+                loading="lazy"
+                decoding="async"
+                width={500}
+                height={333}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
@@ -62,6 +66,10 @@ export const InteriorsSection: React.FC<InteriorsSectionProps> = ({
               <img
                 src={kitchenSrc}
                 alt={kitchenTitle}
+                loading="lazy"
+                decoding="async"
+                width={500}
+                height={333}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />

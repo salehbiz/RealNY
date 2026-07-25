@@ -55,6 +55,10 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
               <img
                 src={cat.image}
                 alt={cat.title}
+                loading="lazy"
+                decoding="async"
+                width={1920}
+                height={1080}
                 onClick={() => {
                   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
                   onImageClick(

@@ -32,7 +32,7 @@ export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
         {/* Centered Heading with Balanced Spacing */}
         <div className="text-center max-w-4xl mx-auto pb-20 md:pb-[120px] flex justify-center items-center">
           <h2 className="font-rexton text-[26.5px] font-bold text-[#101535] leading-[1.2] tracking-[-0.15em]">
-            Where the Best of Manhattan <span className="text-[28px] text-[#D6B585] tracking-[-0.08em] leading-[1.14] font-bold inline-block">Reveals Itself</span>
+            Where the Best of Manhattan <span className="text-[28px] text-[#745831] tracking-[-0.08em] leading-[1.14] font-bold inline-block">Reveals Itself</span>
           </h2>
         </div>
 
@@ -51,6 +51,10 @@ export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
               <img
                 src={card.src}
                 alt={card.title}
+                loading="lazy"
+                decoding="async"
+                width={426}
+                height={580}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />

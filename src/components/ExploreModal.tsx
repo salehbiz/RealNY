@@ -185,6 +185,10 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
               <img
                 src={currentItem.image}
                 alt={currentItem.title}
+                loading="lazy"
+                decoding="async"
+                width={800}
+                height={600}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />

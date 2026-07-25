@@ -136,10 +136,11 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
                 {/* First Name & Last Name */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="block font-sora text-[10px] font-semibold text-[#101535]">
+                    <label htmlFor="modalFirstName" className="block font-sora text-[10px] font-semibold text-[#101535]">
                       First Name *
                     </label>
                     <input
+                      id="modalFirstName"
                       type="text"
                       required
                       placeholder="John"
@@ -149,10 +150,11 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="block font-sora text-[10px] font-semibold text-[#101535]">
+                    <label htmlFor="modalLastName" className="block font-sora text-[10px] font-semibold text-[#101535]">
                       Last Name *
                     </label>
                     <input
+                      id="modalLastName"
                       type="text"
                       required
                       placeholder="Smith"
@@ -165,10 +167,11 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
 
                 {/* Email Address */}
                 <div className="space-y-1">
-                  <label className="block font-sora text-[10px] font-semibold text-[#101535]">
+                  <label htmlFor="modalEmail" className="block font-sora text-[10px] font-semibold text-[#101535]">
                     Email Address *
                   </label>
                   <input
+                    id="modalEmail"
                     type="email"
                     required
                     placeholder="john.smith@example.com"
@@ -180,10 +183,11 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
 
                 {/* Phone Number */}
                 <div className="space-y-1">
-                  <label className="block font-sora text-[10px] font-semibold text-[#101535]">
+                  <label htmlFor="modalPhone" className="block font-sora text-[10px] font-semibold text-[#101535]">
                     Phone Number *
                   </label>
                   <input
+                    id="modalPhone"
                     type="tel"
                     required
                     placeholder="(212) 555-0199"
@@ -195,10 +199,11 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
 
                 {/* More about your inquiry */}
                 <div className="space-y-1">
-                  <label className="block font-sora text-[10px] font-semibold text-[#101535]">
+                  <label htmlFor="modalComments" className="block font-sora text-[10px] font-semibold text-[#101535]">
                     More about your inquiry *
                   </label>
                   <textarea
+                    id="modalComments"
                     rows={2}
                     required
                     placeholder="Tell us about your target move-in, preferred floor level, etc."

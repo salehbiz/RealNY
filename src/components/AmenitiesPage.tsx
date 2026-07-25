@@ -264,6 +264,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
               onClick={() => onImageClick( media('/images/amenities-courtyard-night.webp'), 'Enchanted Courtyard Garden')}
               src={media("/images/amenities-courtyard-night.webp")}
               alt="Courtyard Garden Evening"
+              loading="lazy"
+              decoding="async"
+              width={875}
+              height={650}
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
             />
           </div>
@@ -275,6 +279,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
         <img
           src={media("/images/amenities-lobby.webp")}
           alt="Lobby & Social Lounge"
+          loading="lazy"
+          decoding="async"
+          width={1920}
+          height={1080}
           className="w-full h-full object-cover object-center"
         />
       </section>
@@ -296,24 +304,24 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
             <button
               onClick={handleScrollLeft}
               disabled={activeSlide === 0}
-              className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+              className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
                 activeSlide === 0 ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
               }`}
               aria-label="Previous Slide"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             {/* Right Arrow Button */}
             <button
               onClick={handleScrollRight}
               disabled={activeSlide === (isSliderMobile ? sliderCards.length - 1 : sliderCards.length - 2)}
-              className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+              className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
                 activeSlide === (isSliderMobile ? sliderCards.length - 1 : sliderCards.length - 2) ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
               }`}
               aria-label="Next Slide"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-5 h-5" />
             </button>
 
             {/* Scrollable Track */}
@@ -335,6 +343,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
                   <img
                     src={card.src}
                     alt={card.title}
+                    loading="lazy"
+                    decoding="async"
+                    width={624}
+                    height={390}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-none"
                   />
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
@@ -391,6 +403,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
                   }}
                   src={media("/images/amenities-lounge.webp")}
                   alt="Social Lounge"
+                  loading="lazy"
+                  decoding="async"
+                  width={875}
+                  height={650}
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
                 />
               </picture>
@@ -422,6 +438,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
                 onClick={() => onImageClick( media('/images/amenities-coworking.webp'), 'Private Dining & Event Suite')}
                 src={media("/images/amenities-coworking.webp")}
                 alt="Private Event Suite"
+                loading="lazy"
+                decoding="async"
+                width={875}
+                height={650}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
               />
             </div>
@@ -456,6 +476,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
             <img
               src={media("/images/amenities-2-gym.webp")}
               alt="State-of-the-Art Fitness Center"
+              loading="lazy"
+              decoding="async"
+              width={1920}
+              height={1080}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           </picture>
@@ -469,6 +493,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
                 onClick={() => onImageClick( media('/images/amenities-sauna.webp'), 'Cedar Sauna & Thermal Spa')}
                 src={media("/images/amenities-sauna.webp")}
                 alt="Cedar Sauna"
+                loading="lazy"
+                decoding="async"
+                width={875}
+                height={650}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
               />
             </div>
@@ -489,6 +517,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
         <img
           src={media("/images/amenities-5-rooftop.webp")}
           alt="Landscaped Rooftop Terrace"
+          loading="lazy"
+          decoding="async"
+          width={1920}
+          height={1080}
           className="w-full h-full object-cover object-center"
         />
       </section>

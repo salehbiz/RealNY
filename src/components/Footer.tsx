@@ -72,6 +72,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
               <img
                 src={media("/brand/Wordmark_Gold.svg")}
                 alt="The Eastline New York"
+                loading="lazy"
+                decoding="async"
+                width={180}
+                height={32}
                 className="h-8 w-auto object-contain"
               />
             </div>
@@ -138,6 +142,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <img
                   src={media("/img/chess-logo.png")}
                   alt="CHESS"
+                  loading="lazy"
+                  decoding="async"
+                  width={96}
+                  height={12}
                   className="h-3 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
                 />
               </div>
@@ -149,6 +157,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <img
                   src={media("/img/realny-logo.png")}
                   alt="REAL NY"
+                  loading="lazy"
+                  decoding="async"
+                  width={80}
+                  height={24}
                   className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
                 />
               </div>
@@ -181,6 +193,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
               <img
                 src={media("/img/eho-logo-trimmed.png")}
                 alt="Equal Housing Opportunity"
+                loading="lazy"
+                decoding="async"
+                width={24}
+                height={24}
                 className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
               />
             </div>
