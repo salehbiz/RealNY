@@ -33,8 +33,8 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
     [tier]
   );
 
-  // Smoothly fade out text and overlay as soon as scroll starts (instantly hidden on Frame 2 when East River pops up)
-  const contentOpacity = currentFrame >= 2 ? 0 : Math.max(0, 1 - progress * 20);
+  // Smoothly fade out text and overlay as soon as scroll starts past frame 2
+  const contentOpacity = currentFrame > 2 ? 0 : Math.max(0, 1 - progress * 10);
 
   // River East text overlay opacity (Frames 2 - 17)
   let riverEastOpacity = 0;
@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 2 - 17: East River Text Overlay */}
         <div
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: riverEastOpacity }}
         >
           <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
@@ -140,7 +140,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: neighborhoodOpacity }}
         >
           <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
@@ -154,7 +154,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 62 - 101: The Eastline New York Text Overlay */}
         <div
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: eastlineOpacity }}
         >
           <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
@@ -168,7 +168,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: lobbyOpacity }}
         >
           <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
@@ -191,7 +191,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
         <div
-          className="absolute bottom-5 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-4 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
+          className="absolute bottom-16 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
           style={{ opacity: contentOpacity }}
         >
           {/* Centered Scroll to Explore on Desktop */}
