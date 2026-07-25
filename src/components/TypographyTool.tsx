@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface TypoValues {
   fontSize: number;
@@ -179,6 +180,7 @@ const SliderRow: React.FC<SliderRowProps> = ({ label, value, min, max, step, uni
 };
 
 export const TypographyTool: React.FC = () => {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [pickerActive, setPickerActive] = useState(false);
   const [targets, setTargets] = useState<TargetItem[]>([]);
@@ -203,7 +205,7 @@ export const TypographyTool: React.FC = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Scan ALL text elements on the page
+  // Scan text elements on current active page ONLY
   const scanPageElements = useCallback(() => {
     const selector = 'h1, h2, h3, h4, h5, h6, p, button, a, span[class*="text"], [data-typo-id]';
     const rawEls = Array.from(document.querySelectorAll(selector)) as HTMLElement[];
@@ -228,16 +230,44 @@ export const TypographyTool: React.FC = () => {
     });
 
     setTargets(items);
-    if (items.length > 0 && !selectedId) {
-      setSelectedId(items[0].id);
+    if (items.length > 0) {
+      setSelectedId(prev => (items.some(i => i.id === prev) ? prev : items[0].id));
     }
-  }, [selectedId]);
+  }, []);
+
+  // Rescan whenever active route changes
+  useEffect(() => {
+    // Small delay to ensure route component has rendered into the DOM
+    const timer = setTimeout(() => {
+      scanPageElements();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [location.pathname, scanPageElements]);
 
   useEffect(() => {
     if (open) {
       scanPageElements();
     }
   }, [open, scanPageElements]);
+
+  // Handle element selection with smooth auto-scroll & gold highlight ring
+  const selectElement = (id: string) => {
+    setSelectedId(id);
+    const target = targets.find(t => t.id === id);
+    if (target && target.el) {
+      target.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      const origOutline = target.el.style.outline;
+      const origOffset = target.el.style.outlineOffset;
+      target.el.style.outline = '2.5px solid #D6B585';
+      target.el.style.outlineOffset = '4px';
+
+      setTimeout(() => {
+        target.el.style.outline = origOutline;
+        target.el.style.outlineOffset = origOffset;
+      }, 1600);
+    }
+  };
 
   // Click-to-Pick Element Mode
   useEffect(() => {
@@ -270,10 +300,10 @@ export const TypographyTool: React.FC = () => {
       setHoveredEl(null);
       setPickerActive(false);
 
-      // Check if target is already in list or add it
+      // Find existing or create target
       const existing = targets.find(t => t.el === target);
       if (existing) {
-        setSelectedId(existing.id);
+        selectElement(existing.id);
       } else {
         const { id, label } = getUniqueSelector(target, targets.length);
         const newItem: TargetItem = {
@@ -284,7 +314,7 @@ export const TypographyTool: React.FC = () => {
           el: target,
         };
         setTargets(prev => [newItem, ...prev]);
-        setSelectedId(id);
+        selectElement(id);
       }
     };
 
@@ -502,7 +532,7 @@ export const TypographyTool: React.FC = () => {
 
             <select
               value={selectedId}
-              onChange={e => setSelectedId(e.target.value)}
+              onChange={e => selectElement(e.target.value)}
               style={{
                 width: '100%',
                 background: 'rgba(255,255,255,0.05)',
@@ -516,11 +546,26 @@ export const TypographyTool: React.FC = () => {
                 borderRadius: '3px',
               }}
             >
-              {targets.map(t => (
-                <option key={t.id} value={t.id} style={{ background: '#0c1028' }}>
-                  {t.label}
-                </option>
-              ))}
+              {(() => {
+                // Group targets by section name
+                const groups: Record<string, TargetItem[]> = {};
+                targets.forEach(t => {
+                  const match = t.label.match(/^\[(.*?)\]/);
+                  const secName = match ? match[1] : 'General';
+                  if (!groups[secName]) groups[secName] = [];
+                  groups[secName].push(t);
+                });
+
+                return Object.entries(groups).map(([secName, items]) => (
+                  <optgroup key={secName} label={`📍 ${secName}`} style={{ background: '#080b1e', color: '#D6B585', fontWeight: 'bold' }}>
+                    {items.map(t => (
+                      <option key={t.id} value={t.id} style={{ background: '#0c1028', color: '#F4F5F8', fontWeight: 'normal' }}>
+                        {t.tagName.toUpperCase()}: "{t.textPreview}"
+                      </option>
+                    ))}
+                  </optgroup>
+                ));
+              })()}
             </select>
           </div>
 
