@@ -181,7 +181,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
               <img
                 src={media("/img/eho-logo-trimmed.png")}
                 alt="Equal Housing Opportunity"
-                className="h-4.5 w-auto object-contain brightness-200 contrast-125 opacity-35 hover:opacity-80 transition-opacity"
+                className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
               />
             </div>
           </div>
