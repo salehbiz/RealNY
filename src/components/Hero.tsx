@@ -143,10 +143,10 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: neighborhoodOpacity }}
         >
-          <h2 className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <h2 className="font-rexton text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
             Welcome to the Upper East Side
           </h2>
-          <p className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <p className="font-sora text-[9px] xs:text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
             <span className="sm:hidden block">
               <span className="whitespace-nowrap block">A quieter side of Manhattan, where leafy streets</span>
               <span className="whitespace-nowrap block">meet the river and the city stays within reach.</span>
