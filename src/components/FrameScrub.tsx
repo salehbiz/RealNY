@@ -311,7 +311,8 @@ export default function FrameScrub({
             if (cachedRes) {
               res = cachedRes;
             } else {
-              res = await fetch(targetPath, { priority: 'low' } as any);
+              const fetchPriority = (eager && currentFrame <= 12) ? 'high' : 'low';
+              res = await fetch(targetPath, { priority: fetchPriority } as any);
               if (res.ok) {
                 cache.put(targetPath, res.clone());
               }

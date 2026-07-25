@@ -66,7 +66,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         scrollLengthVh={350}
         className="w-full"
         eager={true}
-        deferUntilLoad={true}
         tierResolved={!!tier}
         pathKey={tier ? tier.dir : ''}
         onProgress={(prog, frame) => {
