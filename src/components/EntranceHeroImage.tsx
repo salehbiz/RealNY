@@ -6,8 +6,8 @@ interface EntranceHeroImageProps {
 }
 
 export const EntranceHeroImage: React.FC<EntranceHeroImageProps> = ({ onImageClick }) => {
-  const imageSrc = media('/images/building-entrance.webp');
-  const imageSrcMobile = media('/images/building-entrance-mobile.webp');
+  const imageSrc = media('/images/skyline-architecture.webp');
+  const imageSrcMobile = media('/images/skyline-architecture-mobile.webp');
   const title = 'Street-level arrival entrance · 355 East 86th Street';
 
   return (

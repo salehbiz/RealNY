@@ -18,8 +18,8 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
       tabLabel: 'Architecture',
       title: 'Architecture',
       description: 'A modern tribute to Manhattan’s Gilded Age with bronze panels, glass, and textured limestone.',
-      image: media('/images/skyline-architecture.webp'),
-      imageMobile: media('/images/skyline-architecture-mobile.webp'),
+      image: media('/images/building-entrance.webp'),
+      imageMobile: media('/images/building-entrance-mobile.webp'),
     },
     {
       id: 'interiors',
