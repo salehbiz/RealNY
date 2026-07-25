@@ -147,7 +147,10 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             Welcome to the Upper East Side
           </h2>
           <p className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
-            <span className="sm:hidden">A quieter side of Manhattan, where leafy streets meet the river,<br />and the whole city stays within reach.</span>
+            <span className="sm:hidden block">
+              <span className="whitespace-nowrap block">A quieter side of Manhattan, where leafy streets</span>
+              <span className="whitespace-nowrap block">meet the river and the city stays within reach.</span>
+            </span>
             <span className="hidden sm:inline">A quieter side of Manhattan, where leafy streets meet the open river<br />and the whole city stays within reach.</span>
           </p>
         </div>
