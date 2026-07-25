@@ -303,12 +303,21 @@ export default function FrameScrub({
             ? fallbackFramePathRef.current(currentFrame)
             : framePathRef.current(currentFrame);
 
-        fetch(targetPath, { priority: 'low' } as any)
-          .then((res) => {
+        const fetchFrame = async () => {
+          try {
+            let res: Response | undefined;
+            const cache = await caches.open('frame-cache-v1');
+            const cachedRes = await cache.match(targetPath);
+            if (cachedRes) {
+              res = cachedRes;
+            } else {
+              res = await fetch(targetPath, { priority: 'low' } as any);
+              if (res.ok) {
+                cache.put(targetPath, res.clone());
+              }
+            }
             if (!res.ok) throw new Error(`Status: ${res.status}`);
-            return res.blob();
-          })
-          .then((blob) => {
+            const blob = await res.blob();
             if (cancelled) return;
             compressedBlobs.current.set(currentFrame, blob);
             loadedCount++;
@@ -317,8 +326,7 @@ export default function FrameScrub({
             }
             inFlight--;
             pump();
-          })
-          .catch(() => {
+          } catch (err) {
             if (cancelled) return;
             if (!isFallenBack && fallbackFramePathRef.current) {
               setIsFallenBack(true);
@@ -327,7 +335,9 @@ export default function FrameScrub({
               inFlight--;
               pump();
             }
-          });
+          }
+        };
+        fetchFrame();
       }
     };
 
