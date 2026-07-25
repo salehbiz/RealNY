@@ -21,7 +21,7 @@ export const CrestLogo: React.FC<CrestLogoProps> = ({ className = '', light = fa
     <div className={`flex flex-col items-center justify-center select-none ${className}`}>
       <img
         src={logoSrc}
-        alt="Park & Madison | The Morgan | 38 East 35th Street"
+        alt="Park & Madison | The Morgan | 355 East 86th Street"
         className={`${sizeClasses} object-contain transition-transform duration-500 hover:scale-105`}
       />
     </div>

@@ -81,8 +81,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <MapPin className="w-4 h-4 text-[#D6B585] shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-white block font-medium">Building Location:</strong>
-                  <span className="block text-white/90">38 East 35th Street, New York, NY 10016</span>
-                  <span className="block text-white/90 mt-1">38 East 35th Street, New York, NY 10016</span>
+                  <span className="block text-white/90">1655 First Avenue, New York, NY 10028</span>
+                  <span className="block text-white/90 mt-1">355 East 86th Street, New York, NY 10028</span>
                 </div>
               </div>
 

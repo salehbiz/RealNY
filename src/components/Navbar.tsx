@@ -204,11 +204,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="space-y-4 font-sora text-sm tracking-wider text-[#F4F5F8]/80">
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <MapPin className="w-4 h-4 text-[#D6B585] shrink-0" />
-                <span>38 East 35th Street, New York, NY 10016</span>
+                <span>355 East 86th Street, New York, NY 10028</span>
               </div>
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <Phone className="w-4 h-4 text-[#D6B585] shrink-0" />
-                <span>Leasing Office: 35A East 35th Street, 2nd Floor</span>
+                <span>Leasing Office: 355 East 86th Street, New York, NY 10028</span>
               </div>
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <Mail className="w-4 h-4 text-[#D6B585] shrink-0" />

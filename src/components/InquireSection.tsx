@@ -84,7 +84,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
             {/* Header */}
             <div className={`space-y-3 ${sideImage ? 'text-left' : 'text-center'}`}>
               <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#D6B585] uppercase">
-                38 East 35th Street • New York, NY 10016
+                355 East 86th Street • New York, NY 10028
               </span>
               <h2 className="font-rexton text-[35px] font-bold text-[#101535] leading-[1.0] tracking-[-0.15em]">
                 Inquire Now

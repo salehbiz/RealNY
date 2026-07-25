@@ -8,7 +8,7 @@ interface EntranceHeroImageProps {
 export const EntranceHeroImage: React.FC<EntranceHeroImageProps> = ({ onImageClick }) => {
   const imageSrc = media('/images/building-entrance.webp');
   const imageSrcMobile = media('/images/building-entrance-mobile.webp');
-  const title = 'Street-level arrival entrance · 38 East 35th Street';
+  const title = 'Street-level arrival entrance · 355 East 86th Street';
 
   return (
     <section className="relative w-full h-screen overflow-hidden select-none my-0 border-y border-[#101535]/10">
@@ -26,7 +26,7 @@ export const EntranceHeroImage: React.FC<EntranceHeroImageProps> = ({ onImageCli
         </picture>
         <div className="absolute bottom-6 left-6 md:left-12 z-10">
           <span className="font-sora text-xs tracking-wider text-[#F4F5F8] bg-[#101535]/90 backdrop-blur-md px-5 py-2.5 rounded-none font-medium shadow-md border border-[#D6B585]/40">
-            Main Arrival Entrance • 38 East 35th Street
+            Main Arrival Entrance • 355 East 86th Street
           </span>
         </div>
       </div>
