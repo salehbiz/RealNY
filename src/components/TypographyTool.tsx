@@ -53,12 +53,20 @@ function readComputed(el: HTMLElement): TypoValues {
 }
 
 function applyStyles(el: HTMLElement, v: TypoValues) {
-  el.style.fontSize = `${v.fontSize}px`;
-  el.style.letterSpacing = `${v.letterSpacing}em`;
-  el.style.lineHeight = `${v.lineHeight}`;
-  el.style.fontWeight = v.fontWeight;
-  if (v.color) el.style.color = v.color;
-  if (v.textTransform) el.style.textTransform = v.textTransform;
+  // Target both the element itself and any nested spans or text containers inside it
+  const targetNodes = [el, ...Array.from(el.querySelectorAll<HTMLElement>('span, p, h1, h2, h3, h4, h5, h6, a, div'))];
+  
+  targetNodes.forEach(node => {
+    // Only apply to text nodes or elements without complex layout containers
+    if (node === el || node.tagName === 'SPAN' || node.tagName === 'P' || node.tagName.startsWith('H')) {
+      node.style.setProperty('font-size', `${v.fontSize}px`, 'important');
+      node.style.setProperty('letter-spacing', `${v.letterSpacing}em`, 'important');
+      node.style.setProperty('line-height', `${v.lineHeight}`, 'important');
+      node.style.setProperty('font-weight', `${v.fontWeight}`, 'important');
+      if (v.color) node.style.setProperty('color', v.color, 'important');
+      if (v.textTransform) node.style.setProperty('text-transform', v.textTransform, 'important');
+    }
+  });
 }
 
 // Detect human-readable section name for any element on the page
