@@ -210,13 +210,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       {/* Intro Subtitle Block */}
       <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
         <div className="w-full max-w-3xl mx-auto text-center space-y-5">
-          <p
-            data-typo-id="ame-intro-label"
-            data-typo-label="Amenities / Eyebrow Label"
-            className="univ-label-eyebrow text-[#101535]"
-          >
-            INDOOR &amp; OUTDOOR COURTYARD
-          </p>
+
           <p
             data-typo-id="ame-intro-body"
             data-typo-label="Amenities / Intro Paragraph"

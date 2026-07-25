@@ -8,19 +8,12 @@ export const IntroSection: React.FC<IntroSectionProps> = ({ onScheduleClick }) =
   return (
     <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 sm:px-12 lg:px-20 w-full border-y border-[#101535]/10 select-none">
       <div className="w-full max-w-3xl mx-auto text-center space-y-5">
-        {/* Eyebrow Label */}
-        <p
-          data-typo-id="home-intro-label"
-          data-typo-label="Home / Eyebrow Label"
-          className="font-sora text-[15px] tracking-[-0.095em] leading-[0.7] font-semibold text-[#101535] uppercase"
-        >
-          MIDTOWN MANHATTAN
-        </p>
+
         {/* Paragraph */}
         <p
           data-typo-id="home-intro-body"
           data-typo-label="Home / Intro Paragraph"
-          className="font-sora text-[15px] tracking-[-0.05em] leading-[1.0] text-[#101535]/80 font-thin max-w-2xl mx-auto text-center [text-wrap:balance]"
+          className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
         >
           The Eastline New York, at 38 East 35th Street, is ideally positioned between Park and Madison Avenues on a rare, tree-lined block. This exceptional new Midtown condominium offers a sophisticated retreat in the heart of Manhattan. The Eastline New York places residents moments from Madison Square Park, Bryant Park, NoMad, and the very best of New York City living.
         </p>

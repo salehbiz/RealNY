@@ -175,10 +175,10 @@
 
 .univ-p-body {
   font-family: 'Sora', -apple-system, sans-serif !important;
-  font-size: 15px !important;
-  letter-spacing: -0.05em !important;
-  line-height: 1.0 !important;
-  font-weight: 300 !important;
+  font-size: 15.5px !important;
+  letter-spacing: -0.075em !important;
+  line-height: 1.15 !important;
+  font-weight: 100 !important;
 }
 
 .univ-label-eyebrow {
