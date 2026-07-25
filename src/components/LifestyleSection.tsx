@@ -99,8 +99,7 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
         {/* Centered Heading with Equal Spacing */}
         <div className="text-center max-w-4xl mx-auto px-4 pb-20 md:pb-[120px] flex justify-center items-center">
           <h2 id="crossroads-heading" className="font-rexton text-[22.5px] font-bold text-[#101535] leading-[1.15] tracking-[-0.15em] uppercase text-center [text-wrap:balance]">
-            At the crossroads of <span className="text-[#D6B585] tracking-[-0.15em] font-bold uppercase">Midtown Manhattan’s</span> <br className="hidden md:inline" />
-            energy and evolution.
+            A New Line of <span className="text-[#D6B585] tracking-[-0.15em] font-bold uppercase">Luxury</span> has Arrived
           </h2>
         </div>
 
