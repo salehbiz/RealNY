@@ -13,6 +13,7 @@ import type { Residence } from './components/AvailabilitySection';
 import { InquireSection } from './components/InquireSection';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { TypographyTool } from './components/TypographyTool';
 import type { ExploreType } from './components/ExploreModal';
 
 const ResidencesPage = React.lazy(() => import('./components/ResidencesPage').then(m => ({ default: m.ResidencesPage })));
@@ -60,6 +61,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#ECE7DF] text-[#1F261E] flex flex-col relative font-sans-clean">
       <ScrollToTop />
+      <TypographyTool />
       {/* Header & Drawer Navigation */}
       <Navbar
         currentPage={currentPage}

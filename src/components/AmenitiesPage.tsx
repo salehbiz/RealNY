@@ -210,10 +210,18 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       {/* Intro Subtitle Block */}
       <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
         <div className="w-full max-w-3xl mx-auto text-center space-y-5">
-          <p className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase">
+          <p
+            data-typo-id="ame-intro-label"
+            data-typo-label="Amenities / Eyebrow Label"
+            className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase"
+          >
             INDOOR &amp; OUTDOOR COURTYARD
           </p>
-          <p className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]">
+          <p
+            data-typo-id="ame-intro-body"
+            data-typo-label="Amenities / Intro Paragraph"
+            className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]"
+          >
             A garden at the center of it all. More than 10,000 square feet of wellness, social, and remote work spaces enveloping an enchanting private landscaped courtyard.
           </p>
         </div>

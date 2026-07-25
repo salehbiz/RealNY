@@ -246,10 +246,18 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
       {/* Intro Subtitle Block */}
       <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
         <div className="w-full max-w-3xl mx-auto text-center space-y-5">
-          <p className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase">
+          <p
+            data-typo-id="res-intro-label"
+            data-typo-label="Residences / Eyebrow Label"
+            className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase"
+          >
             INC ARCHITECTURE &amp; DESIGN
           </p>
-          <p className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]">
+          <p
+            data-typo-id="res-intro-body"
+            data-typo-label="Residences / Intro Paragraph"
+            className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]"
+          >
             A boutique collection of studio through three-bedroom homes, duplexes, and penthouse suites—crafted with natural oak, soft light, and refined detail for mindful luxury.
           </p>
         </div>
