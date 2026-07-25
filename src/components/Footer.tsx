@@ -136,9 +136,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                   Developer & Sponsor
                 </span>
                 <img
-                  src={media("/img/eho-logo-trimmed.png")}
-                  alt="Equal Housing Opportunity"
-                  className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
+                  src={media("/img/chess-logo.png")}
+                  alt="CHESS"
+                  className="h-5 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
                 />
               </div>
 
@@ -146,11 +146,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
                 <span className="block font-sora text-[10px] tracking-wider uppercase text-[#F4F5F8]/50">
                   Exclusive Leasing & Marketing
                 </span>
-                <img
-                  src={media("/img/realny-logo.png")}
-                  alt="REAL NY"
-                  className="h-6 w-auto object-contain brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
-                />
+                <div className="flex flex-col gap-3">
+                  <img
+                    src={media("/img/realny-logo.png")}
+                    alt="REAL NY"
+                    className="h-6 w-auto object-contain self-start brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src={media("/img/eho-logo-trimmed.png")}
+                    alt="Equal Housing Opportunity"
+                    className="h-5 w-auto object-contain self-start brightness-200 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
+                  />
+                </div>
               </div>
             </div>
           </div>
