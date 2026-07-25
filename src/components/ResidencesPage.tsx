@@ -244,13 +244,26 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
       </section>
 
       {/* Intro Subtitle Block */}
-      <section className="py-16 md:py-24 px-6 md:px-16 text-center max-w-4xl mx-auto space-y-4 border-b border-[#101535]/15">
-        <h2 className="font-sora text-xs md:text-sm tracking-[0.25em] font-semibold text-[#D6B585] uppercase">
-          INC ARCHITECTURE & DESIGN
-        </h2>
-        <p className="font-sora page-intro-p text-[#101535]/90 font-light max-w-4xl mx-auto text-center [text-wrap:balance]">
-          A boutique collection of studio through three-bedroom homes, duplexes, and penthouse suites—crafted with natural oak, soft light, and refined detail for mindful luxury.
-        </p>
+      <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
+        <div className="w-full max-w-3xl mx-auto text-center space-y-5">
+          {/* Eyebrow Label */}
+          <p className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase">
+            INC ARCHITECTURE &amp; DESIGN
+          </p>
+          {/* Paragraph */}
+          <p className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]">
+            A boutique collection of studio through three-bedroom homes, duplexes, and penthouse suites—crafted with natural oak, soft light, and refined detail for mindful luxury.
+          </p>
+          {/* CTA Button */}
+          <div className="pt-1">
+            <button
+              onClick={() => onOpenInquireWithName('')}
+              className="px-6 py-2.5 rounded-none bg-[#101535] text-white border border-[#101535] hover:bg-[#242C5B] hover:scale-105 font-sora text-[10px] tracking-widest font-semibold uppercase transition-all duration-300 shadow-md cursor-pointer"
+            >
+              Schedule a Tour
+            </button>
+          </div>
+        </div>
       </section>
 
       {/* 2. ASYMMETRIC EDITORIAL BLOCK 1: Text Left + Image Right with Side Padding */}
