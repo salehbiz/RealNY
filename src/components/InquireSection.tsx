@@ -12,6 +12,8 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
     lastName: '',
     email: '',
     phone: '',
+    budget: '',
+    moveInDate: '',
     isBroker: 'No',
     size: 'One Bedroom',
     hearAbout: 'Online Search',
@@ -88,7 +90,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 Inquire Now
               </h2>
               <p className={`font-sora text-xs sm:text-sm tracking-wider text-[#101535]/70 ${sideImage ? 'max-w-md' : 'max-w-lg mx-auto'}`}>
-                Please complete the form below to receive floor plans, pricing, and schedule a private visit to The Eastline New York sales gallery.
+                Please complete the form below to receive floor plans, pricing, and schedule a private visit to The Eastline New York leasing office.
               </p>
             </div>
 
@@ -101,11 +103,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                   Thank You For Your Inquiry
                 </h3>
                 <p className="font-sora text-sm text-[#F4F5F8]/80 max-w-md mx-auto leading-relaxed">
-                  A sales representative from Corcoran New Development will contact you shortly with availability details and appointment options for The Eastline New York.
+                  A leasing representative from REAL NY will contact you shortly with availability details and appointment options for The Eastline New York.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-6 py-2.5 rounded-full border border-[#D6B585]/40 hover:bg-[#D6B585] hover:text-[#101535] font-sora text-xs tracking-wider uppercase transition-all cursor-pointer"
+                  className="px-4.5 py-1.5 rounded-full border border-white/30 text-white hover:bg-white/10 font-sora text-[10px] tracking-wider uppercase transition-all cursor-pointer"
                 >
                   Submit Another Inquiry
                 </button>
@@ -177,7 +179,43 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                   </div>
                 </div>
 
-                {/* Row 3: Are you a broker? */}
+                {/* Row 3: Budget & Move-In Date */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                      Budget (USD) *
+                    </label>
+                    <div className="relative flex items-center">
+                      <span className="absolute left-0 text-sm font-sora text-[#101535]/60">$</span>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. 5,000"
+                        value={formData.budget}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9.,]/g, '');
+                          setFormData({ ...formData, budget: val });
+                        }}
+                        className="w-full bg-transparent border-b border-[#101535]/30 focus:border-[#D6B585] pl-4 py-2.5 text-sm font-sora text-[#101535] focus:outline-none transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block font-sora text-xs font-semibold text-[#101535]">
+                      Move-In Date *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.moveInDate}
+                      onChange={(e) => setFormData({ ...formData, moveInDate: e.target.value })}
+                      className="w-full bg-transparent border-b border-[#101535]/30 focus:border-[#D6B585] py-2.5 text-sm font-sora text-[#101535] focus:outline-none transition-colors cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                {/* Row 4: Are you a broker? */}
                 <div className="space-y-2">
                   <label className="block font-sora text-xs font-semibold text-[#101535]">
                     Are You A Broker? *
@@ -188,9 +226,9 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                         key={bOpt}
                         type="button"
                         onClick={() => setFormData({ ...formData, isBroker: bOpt })}
-                        className={`px-4 py-2 rounded-full font-sora text-xs transition-all cursor-pointer ${
+                        className={`px-3.5 py-1.5 rounded-full font-sora text-[10px] transition-all cursor-pointer ${
                           formData.isBroker === bOpt
-                            ? 'bg-[#101535] text-[#D6B585] font-semibold shadow-sm border border-[#D6B585]/40'
+                            ? 'bg-[#101535] text-white font-semibold shadow-sm border border-white/30'
                             : 'bg-transparent border border-[#101535]/20 text-[#101535]/80 hover:bg-[#101535]/10'
                         }`}
                       >
@@ -211,9 +249,9 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                         key={size}
                         type="button"
                         onClick={() => setFormData({ ...formData, size })}
-                        className={`px-3.5 py-1.5 rounded-full font-sora text-xs transition-all cursor-pointer ${
+                        className={`px-3 py-1 rounded-full font-sora text-[10px] transition-all cursor-pointer ${
                           formData.size === size
-                            ? 'bg-[#101535] text-[#D6B585] font-semibold shadow-sm border border-[#D6B585]/40'
+                            ? 'bg-[#101535] text-white font-semibold shadow-sm border border-white/30'
                             : 'bg-transparent border border-[#101535]/20 text-[#101535]/80 hover:bg-[#101535]/10'
                         }`}
                       >
@@ -246,11 +284,11 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 {/* Comments */}
                 <div className="space-y-1.5">
                   <label className="block font-sora text-xs font-semibold text-[#101535]">
-                    Comments or Questions
+                    Add more information about your inquiry
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Tell us about your timing, preferred floor levels, or questions..."
+                    placeholder="Tell us more details about your inquiry, preferences, or timing..."
                     value={formData.comments}
                     onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
                     className="w-full bg-transparent border-b border-[#101535]/30 focus:border-[#D6B585] py-2.5 text-sm font-sora text-[#101535] focus:outline-none transition-colors resize-none"
@@ -266,14 +304,14 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-full bg-[#101535] text-[#D6B585] border border-[#D6B585]/40 hover:bg-[#242C5B] hover:scale-[1.01] font-sora text-xs tracking-wider font-bold uppercase transition-all duration-300 shadow-lg flex items-center justify-center gap-3 cursor-pointer"
+                  className="w-full py-2.5 rounded-full bg-[#101535] text-white border border-white/20 hover:bg-[#242C5B] hover:scale-[1.01] font-sora text-[10px] tracking-wider font-bold uppercase transition-all duration-300 shadow-lg flex items-center justify-center gap-3 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <span>Submitting...</span>
                   ) : (
                     <>
                       <span>Submit Inquiry</span>
-                      <Send className="w-4 h-4" />
+                      <Send className="w-3 h-3" />
                     </>
                   )}
                 </button>

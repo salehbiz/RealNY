@@ -13,7 +13,7 @@ import type { Residence } from './components/AvailabilitySection';
 import { InquireSection } from './components/InquireSection';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
-import { TypographyTool } from './components/TypographyTool';
+// import { TypographyTool } from './components/TypographyTool';
 import type { ExploreType } from './components/ExploreModal';
 
 const ResidencesPage = React.lazy(() => import('./components/ResidencesPage').then(m => ({ default: m.ResidencesPage })));
@@ -35,7 +35,11 @@ export function App() {
   }, [location.pathname]);
 
   // Modal states
-  const [lightBoxImage, setLightBoxImage] = useState<{ src: string; title: string } | null>(null);
+  const [lightBoxImage, setLightBoxImage] = useState<{
+    src: string;
+    title: string;
+    groupImages?: { src: string; title?: string }[];
+  } | null>(null);
   const [selectedResidence, setSelectedResidence] = useState<Residence | null>(null);
   const [exploreType, setExploreType] = useState<ExploreType>(null);
   const [inquireResidenceName, setInquireResidenceName] = useState<string>('');
@@ -61,7 +65,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#ECE7DF] text-[#1F261E] flex flex-col relative font-sans-clean">
       <ScrollToTop />
-      <TypographyTool />
+      {/* <TypographyTool /> */}
       {/* Header & Drawer Navigation */}
       <Navbar
         currentPage={currentPage}
@@ -69,10 +73,10 @@ export function App() {
         onOpenInquire={() => handleOpenInquireWithName('')}
         onOpenAvailability={() => {
           if (currentPage !== 'residences') {
-            handleNavigatePage('residences');
-            setTimeout(() => scrollToSection('availability'), 100);
+            navigate('/residences', { state: { scrollTo: 'availability' } });
           } else {
-            scrollToSection('availability');
+            const el = document.getElementById('availability');
+            if (el) el.scrollIntoView();
           }
         }}
       />
@@ -97,29 +101,28 @@ export function App() {
                 {/* Skyline & City Aligns */}
                 <SkylineSection
                   onExploreBuilding={() => setExploreType('building')}
-                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
                 {/* Thoughtfully Considered Lifestyle & Amenities */}
                 <LifestyleSection
                   onExploreAmenities={() => handleNavigatePage('amenities')}
-                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
                 {/* Upper Exterior Full-Width Hero Image */}
                 <ExteriorHeroImage
-                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
                 {/* Neighborhood Highlights */}
                 <NeighborhoodSection
-                  onExploreNeighborhood={() => setExploreType('neighborhood')}
-                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
                 {/* Entrance Hero Full-Width Image */}
                 <EntranceHeroImage
-                  onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
                 {/* Inquiry Form */}
@@ -139,7 +142,7 @@ export function App() {
                 onSelectResidence={(res) => setSelectedResidence(res)}
                 onOpenInquireWithName={handleOpenInquireWithName}
                 onNavigatePage={handleNavigatePage}
-                onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
               />
             } />
 
@@ -147,7 +150,7 @@ export function App() {
               <AmenitiesPage
                 onOpenInquireWithName={handleOpenInquireWithName}
                 onNavigatePage={handleNavigatePage}
-                onImageClick={(src, title) => setLightBoxImage({ src, title })}
+                onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
               />
             } />
           </Routes>
@@ -159,20 +162,20 @@ export function App() {
         <LightBoxModal
           src={lightBoxImage?.src || null}
           title={lightBoxImage?.title}
+          groupImages={lightBoxImage?.groupImages}
           onClose={() => setLightBoxImage(null)}
         />
 
         <FloorplanModal
           residence={selectedResidence}
           onClose={() => setSelectedResidence(null)}
-          onInquire={(resName) => handleOpenInquireWithName(resName)}
         />
 
         <ExploreModal
           type={exploreType}
           onClose={() => setExploreType(null)}
           onOpenInquire={() => handleOpenInquireWithName('')}
-          onSelectImage={(src, title) => setLightBoxImage({ src, title })}
+          onSelectImage={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
         />
       </Suspense>
     </div>

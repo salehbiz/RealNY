@@ -208,11 +208,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <Phone className="w-4 h-4 text-[#D6B585] shrink-0" />
-                <span>Sales Gallery: 35A East 35th Street, 2nd Floor</span>
+                <span>Leasing Office: 35A East 35th Street, 2nd Floor</span>
               </div>
               <div className="flex items-center gap-3 justify-center lg:justify-start">
                 <Mail className="w-4 h-4 text-[#D6B585] shrink-0" />
-                <span>hello@theeastlinenyc.com</span>
+                <a
+                  href="mailto:eastline@realnyproperties.com"
+                  className="hover:text-[#D6B585] transition-colors"
+                >
+                  eastline@realnyproperties.com
+                </a>
               </div>
             </div>
 
@@ -222,7 +227,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setIsMenuOpen(false);
                   onOpenInquire();
                 }}
-                className="px-8 py-3 rounded-full bg-[#D6B585] text-[#101535] font-sora text-xs tracking-[0.2em] font-bold uppercase hover:bg-white transition-all shadow-lg cursor-pointer"
+                className="px-8 py-3 rounded-full bg-[#D6B585] text-[#101535] font-sora text-xs tracking-[0.2em] font-bold uppercase hover:bg-[#ECE7DF] transition-all shadow-lg cursor-pointer"
               >
                 SCHEDULE A TOUR
               </button>

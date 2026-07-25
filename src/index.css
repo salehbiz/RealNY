@@ -44,7 +44,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Sora', sans-serif;
@@ -89,40 +89,37 @@
   line-height: 1.25 !important;
   font-weight: 700 !important;
 }
-@media (min-width: 1024px) {
-  #skyline p { font-size: 18px !important; }
-}
-@media (max-width: 1023px) {
-  #skyline p { font-size: 13px !important; }
-}
 #skyline p {
+  font-size: 14.5px !important;
   letter-spacing: -0.015em !important;
+  line-height: 1.3 !important;
+  font-weight: 300 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-transform: none !important;
 }
 
 /* Crossroads Heading Banner Spacing Overrides */
 #crossroads-heading {
-  font-size: 20.5px !important;
+  font-size: 22.5px !important;
   letter-spacing: -0.15em !important;
-  line-height: 1.35 !important;
+  line-height: 1.15 !important;
   font-weight: 700 !important;
+  color: #101535 !important;
+  text-transform: uppercase !important;
 }
 #crossroads-heading span {
-  font-size: 16px !important;
+  font-size: inherit !important;
   color: #D6B585 !important;
-  line-height: 1.1 !important;
 }
 
 /* Lifestyle (Amenities) Spacing Overrides */
-@media (min-width: 1024px) {
-  #amenities h2 { font-size: 33px !important; }
-}
-#amenities h2 {
-  letter-spacing: -0.12em !important;
-  line-height: 1.46 !important;
-}
 #amenities p {
-  font-size: 18px !important;
+  font-size: 15px !important;
   letter-spacing: -0.015em !important;
+  line-height: 1 !important;
+  font-weight: 300 !important;
+  color: rgba(16, 21, 53, 0.8) !important;
+  text-transform: none !important;
 }
 
 /* Interiors (Residences) Spacing Overrides */
@@ -133,16 +130,29 @@
 }
 
 /* Neighborhood Spacing Overrides */
-@media (min-width: 1024px) {
-  #neighborhood h2 { font-size: 34px !important; }
-}
 #neighborhood h2 {
+  font-size: 26.5px !important;
+  letter-spacing: -0.15em !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  color: #101535 !important;
+  text-transform: none !important;
+}
+#neighborhood h2 span {
+  font-size: 28px !important;
   letter-spacing: -0.08em !important;
   line-height: 1.14 !important;
+  font-weight: 700 !important;
+  color: #D6B585 !important;
+  text-transform: none !important;
 }
 #neighborhood p {
-  font-size: 18px !important;
-  letter-spacing: -0.015em !important;
+  font-size: 16.5px !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  font-weight: 300 !important;
+  color: rgba(16, 21, 53, 0.8) !important;
+  text-transform: none !important;
 }
 
 /* Universal Site-Wide Design System Typography Utility Classes */
@@ -256,7 +266,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F4F5F8;
+  background: #ECE7DF;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -281,4 +291,22 @@
 /* Sharp Corners Everywhere Reset for luxurious sharp architectural aesthetic */
 button, input, select, textarea, img, div, span, a {
   border-radius: 0 !important;
+}
+
+/* Custom Locked Typography Styles */
+[data-typo-id="auto-button-0"] {
+  font-size: 13px !important;
+  letter-spacing: -0.0185em !important;
+  line-height: 1.5 !important;
+  font-weight: 700 !important;
+  color: #D6B585 !important;
+  text-transform: none !important;
+}
+
+header nav button {
+  font-size: 12px !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.33 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
 }

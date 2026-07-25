@@ -36,7 +36,7 @@ export const AMENITY_ROOMS: AmenityRoomConfig[] = [
 interface AmenitiesPageProps {
   onOpenInquireWithName: (name: string) => void;
   onNavigatePage: (page: 'home' | 'residences' | 'amenities') => void;
-  onImageClick: (src: string, title: string) => void;
+  onImageClick: (src: string, title: string, groupImages?: { src: string; title?: string }[]) => void;
 }
 
 export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
@@ -46,15 +46,34 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isSliderMobile, setIsSliderMobile] = useState(false);
 
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.scrollLeft = 0;
     }
+    const handleResize = () => {
+      setIsSliderMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
   const [tier] = useState<FrameTier>(getFrameTier);
   const [progress, setProgress] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(1);
+
+  const handleSkipIntro = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const heroSection = document.getElementById('amenities-hero');
+    if (heroSection) {
+      window.scrollTo({
+        top: heroSection.offsetTop + heroSection.offsetHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   // Determine active room from frame playhead
   const activeRoom = useMemo(() => {
@@ -83,8 +102,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
   );
 
   const contentOpacity = Math.max(0, 1 - progress * 12);
-  const roomLabelOpacity = Math.min(1, Math.max(0, (progress - 0.04) * 20));
-  const pointerEvents = contentOpacity > 0.05 ? 'auto' : 'none';
+  const roomLabelOpacity = Math.min(1, progress * 25);
 
   const sliderCards = [
     {
@@ -117,22 +135,23 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
   const handleScrollLeft = () => {
     if (sliderRef.current) {
       const cardWidth = sliderRef.current.firstElementChild?.getBoundingClientRect().width || 340;
-      sliderRef.current.scrollBy({ left: -(cardWidth + 24), behavior: 'smooth' });
+      sliderRef.current.scrollBy({ left: -(cardWidth + 32), behavior: 'smooth' });
     }
   };
 
   const handleScrollRight = () => {
     if (sliderRef.current) {
       const cardWidth = sliderRef.current.firstElementChild?.getBoundingClientRect().width || 340;
-      sliderRef.current.scrollBy({ left: cardWidth + 24, behavior: 'smooth' });
+      sliderRef.current.scrollBy({ left: cardWidth + 32, behavior: 'smooth' });
     }
   };
 
   const handleSliderScroll = () => {
     if (!sliderRef.current) return;
     const cardWidth = sliderRef.current.firstElementChild?.getBoundingClientRect().width || 340;
-    const index = Math.round(sliderRef.current.scrollLeft / (cardWidth + 24));
-    setActiveSlide(Math.max(0, Math.min(sliderCards.length - 1, index)));
+    const index = Math.round(sliderRef.current.scrollLeft / (cardWidth + 32));
+    const maxIdx = isSliderMobile ? sliderCards.length - 1 : sliderCards.length - 2;
+    setActiveSlide(Math.max(0, Math.min(maxIdx, index)));
   };
 
   return (
@@ -164,25 +183,30 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
           {/* Top Header Spacer */}
           <div className="pt-24 z-20 pointer-events-auto" />
 
-          {/* Bottom-Centered Initial Hero Content Container (Fades out quickly on scroll) */}
+          {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
           <div
-            className="relative z-20 max-w-3xl mx-auto px-6 text-center flex flex-col items-center mt-auto pb-12 sm:pb-16 space-y-3 transition-opacity duration-300 ease-out"
-            style={{ opacity: contentOpacity, pointerEvents: pointerEvents as any }}
+            className="absolute bottom-16 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
+            style={{ opacity: contentOpacity }}
           >
-            {/* Hero Title */}
-            <h1 className="univ-h2-large text-[#F4F5F8] uppercase drop-shadow-md">
-              Indoor &amp; Outdoor Amenities
-            </h1>
-
-            {/* Scroll to Explore CTA */}
-            <div className="pt-1">
-              <div className="flex flex-col items-center gap-1 group opacity-85 hover:opacity-100 transition-opacity">
-                <span className="univ-btn-primary text-[#D6B585] uppercase">
-                  Scroll to Explore
-                </span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#D6B585] animate-bounce" />
-              </div>
+            {/* Centered Scroll to Explore on Desktop */}
+            <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+              <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
+                Scroll to Explore
+              </span>
+              <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce" />
             </div>
+
+            {/* Right-Aligned Skip Intro Button */}
+            <button
+              onClick={handleSkipIntro}
+              className="sm:absolute sm:right-10 flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+              aria-label="Skip the intro"
+            >
+              <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
+                Skip the intro
+              </span>
+              <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce group-hover:translate-y-0.5 transition-transform" />
+            </button>
           </div>
 
           {/* Pinned Bottom-Left Room Label Overlay (Fades in cleanly as user scrubs sequence) */}
@@ -208,7 +232,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       </section>
 
       {/* Intro Subtitle Block */}
-      <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
+      <section className="bg-[#ECE7DF] text-[#101535] py-14 md:py-20 px-6 md:px-16 w-full border-y border-[#101535]/10 select-none">
         <div className="w-full max-w-3xl mx-auto text-center space-y-5">
 
           <p
@@ -256,7 +280,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       </section>
 
       {/* 4. CAROUSEL SLIDER SECTION (Matching Homepage LifestyleSection Exactly) */}
-      <section className="bg-[#F4F5F8] text-[#101535] py-16 md:py-20 px-4 sm:px-8 lg:px-16 w-full border-y border-[#101535]/10 select-none">
+      <section className="bg-[#ECE7DF] text-[#101535] py-16 md:py-20 px-4 sm:px-8 lg:px-16 w-full border-y border-[#101535]/10 select-none">
         <div className="w-full max-w-7xl mx-auto space-y-8">
           {/* Centered Heading */}
           <div className="text-center max-w-5xl mx-auto">
@@ -272,24 +296,24 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
             <button
               onClick={handleScrollLeft}
               disabled={activeSlide === 0}
-              className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-[#D6B585] border border-[#D6B585]/40 flex items-center justify-center shadow-xl hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+              className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
                 activeSlide === 0 ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
               }`}
               aria-label="Previous Slide"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
 
             {/* Right Arrow Button */}
             <button
               onClick={handleScrollRight}
-              disabled={activeSlide === sliderCards.length - 1}
-              className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-[#D6B585] border border-[#D6B585]/40 flex items-center justify-center shadow-xl hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
-                activeSlide === sliderCards.length - 1 ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
+              disabled={activeSlide === (isSliderMobile ? sliderCards.length - 1 : sliderCards.length - 2)}
+              className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+                activeSlide === (isSliderMobile ? sliderCards.length - 1 : sliderCards.length - 2) ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
               }`}
               aria-label="Next Slide"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-4 h-4" />
             </button>
 
             {/* Scrollable Track */}
@@ -301,7 +325,11 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
               {sliderCards.map((card, idx) => (
                 <div
                   key={idx}
-                  onClick={() => onImageClick(card.src, card.title)}
+                  onClick={() => onImageClick(
+                    card.src,
+                    card.title,
+                    sliderCards.map(c => ({ src: c.src, title: c.title }))
+                  )}
                   className="group cursor-pointer relative overflow-hidden w-full md:w-[calc(50%-16px)] shrink-0 snap-start aspect-[16/10]"
                 >
                   <img
@@ -316,7 +344,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
 
             {/* Slide Indicator Dots */}
             <div className="flex justify-center items-center gap-2 pt-4">
-              {sliderCards.map((_, idx) => (
+              {(isSliderMobile ? sliderCards : sliderCards.slice(0, sliderCards.length - 1)).map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => {
@@ -459,14 +487,14 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       {/* 7. FULL WIDTH BOTTOM FEATURE BANNER: Full Screen Height */}
       <section className="relative w-full h-screen overflow-hidden select-none">
         <img
-          src={media("/images/amenities-5-golf.webp")}
-          alt="PGA Golf Simulator & Lounge"
+          src={media("/images/amenities-5-rooftop.webp")}
+          alt="Landscaped Rooftop Terrace"
           className="w-full h-full object-cover object-center"
         />
       </section>
 
       {/* 8. INQUIRY & FOOTER */}
-      <InquireSection initialResidence="" sideImage={media("/images/amenities-1-courtyard.webp")} />
+      <InquireSection initialResidence="" sideImage={media("/images/skyline-amenities.webp")} />
 
       <Footer
         onNavigateSection={(id) => {

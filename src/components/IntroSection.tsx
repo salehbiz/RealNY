@@ -6,7 +6,7 @@ interface IntroSectionProps {
 
 export const IntroSection: React.FC<IntroSectionProps> = ({ onScheduleClick }) => {
   return (
-    <section className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 sm:px-12 lg:px-20 w-full border-y border-[#101535]/10 select-none">
+    <section className="bg-[#ECE7DF] text-[#101535] py-14 md:py-20 px-6 sm:px-12 lg:px-20 w-full border-y border-[#101535]/10 select-none">
       <div className="w-full max-w-3xl mx-auto text-center space-y-5">
 
         {/* Paragraph */}
@@ -21,7 +21,7 @@ export const IntroSection: React.FC<IntroSectionProps> = ({ onScheduleClick }) =
         <div className="pt-1">
           <button
             onClick={onScheduleClick}
-            className="px-6 py-2.5 rounded-none bg-[#101535] text-white border border-[#101535] hover:bg-[#242C5B] hover:scale-105 font-sora text-[10px] tracking-widest font-semibold uppercase transition-all duration-300 shadow-md cursor-pointer"
+            className="px-4 py-1.5 rounded-none bg-[#101535] text-white border border-[#101535] hover:bg-[#242C5B] hover:scale-105 font-sora text-[9px] tracking-widest font-semibold uppercase transition-all duration-300 shadow-md cursor-pointer"
           >
             Schedule a Tour
           </button>

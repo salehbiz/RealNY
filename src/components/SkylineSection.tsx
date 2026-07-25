@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 interface SkylineSectionProps {
   onExploreBuilding: () => void;
-  onImageClick: (src: string, title: string) => void;
+  onImageClick: (src: string, title: string, groupImages?: { src: string; title?: string }[]) => void;
 }
 
 export const SkylineSection: React.FC<SkylineSectionProps> = ({
@@ -14,35 +14,35 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
 
   const categories = [
     {
-      id: 'interiors',
-      tabLabel: 'Interior Design',
-      title: 'Interior Design',
-      description: 'Bespoke living spaces balancing natural oak, soft light, and refined detail for mindful luxury.',
-      image: media('/images/skyline-interiors.webp'),
-      imageMobile: media('/images/skyline-interiors-mobile.webp'),
-    },
-    {
       id: 'architecture',
-      tabLabel: 'Architecture Design',
-      title: 'Architecture Design',
+      tabLabel: 'Architecture',
+      title: 'Architecture',
       description: 'A modern tribute to Manhattan’s Gilded Age with bronze panels, glass, and textured limestone.',
       image: media('/images/skyline-architecture.webp'),
       imageMobile: media('/images/skyline-architecture-mobile.webp'),
     },
     {
-      id: 'landscape',
-      tabLabel: 'Landscape Design',
-      title: 'Landscape Design',
-      description: 'A central garden courtyard envisioned by Paul Duesing with seasonal green sanctuary.',
-      image: media('/images/skyline-landscape.webp'),
-      imageMobile: media('/images/skyline-landscape-mobile.webp'),
+      id: 'interiors',
+      tabLabel: 'Interior',
+      title: 'Interior',
+      description: 'Bespoke living spaces balancing natural oak, soft light, and refined detail for mindful luxury.',
+      image: media('/images/skyline-interiors.webp'),
+      imageMobile: media('/images/skyline-interiors-mobile.webp'),
+    },
+    {
+      id: 'amenities',
+      tabLabel: 'Amenities',
+      title: 'Amenities',
+      description: 'More than 10,000 square feet of wellness, social, and remote work spaces enveloping a private courtyard.',
+      image: media('/images/skyline-amenities.webp'),
+      imageMobile: media('/images/skyline-amenities-mobile.webp'),
     },
   ];
 
   const currentCategory = categories[activeCategory];
 
   return (
-    <section id="skyline" className="bg-[#F4F5F8] py-6 md:py-10 px-4 sm:px-8 lg:px-16 w-full select-none border-b border-[#101535]/10">
+    <section id="skyline" className="bg-[#ECE7DF] pt-6 pb-0 md:pt-10 md:pb-0 px-4 sm:px-8 lg:px-16 w-full select-none">
       
       {/* Showcase Container */}
       <div className="relative w-full h-[540px] max-h-[75vh] md:h-[80vh] md:min-h-[550px] md:max-h-[850px] overflow-hidden rounded-none bg-[#101535] shadow-2xl">
@@ -55,7 +55,17 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
               <img
                 src={cat.image}
                 alt={cat.title}
-                onClick={() => onImageClick(window.innerWidth < 768 ? cat.imageMobile : cat.image, `${cat.title} Showcase`)}
+                onClick={() => {
+                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                  onImageClick(
+                    isMobile ? cat.imageMobile : cat.image,
+                    `${cat.title} Showcase`,
+                    categories.map((c) => ({
+                      src: isMobile ? c.imageMobile : c.image,
+                      title: `${c.title} Showcase`
+                    }))
+                  );
+                }}
                 className={`absolute inset-0 w-full h-full object-cover cursor-pointer transition-all duration-1000 ease-in-out transform ${
                   idx === activeCategory ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
                 }`}
@@ -72,13 +82,13 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(idx)}
-                className={`px-2.5 py-1 rounded-none font-sora text-[10px] flex items-center transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap ${
+                className={`px-2 py-0.5 rounded-none font-sora text-[9px] flex items-center transition-all duration-300 shadow-sm cursor-pointer whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#101535] text-[#D6B585] border border-[#D6B585]/40 font-semibold'
+                    ? 'bg-[#101535] text-white border border-white/20 font-semibold'
                     : 'bg-black/40 text-white/80 border border-white/15 backdrop-blur-md font-light'
                 }`}
               >
-                {isActive && <span className="w-1 h-1 rounded-full bg-[#D6B585] mr-1.5 inline-block" />}
+                {isActive && <span className="w-1 h-1 rounded-full bg-white mr-1.5 inline-block" />}
                 {cat.tabLabel}
               </button>
             );
@@ -93,13 +103,13 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(idx)}
-                className={`px-4 py-1.5 rounded-none font-sora text-xs flex items-center transition-all duration-300 shadow-md cursor-pointer ${
+                className={`px-3 py-1 rounded-none font-sora text-[10px] flex items-center transition-all duration-300 shadow-md cursor-pointer ${
                   isActive
-                    ? 'bg-[#101535] text-[#D6B585] border border-[#D6B585]/40 font-semibold'
+                    ? 'bg-[#101535] text-white border border-white/20 font-semibold'
                     : 'bg-black/40 hover:bg-[#101535]/90 text-white/90 border border-white/20 backdrop-blur-md font-light'
                 }`}
               >
-                {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#D6B585] mr-2 inline-block" />}
+                {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white mr-2 inline-block" />}
                 {cat.tabLabel}
               </button>
             );
@@ -112,7 +122,7 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
             <h2 className="font-rexton text-[19.5px] font-bold text-white tracking-[-0.15em] leading-[1.25] uppercase">
               {currentCategory.title}
             </h2>
-            <p className="font-sora text-[15px] text-white/95 font-light tracking-[-0.01em] leading-[1.3] max-w-lg md:max-w-xl line-clamp-2 [text-wrap:balance]">
+            <p className="font-sora text-[14.5px] text-white/95 font-light tracking-[-0.015em] leading-[1.3] max-w-lg md:max-w-xl line-clamp-2 [text-wrap:balance]">
               {currentCategory.description}
             </p>
           </div>

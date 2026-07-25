@@ -2,7 +2,7 @@ import { media } from '../lib/media';
 import React from 'react';
 
 interface ExteriorHeroImageProps {
-  onImageClick: (src: string, title: string) => void;
+  onImageClick: (src: string, title: string, groupImages?: { src: string; title?: string }[]) => void;
 }
 
 export const ExteriorHeroImage: React.FC<ExteriorHeroImageProps> = ({ onImageClick }) => {

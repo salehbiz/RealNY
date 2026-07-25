@@ -63,7 +63,7 @@ export const ArchitectureSection: React.FC<ArchitectureSectionProps> = ({ onImag
   };
 
   return (
-    <section className="relative bg-[#F4F5F8] text-[#101535] py-16 md:py-24 px-4 sm:px-8 lg:px-16 w-full border-b border-[#101535]/10 select-none overflow-hidden">
+    <section className="relative bg-[#ECE7DF] text-[#101535] py-16 md:py-24 px-4 sm:px-8 lg:px-16 w-full border-b border-[#101535]/10 select-none overflow-hidden">
       {/* Subtle Background Watermark Text */}
       <div className="absolute bottom-2 left-0 right-0 pointer-events-none z-0 overflow-hidden leading-none opacity-[0.03] flex justify-center">
         <span className="font-rexton text-[12vw] font-black uppercase text-[#101535] whitespace-nowrap tracking-tight">
@@ -75,7 +75,7 @@ export const ArchitectureSection: React.FC<ArchitectureSectionProps> = ({ onImag
         {/* Header Row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-none border border-[#D6B585]/40 bg-white text-[#101535] font-sora text-[11px] font-semibold">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-none border border-[#D6B585]/40 bg-[#ECE7DF] text-[#101535] font-sora text-[11px] font-semibold">
               <span className="text-[#D6B585] text-xs">✳</span>
               <span>Featured Highlights</span>
             </div>
@@ -97,14 +97,14 @@ export const ArchitectureSection: React.FC<ArchitectureSectionProps> = ({ onImag
             <div className="flex items-center gap-2 pt-1">
               <button
                 onClick={() => handleScroll('left')}
-                className="p-3 rounded-none border border-[#101535]/20 bg-white hover:bg-[#101535] hover:text-[#D6B585] hover:border-[#101535] transition-all cursor-pointer shadow-sm"
+                className="p-2 rounded-none border border-[#101535]/20 bg-[#ECE7DF] hover:bg-[#101535] hover:text-white hover:border-[#101535] transition-all cursor-pointer shadow-sm"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleScroll('right')}
-                className="p-3 rounded-none border border-[#101535]/20 bg-white hover:bg-[#101535] hover:text-[#D6B585] hover:border-[#101535] transition-all cursor-pointer shadow-sm"
+                className="p-2 rounded-none border border-[#101535]/20 bg-[#ECE7DF] hover:bg-[#101535] hover:text-white hover:border-[#101535] transition-all cursor-pointer shadow-sm"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -122,7 +122,7 @@ export const ArchitectureSection: React.FC<ArchitectureSectionProps> = ({ onImag
             <div
               key={proj.id}
               onClick={() => onImageClick(proj.image, proj.title)}
-              className={`flex-none w-[300px] sm:w-[360px] md:w-[400px] bg-white p-5 rounded-none shadow-sm hover:shadow-md border border-[#101535]/10 group cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
+              className={`flex-none w-[300px] sm:w-[360px] md:w-[400px] bg-[#ECE7DF] p-5 rounded-none shadow-sm hover:shadow-md border border-[#101535]/10 group cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
                 proj.offset ? 'mt-4 md:mt-8' : ''
               }`}
             >
@@ -151,7 +151,7 @@ export const ArchitectureSection: React.FC<ArchitectureSectionProps> = ({ onImag
                 {proj.tags.map((tag, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-2.5 py-1 rounded-none bg-[#F4F5F8] text-[#101535]/80 font-sora text-[10px] font-medium"
+                    className="px-2.5 py-1 rounded-none bg-[#ECE7DF] text-[#101535]/80 font-sora text-[10px] font-medium"
                   >
                     {tag}
                   </span>

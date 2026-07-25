@@ -16,7 +16,7 @@ export const InteriorsSection: React.FC<InteriorsSectionProps> = ({
   const kitchenTitle = 'Custom kitchen with honed marble countertops and premium integrated appliances by INC Architecture';
 
   return (
-    <section id="residences" className="bg-[#F4F5F8] text-[#101535] py-12 lg:py-16 px-4 sm:px-8 lg:px-16 w-full border-b border-[#101535]/10 select-none min-h-screen lg:h-screen lg:min-h-[800px] flex flex-col justify-center">
+    <section id="residences" className="bg-[#ECE7DF] text-[#101535] py-12 lg:py-16 px-4 sm:px-8 lg:px-16 w-full border-b border-[#101535]/10 select-none min-h-screen lg:h-screen lg:min-h-[800px] flex flex-col justify-center">
       <div className="w-full max-w-6xl mx-auto flex flex-col justify-between h-full space-y-12 lg:space-y-0 py-2">
         {/* Row 1: Image Left, Text Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center flex-1">

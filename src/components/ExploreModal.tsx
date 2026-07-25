@@ -8,7 +8,7 @@ interface ExploreModalProps {
   type: ExploreType;
   onClose: () => void;
   onOpenInquire: () => void;
-  onSelectImage: (src: string, title: string) => void;
+  onSelectImage: (src: string, title: string, groupImages?: { src: string; title?: string }[]) => void;
 }
 
 export const ExploreModal: React.FC<ExploreModalProps> = ({
@@ -29,7 +29,7 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
         {
           title: 'Private Courtyard Garden',
           desc: 'A lushly landscaped outdoor sanctuary featuring lounge seating, flowering walls, and soft lighting for evening gatherings.',
-          image: media('/images/amenities-1-courtyard.webp'),
+          image: media('/images/skyline-amenities.webp'),
         },
         {
           title: 'Fitness & Movement Studio',
@@ -47,9 +47,9 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
           image: media('/images/amenities-4-cinema.webp'),
         },
         {
-          title: 'PGA Golf Simulator Suite',
-          desc: 'Immersive virtual golf simulator experience with precision tracking, world-class courses, and lounge seating.',
-          image: media('/images/amenities-5-golf.webp'),
+          title: 'Landscaped Rooftop Terrace',
+          desc: 'Panoramic skyline views, outdoor dining tables under a shaded pergola, and open-air lounging spaces.',
+          image: media('/images/amenities-5-rooftop.webp'),
         },
       ],
     },
@@ -156,15 +156,15 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
         {/* Category Item Navigation Tabs */}
         <div className="bg-[#ECE7DF] border-b border-[#1F261E]/10 px-6 py-3 flex overflow-x-auto gap-2 scrollbar-none">
           {modalData.items.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveTab(idx)}
-              className={`px-4 py-2 rounded-full font-sans-clean text-xs tracking-wider uppercase whitespace-nowrap transition-all cursor-pointer ${
-                activeTab === idx
-                  ? 'bg-[#2C382A] text-[#ECE7DF] font-semibold shadow-sm'
-                  : 'text-[#1F261E]/70 hover:bg-[#1F261E]/10'
-              }`}
-            >
+             <button
+               key={idx}
+               onClick={() => setActiveTab(idx)}
+               className={`px-3 py-1.5 rounded-full font-sans-clean text-[10px] tracking-wider uppercase whitespace-nowrap transition-all cursor-pointer ${
+                 activeTab === idx
+                   ? 'bg-[#101535] text-white border border-white/20 font-semibold shadow-sm'
+                   : 'text-[#101535]/70 hover:bg-[#101535]/10'
+               }`}
+             >
               {item.title}
             </button>
           ))}
@@ -175,7 +175,11 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
           {/* Left Large Photo */}
           <div className="lg:col-span-7">
             <div
-              onClick={() => onSelectImage(currentItem.image, currentItem.title)}
+              onClick={() => onSelectImage(
+                currentItem.image,
+                currentItem.title,
+                modalData.items.map(item => ({ src: item.image, title: item.title }))
+              )}
               className="relative rounded-2xl overflow-hidden border border-[#1F261E]/15 shadow-xl group cursor-pointer aspect-[4/3]"
             >
               <img
@@ -216,16 +220,16 @@ export const ExploreModal: React.FC<ExploreModalProps> = ({
             </div>
 
             <div className="pt-2">
-              <button
-                onClick={() => {
-                  onClose();
-                  onOpenInquire();
-                }}
-                className="w-full py-3.5 rounded-full bg-[#2C382A] text-[#ECE7DF] hover:bg-[#1F261E] font-sans-clean text-xs tracking-[0.2em] font-semibold uppercase transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>REQUEST COMPLETE BROCHURE</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+               <button
+                 onClick={() => {
+                   onClose();
+                   onOpenInquire();
+                 }}
+                 className="w-full py-2.5 rounded-full bg-[#101535] text-white border border-white/20 hover:bg-[#242C5B] font-sans-clean text-[10px] tracking-[0.2em] font-semibold uppercase transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+               >
+                 <span>REQUEST COMPLETE BROCHURE</span>
+                 <ArrowRight className="w-3 h-3" />
+               </button>
             </div>
           </div>
         </div>

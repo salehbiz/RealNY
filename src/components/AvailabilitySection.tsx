@@ -5,7 +5,7 @@ import { FileText, ArrowRight } from 'lucide-react';
 export interface Residence {
   id: string;
   name: string;
-  type: string; // '1 Bed', '2 Bed', '3 Bed', 'Penthouse'
+  type: string; // '1 Bed', '2 Bed', '3 Bed'
   beds: number;
   baths: number;
   sqft: number;
@@ -16,6 +16,7 @@ export interface Residence {
   floorplanImg: string;
   interiorImg: string;
   status: 'Available' | 'Contract Signed' | 'Inquire';
+  concession: string;
 }
 
 interface AvailabilitySectionProps {
@@ -35,9 +36,10 @@ export const sampleResidences: Residence[] = [
     price: '$1,795,000',
     maintenance: '$1,120 / mo',
     taxes: '$980 / mo',
-    floorplanImg: media('/images/residences-living-room-cropped.webp'),
+    floorplanImg: media('/images/floorplan-2b.png'),
     interiorImg: media('/images/residences-living-room.webp'),
     status: 'Available',
+    concession: '1 Month Free',
   },
   {
     id: 'res-4a',
@@ -50,9 +52,10 @@ export const sampleResidences: Residence[] = [
     price: '$3,250,000',
     maintenance: '$1,890 / mo',
     taxes: '$1,650 / mo',
-    floorplanImg: media('/images/residences-kitchen.webp'),
+    floorplanImg: media('/images/floorplan-4a.png'),
     interiorImg: media('/images/residences-kitchen.webp'),
     status: 'Available',
+    concession: '2 Months Free',
   },
   {
     id: 'res-5c',
@@ -65,9 +68,10 @@ export const sampleResidences: Residence[] = [
     price: '$2,985,000',
     maintenance: '$1,740 / mo',
     taxes: '$1,520 / mo',
-    floorplanImg: media('/images/residences-living-room.webp'),
+    floorplanImg: media('/images/floorplan-5c.png'),
     interiorImg: media('/images/residences-living-room.webp'),
     status: 'Available',
+    concession: '1 Month Free',
   },
   {
     id: 'res-7b',
@@ -80,24 +84,10 @@ export const sampleResidences: Residence[] = [
     price: '$5,450,000',
     maintenance: '$2,860 / mo',
     taxes: '$2,480 / mo',
-    floorplanImg: media('/images/residences-primary-bathroom.webp'),
+    floorplanImg: media('/images/floorplan-7b.png'),
     interiorImg: media('/images/residences-primary-bathroom.webp'),
     status: 'Available',
-  },
-  {
-    id: 'res-ph10',
-    name: 'Penthouse 10A',
-    type: 'Penthouse',
-    beds: 4,
-    baths: 4.5,
-    sqft: 3450,
-    exposure: '360° Panoramic Skyline & Private Rooftop',
-    price: '$9,850,000',
-    maintenance: '$4,600 / mo',
-    taxes: '$3,950 / mo',
-    floorplanImg: media('/images/residences-duplex-and-penthouse-exterior.webp'),
-    interiorImg: media('/images/residences-duplex-and-penthouse-exterior.webp'),
-    status: 'Inquire',
+    concession: '3 Months Free',
   },
 ];
 
@@ -107,7 +97,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
 
-  const tabs = ['All', '1 Bed', '2 Bed', '3 Bed', 'Penthouse'];
+  const tabs = ['All', '1 Bed', '2 Bed', '3 Bed'];
 
   const filteredResidences = sampleResidences.filter((res) => {
     if (activeTab === 'All') return true;
@@ -115,7 +105,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
   });
 
   return (
-    <section id="availability" className="bg-[#F4F5F8] text-[#101535] py-14 md:py-20 px-6 border-t border-[#101535]/10">
+    <section id="availability" className="bg-[#ECE7DF] text-[#101535] py-14 md:py-20 px-6 border-t border-[#101535]/10">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#D6B585]/30 pb-6">
@@ -134,10 +124,10 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-1.5 rounded-full font-sora text-xs tracking-wider uppercase transition-all cursor-pointer ${
+                className={`px-3 py-1 rounded-full font-sora text-[10px] tracking-wider uppercase transition-all cursor-pointer ${
                   activeTab === tab
-                    ? 'bg-[#101535] text-[#D6B585] shadow-sm font-semibold border border-[#D6B585]/40'
-                    : 'bg-white border border-[#101535]/20 text-[#101535]/80 hover:bg-[#101535]/10'
+                    ? 'bg-[#101535] text-white shadow-sm font-semibold border border-white/20'
+                    : 'bg-[#ECE7DF] border border-[#101535]/20 text-[#101535]/80 hover:bg-[#101535]/10'
                 }`}
               >
                 {tab}
@@ -151,7 +141,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
           {filteredResidences.map((res) => (
             <div
               key={res.id}
-              className="bg-white border border-[#101535]/15 hover:border-[#D6B585] rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6 group"
+              className="bg-[#ECE7DF] border border-[#101535]/15 hover:border-[#D6B585] rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6 group"
             >
               {/* Left Info: Residence Title & Exposure */}
               <div className="space-y-1 lg:w-1/4">
@@ -178,9 +168,9 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
                 </div>
 
                 <div>
-                  <span className="block text-[#101535]/50 text-[10px] uppercase font-semibold">Interior</span>
+                  <span className="block text-[#101535]/50 text-[10px] uppercase font-semibold">Concession</span>
                   <span className="font-sora text-sm sm:text-base font-bold text-[#101535] whitespace-nowrap">
-                    {res.sqft.toLocaleString()} SF
+                    {res.concession}
                   </span>
                 </div>
 
@@ -196,18 +186,18 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
               <div className="flex items-center gap-2.5 lg:w-1/3 lg:justify-end">
                 <button
                   onClick={() => onSelectResidence(res)}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#101535]/30 bg-transparent hover:bg-[#101535] hover:text-[#D6B585] font-sora text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#101535]/30 bg-transparent hover:bg-[#101535] hover:text-white font-sora text-[10px] tracking-wider uppercase transition-all duration-300 cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5" />
+                  <FileText className="w-3 h-3" />
                   <span>Floorplan</span>
                 </button>
 
                 <button
                   onClick={onOpenInquire}
-                  className="flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#101535] text-[#D6B585] hover:bg-[#242C5B] hover:scale-105 font-sora text-xs tracking-wider uppercase font-bold transition-all duration-300 cursor-pointer border border-[#D6B585]/40 shadow-sm"
+                  className="flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#101535] text-white hover:bg-[#242C5B] hover:scale-105 font-sora text-[10px] tracking-wider uppercase font-bold transition-all duration-300 cursor-pointer border border-white/20 shadow-sm"
                 >
                   <span>Inquire</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
