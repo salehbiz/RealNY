@@ -1,6 +1,6 @@
 import { media } from '../lib/media';
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Eye, Phone, Mail, MapPin } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 
 export type PageType = 'home' | 'residences' | 'amenities';
 
@@ -19,7 +19,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,15 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentPage]);
 
-  const toggleHighContrast = () => {
-    setHighContrast(!highContrast);
-    if (!highContrast) {
-      document.documentElement.classList.add('contrast-125', 'saturate-150');
-    } else {
-      document.documentElement.classList.remove('contrast-125', 'saturate-150');
-    }
-  };
-
   const navLinks: { label: string; id: PageType }[] = [
     { label: 'HOME', id: 'home' },
     { label: 'RESIDENCES', id: 'residences' },
@@ -83,76 +73,79 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand Horizontal Logo (Icon next to Wordmark) */}
-          <div
-            className="flex items-center gap-3 sm:gap-3.5 cursor-pointer group shrink-0"
-            onClick={() => handleLinkClick('home')}
-          >
-            <img
-              src={media("/brand/Icon_Gold.svg")}
-              alt="The Eastline New York Icon"
-              className="h-6 sm:h-7 lg:h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-            <img
-              src={media("/brand/Wordmark_White.svg")}
-              alt="The Eastline New York"
-              className="h-6 sm:h-7 lg:h-8 w-auto object-contain transition-all duration-300"
-            />
+          {/* Left side: Empty */}
+          <div className="flex-1 hidden lg:block" />
+
+          {/* Middle: Logo Only (Emblem SVG removed) */}
+          <div className="flex-1 flex justify-start lg:justify-center">
+            <div
+              className="flex items-center cursor-pointer group shrink-0"
+              onClick={() => handleLinkClick('home')}
+            >
+              <img
+                src={media("/brand/Wordmark_White.svg")}
+                alt="The Eastline New York"
+                className="h-8 sm:h-10 lg:h-12 w-auto object-contain transition-all duration-300 hover:opacity-90 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+              />
+            </div>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-            {navLinks.map((link) => {
-              const isActive = link.id === currentPage;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleLinkClick(link.id)}
-                  className={`font-sora text-xs tracking-[0.2em] font-semibold uppercase transition-all duration-300 relative py-1 cursor-pointer group/nav ${
-                    isActive
-                      ? 'text-[#D6B585]'
-                      : 'text-[#F4F5F8]/80 hover:text-[#D6B585]'
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] bg-[#D6B585] transition-all duration-300 ${
-                      isActive ? 'w-full' : 'w-0 group-hover/nav:w-full'
+          {/* Right side: Navigation Menu Bar & CTA Buttons */}
+          <div className="flex-1 flex justify-end items-center gap-3 xl:gap-4.5 shrink-0">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3.5">
+              {navLinks.map((link) => {
+                const isActive = link.id === currentPage;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => handleLinkClick(link.id)}
+                    className={`font-sora text-xs tracking-[0.2em] font-semibold uppercase transition-all duration-300 relative py-1 cursor-pointer group/nav drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] ${
+                      isActive
+                        ? 'text-[#D6B585]'
+                        : 'text-[#F4F5F8]/90 hover:text-[#D6B585]'
                     }`}
-                  />
-                </button>
-              );
-            })}
-          </nav>
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute bottom-0 left-0 h-[2px] bg-[#D6B585] transition-all duration-300 ${
+                        isActive ? 'w-full' : 'w-0 group-hover/nav:w-full'
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </nav>
 
-          {/* Right side: Mobile Menu Trigger + CTA Buttons */}
-          <div className="flex items-center gap-3 shrink-0">
-            {/* Mobile Menu Button (lg:hidden) */}
-            <button
-              onClick={() => setIsMenuOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D6B585]/40 bg-[#101535]/80 text-[#F4F5F8] hover:bg-[#D6B585] hover:text-[#101535] transition-all duration-300 cursor-pointer"
-              aria-label="Open Menu"
-            >
-              <Menu className="w-4 h-4 text-current" />
-              <span className="font-sora text-[11px] tracking-[0.18em] font-medium uppercase">
-                Menu
-              </span>
-            </button>
+            {/* Mobile Menu Trigger + CTA Buttons */}
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* Mobile Menu Button (lg:hidden) */}
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="lg:hidden flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D6B585]/40 bg-[#101535]/80 text-[#F4F5F8] hover:bg-[#D6B585] hover:text-[#101535] transition-all duration-300 cursor-pointer shadow-lg"
+                aria-label="Open Menu"
+              >
+                <Menu className="w-4 h-4 text-current" />
+                <span className="font-sora text-[11px] tracking-[0.18em] font-medium uppercase">
+                  Menu
+                </span>
+              </button>
 
-            {/* Desktop CTA Buttons */}
-            <button
-              onClick={onOpenAvailability}
-              className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#D6B585]/50 bg-transparent text-[#F4F5F8] hover:border-[#D6B585] hover:text-[#D6B585] font-sora text-[11px] tracking-[0.18em] font-medium uppercase transition-all duration-300 cursor-pointer"
-            >
-              Availability
-            </button>
+              {/* Desktop CTA Buttons */}
+              <button
+                onClick={onOpenAvailability}
+                className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#D6B585]/50 bg-transparent text-[#F4F5F8] hover:border-[#D6B585] hover:text-[#D6B585] font-sora text-[11px] tracking-[0.18em] font-medium uppercase transition-all duration-300 cursor-pointer"
+              >
+                Availability
+              </button>
 
-            <button
-              onClick={onOpenInquire}
-              className="inline-flex items-center px-5 py-2 rounded-full font-sora text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 shadow-lg cursor-pointer bg-[#D6B585] text-[#101535] hover:bg-[#E8CA9D] hover:scale-105"
-            >
-              Inquire
-            </button>
+              <button
+                onClick={onOpenInquire}
+                className="inline-flex items-center px-5 py-2 rounded-full font-sora text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 shadow-xl cursor-pointer bg-[#D6B585] text-[#101535] hover:bg-[#E8CA9D] hover:scale-105"
+              >
+                Inquire
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -165,18 +158,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         {/* Drawer Header */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between border-b border-[#D6B585]/20">
-          <button
-            onClick={toggleHighContrast}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D6B585]/30 hover:border-[#D6B585] text-xs font-sora tracking-wider text-[#D6B585] hover:text-white transition-colors cursor-pointer"
-            title="Toggle Accessibility Contrast"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            <span>{highContrast ? 'STANDARD CONTRAST' : 'ACCESSIBILITY MODE'}</span>
-          </button>
-
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleLinkClick('home')}>
-            <img src={media("/brand/Icon_Gold.svg")} alt="The Eastline New York Icon" className="h-6 sm:h-7 w-auto object-contain" />
-            <img src={media("/brand/Wordmark_Gold.svg")} alt="The Eastline New York" className="h-6 sm:h-7 w-auto object-contain" />
+          <div className="flex items-center cursor-pointer" onClick={() => handleLinkClick('home')}>
+            <img src={media("/brand/Wordmark_Gold.svg")} alt="The Eastline New York" className="h-7 sm:h-8 w-auto object-contain" />
           </div>
 
           <button
@@ -210,12 +193,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             ))}
           </div>
 
-          {/* Right Column: Crest Icon & Contact Info */}
+          {/* Right Column: Wordmark Logo & Contact Info */}
           <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#D6B585]/20 pt-8 lg:pt-0 lg:pl-12 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
             <img
-              src={media("/brand/Icon_Gold.svg")}
-              alt="The Eastline New York Crest"
-              className="w-20 h-auto object-contain"
+              src={media("/brand/Wordmark_Gold.svg")}
+              alt="The Eastline New York"
+              className="h-8 w-auto object-contain"
             />
 
             <div className="space-y-4 font-sora text-sm tracking-wider text-[#F4F5F8]/80">

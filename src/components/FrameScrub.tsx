@@ -20,9 +20,10 @@ type Props = {
   fallbackFramePath?: (i: number) => string;
   pathKey?: string;
   snapPoints?: number[];
+  filterStyle?: string;
 };
 
-const LERP = 0.18;
+const LERP = 0.15;
 
 export default function FrameScrub({
   frameCount,
@@ -39,6 +40,7 @@ export default function FrameScrub({
   fallbackFramePath,
   pathKey = '',
   snapPoints,
+  filterStyle,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -374,7 +376,7 @@ export default function FrameScrub({
             decodedCount++;
             decodingFrames.current.add(i);
 
-            createImageBitmap(blob)
+            createImageBitmap(blob, { resizeQuality: 'high' })
               .then((bmp) => {
                 decodingFrames.current.delete(i);
                 const currentCenter = Math.round(playhead.current);
@@ -498,6 +500,8 @@ export default function FrameScrub({
     );
   };
 
+  const activeFilter = filterStyle || 'brightness(1.16) contrast(0.84) saturate(0.88)';
+
   return (
     <div ref={trackRef} className={className} style={{ position: 'relative' }}>
       <div
@@ -509,7 +513,7 @@ export default function FrameScrub({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
+            filter: activeFilter,
           })
         ) : (
           <>
@@ -525,7 +529,7 @@ export default function FrameScrub({
                 transition: 'opacity 0.4s ease-out',
                 display: 'block',
                 transform: 'translateZ(0)',
-                filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
+                filter: activeFilter,
               }}
             />
             {renderPoster({
@@ -538,7 +542,7 @@ export default function FrameScrub({
               transition: 'opacity 0.4s ease-out',
               pointerEvents: 'none',
               display: 'block',
-              filter: 'contrast(1.04) saturate(1.06) brightness(1.01)',
+              filter: activeFilter,
             })}
           </>
         )}

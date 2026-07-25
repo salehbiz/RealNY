@@ -5,13 +5,17 @@ import FrameScrub from './FrameScrub';
 import { getFrameTier, type FrameTier } from '../lib/frameTier';
 
 interface HeroProps {
-  onScheduleClick: () => void;
+  onScheduleClick?: () => void;
   onExploreClick: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onScheduleClick, onExploreClick }) => {
+export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
   const [tier] = useState<FrameTier>(getFrameTier);
   const [progress, setProgress] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(1);
+
+  // Exact tuned filter: brightness(1.16) contrast(0.84) saturate(0.88)
+  const activeFilterStyle = 'brightness(1.16) contrast(0.84) saturate(0.88)';
 
   const framePath = useCallback(
     (i: number) => {
@@ -29,9 +33,74 @@ export const Hero: React.FC<HeroProps> = ({ onScheduleClick, onExploreClick }) =
     [tier]
   );
 
-  // Smoothly fade out text and overlay as soon as scroll starts (from progress 0 to ~0.08)
-  const contentOpacity = Math.max(0, 1 - progress * 12);
-  const pointerEvents = contentOpacity > 0.05 ? 'auto' : 'none';
+  // Smoothly fade out text and overlay as soon as scroll starts (instantly hidden on Frame 2 when East River pops up)
+  const contentOpacity = currentFrame >= 2 ? 0 : Math.max(0, 1 - progress * 20);
+
+  // River East text overlay opacity (Frames 2 - 17)
+  let riverEastOpacity = 0;
+  if (currentFrame >= 2 && currentFrame <= 17) {
+    if (currentFrame < 4) {
+      riverEastOpacity = (currentFrame - 1) / 3;
+    } else if (currentFrame > 14) {
+      riverEastOpacity = (17 - currentFrame) / 3;
+    } else {
+      riverEastOpacity = 1;
+    }
+  }
+
+  // Neighborhood text overlay opacity (Frames 30 - 61)
+  let neighborhoodOpacity = 0;
+  if (currentFrame >= 30 && currentFrame <= 61) {
+    if (currentFrame < 33) {
+      neighborhoodOpacity = (currentFrame - 30) / 3;
+    } else if (currentFrame > 58) {
+      neighborhoodOpacity = (61 - currentFrame) / 3;
+    } else {
+      neighborhoodOpacity = 1;
+    }
+  }
+
+  // The Eastline New York text overlay opacity (Frames 62 - 101)
+  let eastlineOpacity = 0;
+  if (currentFrame >= 62 && currentFrame <= 101) {
+    if (currentFrame < 65) {
+      eastlineOpacity = (currentFrame - 62) / 3;
+    } else if (currentFrame > 98) {
+      eastlineOpacity = (101 - currentFrame) / 3;
+    } else {
+      eastlineOpacity = 1;
+    }
+  }
+
+  // Lobby text overlay opacity (Frames 118 - 178)
+  let lobbyOpacity = 0;
+  if (currentFrame >= 118 && currentFrame <= 178) {
+    if (currentFrame < 121) {
+      lobbyOpacity = (currentFrame - 117) / 3;
+    } else if (currentFrame > 175) {
+      lobbyOpacity = (178 - currentFrame) / 3;
+    } else {
+      lobbyOpacity = 1;
+    }
+  }
+
+  const handleSkipIntro = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onExploreClick();
+    const introEl = document.getElementById('intro');
+    if (introEl) {
+      introEl.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        window.scrollTo({
+          top: heroSection.offsetTop + heroSection.offsetHeight,
+          behavior: 'smooth',
+        });
+      }
+    }
+  };
 
   return (
     <section id="hero" className="w-full relative select-none bg-[#101535]">
@@ -47,60 +116,103 @@ export const Hero: React.FC<HeroProps> = ({ onScheduleClick, onExploreClick }) =
         deferUntilLoad={true}
         tierResolved={!!tier}
         pathKey={tier ? tier.dir : ''}
-        onProgress={(prog) => setProgress(prog)}
+        filterStyle={activeFilterStyle}
+        onProgress={(prog, frame) => {
+          setProgress(prog);
+          if (frame) setCurrentFrame(frame);
+        }}
       >
-        {/* Subtle top overlay for top header clarity */}
-        <div className="absolute top-0 left-0 right-0 h-28 sm:h-36 bg-gradient-to-b from-black/60 via-black/20 to-transparent z-10 pointer-events-none" />
+
+
+        {/* Frame 2 - 17: East River Text Overlay */}
+        <div
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          style={{ opacity: riverEastOpacity }}
+        >
+          <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            East River
+          </h2>
+          <p className="font-sora text-[11px] sm:text-xs md:text-sm font-light tracking-wide text-[#F4F5F8] leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            Where Manhattan meets the water, a rare stretch of calm<br />
+            along the East River's edge.
+          </p>
+        </div>
+
+        {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
+        <div
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          style={{ opacity: neighborhoodOpacity }}
+        >
+          <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            Welcome to the Upper East Side
+          </h2>
+          <p className="font-sora text-[11px] sm:text-xs md:text-sm font-light tracking-wide text-[#F4F5F8] leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            A quieter side of Manhattan, where leafy streets meet the open river<br />
+            and the whole city stays within reach.
+          </p>
+        </div>
+
+        {/* Frame 62 - 101: The Eastline New York Text Overlay */}
+        <div
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          style={{ opacity: eastlineOpacity }}
+        >
+          <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            The Eastline New York
+          </h2>
+          <p className="font-sora text-[11px] sm:text-xs md:text-sm font-light tracking-wide text-[#F4F5F8] leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            The Eastline New York rises where the city quiets,<br />
+            a modern address built for calm, light, and everyday ease.
+          </p>
+        </div>
+
+        {/* Frame 118 - 178: Step into Luxury Text Overlay */}
+        <div
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-28 z-30 w-11/12 sm:w-auto max-w-xl sm:max-w-3xl space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          style={{ opacity: lobbyOpacity }}
+        >
+          <h2 className="font-rexton text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            Step into Luxury
+          </h2>
+          <p className="font-sora text-[11px] sm:text-xs md:text-sm font-light tracking-wide text-[#F4F5F8] leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            Step inside to a warm, light-filled lobby<br />
+            where the city softens and home begins.
+          </p>
+        </div>
+
+        {/* Top-only header overlay for button & logo clarity */}
+        <div className="absolute top-0 left-0 right-0 h-20 sm:h-24 bg-gradient-to-b from-black/75 via-black/35 to-transparent z-10 pointer-events-none" />
 
         {/* Overlay ONLY on the bottom part of the hero section */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 sm:h-64 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-36 sm:h-48 bg-gradient-to-t from-black/35 via-black/10 to-transparent z-10 pointer-events-none" />
 
         {/* Top Header Spacer */}
         <div className="pt-24 z-20 pointer-events-auto" />
 
-        {/* Bottom-Centered Hero Content & Scroll CTA Container */}
+        {/* Bottom Hero CTAs Bar (Parallel baseline alignment - Left & Right aligned) */}
         <div
-          className="relative z-20 max-w-4xl mx-auto px-6 text-center flex flex-col items-center mt-auto pb-14 md:pb-18 space-y-3 sm:space-y-4 transition-opacity duration-300 ease-out"
-          style={{ opacity: contentOpacity, pointerEvents: pointerEvents as any }}
+          className="absolute bottom-5 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-4 sm:px-10 flex items-center justify-between pointer-events-none transition-opacity duration-300 ease-out"
+          style={{ opacity: contentOpacity }}
         >
-          {/* Hero Title */}
-          <div className="space-y-0.5 pt-1 w-full flex flex-col items-center">
-            <h1 className="font-rexton text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-[#F4F5F8] whitespace-nowrap max-w-full drop-shadow-md">
-              The Beauty of Being
-            </h1>
-            <p className="font-rexton text-base sm:text-xl md:text-2xl lg:text-3xl font-medium tracking-tight text-[#D6B585] whitespace-nowrap max-w-full drop-shadow-md">
-              Between Park & Madison
-            </p>
+          {/* Left-Aligned Scroll to Explore */}
+          <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+            <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+              Scroll to Explore
+            </span>
+            <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D6B585] animate-bounce" />
           </div>
 
-          {/* Hero Copy */}
-          <p className="font-sora text-xs sm:text-sm tracking-wide text-[#F4F5F8]/90 font-light max-w-xl leading-relaxed drop-shadow-sm">
-            The Eastline New York, at 38 East 35th Street, is ideally positioned between Park and Madison Avenues on a rare, tree-lined block.
-          </p>
-
-          {/* Schedule a Tour Button */}
-          <div className="pt-1">
-            <button
-              onClick={onScheduleClick}
-              className="px-8 py-3 rounded-full bg-[#D6B585] text-[#101535] hover:bg-[#E8CA9D] hover:scale-105 font-sora text-xs tracking-wider font-bold uppercase transition-all duration-300 shadow-xl cursor-pointer"
-            >
-              Schedule a Private Tour
-            </button>
-          </div>
-
-          {/* Scroll to Explore CTA (Minimal) */}
-          <div className="pt-2">
-            <button
-              onClick={onExploreClick}
-              className="flex flex-col items-center gap-1 group cursor-pointer opacity-85 hover:opacity-100 transition-opacity"
-              aria-label="Scroll down"
-            >
-              <span className="font-sora text-[10px] tracking-[0.25em] font-medium text-[#D6B585] uppercase">
-                Scroll to Explore
-              </span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#D6B585] animate-bounce" />
-            </button>
-          </div>
+          {/* Right-Aligned Skip Intro Button */}
+          <button
+            onClick={handleSkipIntro}
+            className="flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+            aria-label="Skip the intro"
+          >
+            <span className="font-sora text-[9.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+              Skip the intro
+            </span>
+            <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D6B585] animate-bounce group-hover:translate-y-0.5 transition-transform" />
+          </button>
         </div>
       </FrameScrub>
     </section>
