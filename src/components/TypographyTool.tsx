@@ -60,32 +60,57 @@ function applyStyles(el: HTMLElement, v: TypoValues) {
   if (v.textTransform) el.style.textTransform = v.textTransform;
 }
 
-// Generate a CSS selector or ID for an element
+// Detect human-readable section name for any element on the page
+function detectSectionName(el: HTMLElement): string {
+  // Check closest section/header/footer/nav
+  const container = el.closest('section, header, footer, nav, [id]');
+  if (!container) return 'General';
+
+  const containerId = container.id;
+  if (containerId) {
+    return containerId
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase()) + ' Section';
+  }
+
+  const containerHeading = container.querySelector('h1, h2, h3');
+  if (containerHeading && containerHeading !== el) {
+    const headingText = (containerHeading.textContent || '').trim().replace(/\s+/g, ' ');
+    if (headingText && headingText.length < 30) {
+      return headingText.toUpperCase();
+    }
+  }
+
+  if (container.tagName === 'HEADER' || container.className.includes('nav')) return 'Navbar Header';
+  if (container.tagName === 'FOOTER') return 'Footer';
+  if (container.className.includes('hero')) return 'Hero Section';
+
+  return 'Section';
+}
+
+// Generate a CSS selector or ID for an element with a clean section label
 function getUniqueSelector(el: HTMLElement, index: number): { id: string; label: string } {
   let typoId = el.getAttribute('data-typo-id');
   const customLabel = el.getAttribute('data-typo-label');
 
-  if (!typoId) {
-    const tag = el.tagName.toLowerCase();
-    const text = (el.innerText || el.textContent || '').trim().replace(/\s+/g, ' ');
-    const shortText = text.length > 25 ? text.substring(0, 25) + '...' : text;
-    typoId = `auto-${tag}-${index}`;
-    el.setAttribute('data-typo-id', typoId);
-    
-    // Check parent section or element context
-    const parentSection = el.closest('section, header, footer, div[id]');
-    const sectionName = parentSection?.id || parentSection?.className.match(/([a-zA-Z0-9_-]+-section)/)?.[1] || '';
-    const labelPrefix = sectionName ? `${sectionName} > ` : '';
-    const label = `${labelPrefix}<${tag}> "${shortText || tag}"`;
-    return { id: typoId, label };
+  if (customLabel) {
+    return { id: typoId || `custom-${index}`, label: customLabel };
   }
 
+  const tag = el.tagName.toLowerCase();
   const text = (el.innerText || el.textContent || '').trim().replace(/\s+/g, ' ');
-  const shortText = text.length > 20 ? text.substring(0, 20) + '...' : text;
-  return {
-    id: typoId,
-    label: customLabel || `[${typoId}] "${shortText}"`,
-  };
+  const shortText = text.length > 25 ? text.substring(0, 25) + '...' : text;
+  
+  if (!typoId) {
+    typoId = `auto-${tag}-${index}`;
+    el.setAttribute('data-typo-id', typoId);
+  }
+
+  const sectionName = detectSectionName(el);
+  const tagUpper = tag.toUpperCase();
+  const label = `[${sectionName}] ${tagUpper}: "${shortText || tag}"`;
+
+  return { id: typoId, label };
 }
 
 interface SliderRowProps {

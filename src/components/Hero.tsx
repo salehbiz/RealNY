@@ -129,10 +129,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: riverEastOpacity }}
         >
-          <h2 className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <h2
+            data-typo-id="hero-f1-h2"
+            data-typo-label="[Hero Section] Heading 1: East River"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             East River
           </h2>
-          <p className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <p
+            data-typo-id="hero-f1-p"
+            data-typo-label="[Hero Section] Paragraph 1: East River"
+            className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             <span className="sm:hidden">Where Manhattan meets the water, a rare stretch<br />of calm along the East River's edge.</span>
             <span className="hidden sm:inline">Where Manhattan meets the water, a rare stretch of calm<br />along the East River's edge.</span>
           </p>
@@ -143,10 +151,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: neighborhoodOpacity }}
         >
-          <h2 className="font-rexton text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <h2
+            data-typo-id="hero-f2-h2"
+            data-typo-label="[Hero Section] Heading 2: Welcome to Upper East Side"
+            className="font-rexton text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             Welcome to the Upper East Side
           </h2>
-          <p className="font-sora text-[9px] xs:text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <p
+            data-typo-id="hero-f2-p"
+            data-typo-label="[Hero Section] Paragraph 2: Welcome to Upper East Side"
+            className="font-sora text-[9px] xs:text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             <span className="sm:hidden block">
               <span className="whitespace-nowrap block">A quieter side of Manhattan, where leafy streets</span>
               <span className="whitespace-nowrap block">meet the river and the city stays within reach.</span>
@@ -160,10 +176,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: eastlineOpacity }}
         >
-          <h2 className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <h2
+            data-typo-id="hero-f3-h2"
+            data-typo-label="[Hero Section] Heading 3: The Eastline New York"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             The Eastline New York
           </h2>
-          <p className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <p
+            data-typo-id="hero-f3-p"
+            data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
+            className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             <span className="sm:hidden">The Eastline New York rises where the city quiets,<br />a modern address built for calm and everyday ease.</span>
             <span className="hidden sm:inline">The Eastline New York rises where the city quiets,<br />a modern address built for calm, light, and everyday ease.</span>
           </p>
@@ -174,10 +198,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: lobbyOpacity }}
         >
-          <h2 className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <h2
+            data-typo-id="hero-f4-h2"
+            data-typo-label="[Hero Section] Heading 4: Step into Luxury"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             Step into Luxury
           </h2>
-          <p className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+          <p
+            data-typo-id="hero-f4-p"
+            data-typo-label="[Hero Section] Paragraph 4: Step into Luxury"
+            className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+          >
             <span className="sm:hidden">Step inside to a warm, light-filled lobby<br />where the city softens and home begins.</span>
             <span className="hidden sm:inline">Step inside to a warm, light-filled lobby<br />where the city softens and home begins.</span>
           </p>
