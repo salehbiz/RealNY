@@ -204,14 +204,14 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
             style={{ opacity: contentOpacity, pointerEvents: pointerEvents as any }}
           >
             {/* Hero Title */}
-            <h1 className="font-rexton text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-[#F4F5F8] uppercase drop-shadow-md">
+            <h1 className="univ-h2-large text-[#F4F5F8] uppercase drop-shadow-md">
               Refined Residences
             </h1>
 
             {/* Scroll to Explore CTA */}
             <div className="pt-1">
               <div className="flex flex-col items-center gap-1 group opacity-85 hover:opacity-100 transition-opacity">
-                <span className="font-sora text-[10px] tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+                <span className="univ-btn-primary text-[#D6B585] uppercase">
                   Scroll to Explore
                 </span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#D6B585] animate-bounce" />
@@ -226,15 +226,15 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           >
             <div key={activeRoom.id} className="transition-opacity duration-300 ease-out space-y-0.5">
               {activeRoom.subLabel && (
-                <span className="font-sora text-[10px] sm:text-[11px] tracking-[0.2em] font-semibold text-[#D6B585] uppercase block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                <span className="univ-label-eyebrow text-[#D6B585] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   {activeRoom.subLabel}
                 </span>
               )}
-              <h2 className="font-rexton text-sm sm:text-base md:text-lg font-bold tracking-wider text-[#F4F5F8] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              <h2 className="univ-h2-overlay text-[#F4F5F8] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 {activeRoom.name}
               </h2>
               {activeRoom.description && (
-                <p className="font-sora text-xs sm:text-sm text-[#F4F5F8]/85 font-light leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pt-0.5">
+                <p className="univ-p-body text-[#F4F5F8]/85 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pt-0.5">
                   {activeRoom.description}
                 </p>
               )}
@@ -249,14 +249,14 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           <p
             data-typo-id="res-intro-label"
             data-typo-label="Residences / Eyebrow Label"
-            className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase"
+            className="univ-label-eyebrow text-[#101535]"
           >
             INC ARCHITECTURE &amp; DESIGN
           </p>
           <p
             data-typo-id="res-intro-body"
             data-typo-label="Residences / Intro Paragraph"
-            className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]"
+            className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
           >
             A boutique collection of studio through three-bedroom homes, duplexes, and penthouse suites—crafted with natural oak, soft light, and refined detail for mindful luxury.
           </p>
@@ -268,10 +268,10 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
           {/* Left Text */}
           <div className="lg:col-span-5 space-y-6">
-            <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
-              SUNLIT LIVING & DINING SANCTUARIES
+            <h3 className="univ-h2-section text-[#101535] uppercase">
+              SUNLIT LIVING &amp; DINING SANCTUARIES
             </h3>
-            <p className="font-sora page-body-p text-[#101535]/80 font-light">
+            <p className="univ-p-body text-[#101535]/80">
               Featuring 10-foot ceiling heights, custom wide-plank white oak flooring in chevron patterns, and floor-to-ceiling corner windows framing tree-lined cityscapes between Park and Madison.
             </p>
           </div>
@@ -302,7 +302,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
         <div className="w-full max-w-7xl mx-auto space-y-8">
           {/* Centered Heading */}
           <div className="text-center max-w-4xl mx-auto px-4">
-            <h2 className="font-rexton text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#101535] leading-tight tracking-tight uppercase [text-wrap:balance]">
+            <h2 className="univ-h2-section text-[#101535] uppercase [text-wrap:balance]">
               Crafted with <span className="text-[#D6B585]">Uncompromising</span> <br className="hidden md:inline" />
               Architectural <span className="text-[#D6B585]">Detail</span>.
             </h2>
@@ -380,8 +380,8 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
 
           {/* Text */}
           <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
-            <p className="font-sora text-base md:text-lg leading-relaxed text-[#101535]/80 font-light">
-              Every residence at The Eastline New York is crafted with custom Italian cabinetry, honed marble surfaces, Dornbracht fixtures, and warm oak finishes by INC Architecture & Design.
+            <p className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]">
+              Every residence at The Eastline New York is crafted with custom Italian cabinetry, honed marble surfaces, Dornbracht fixtures, and warm oak finishes by INC Architecture &amp; Design.
             </p>
           </div>
         </div>
@@ -401,10 +401,10 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
               />
             </div>
             <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
-              <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
+              <h3 className="univ-h2-section text-[#101535] uppercase">
                 SPA-INSPIRED PRIMARY SUITES
               </h3>
-              <p className="font-sora page-body-p text-[#101535]/80 font-light">
+              <p className="univ-p-body text-[#101535]/80">
                 Enveloped in full-height honed Calacatta marble with radiantly heated floors, floating custom oak vanities, freestanding soaking tubs, and thermostatic rain showers.
               </p>
             </div>
@@ -415,10 +415,10 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
         <section className="w-full overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
             <div className="lg:col-span-5 space-y-6">
-              <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
+              <h3 className="univ-h2-section text-[#101535] uppercase">
                 SCULPTURAL GUEST POWDER ROOMS
               </h3>
-              <p className="font-sora page-body-p text-[#101535]/80 font-light">
+              <p className="univ-p-body text-[#101535]/80">
                 Dramatic guest powder rooms featuring custom monolithic stone pedestal basins, wall-mounted bronze Dornbracht fixtures, and rich warm sconce illumination.
               </p>
             </div>
@@ -437,10 +437,10 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
       {/* 6. PENTHOUSE & TERRACES FEATURE SECTION */}
       <section className="py-16 md:py-24 w-full text-center space-y-12">
         <div className="space-y-3 px-6 max-w-5xl mx-auto">
-          <h2 className="font-rexton text-3xl sm:text-5xl font-bold tracking-tight text-[#101535] uppercase">
-            PENTHOUSE RESIDENCES & SKYLINE TERRACES
+          <h2 className="univ-h2-section text-[#101535] uppercase">
+            PENTHOUSE RESIDENCES &amp; SKYLINE TERRACES
           </h2>
-          <p className="font-sora text-xs sm:text-sm tracking-[0.2em] font-medium text-[#D6B585] uppercase">
+          <p className="univ-label-eyebrow text-[#D6B585]">
             Private Outdoor Setbacks Overlooking Midtown Manhattan
           </p>
         </div>

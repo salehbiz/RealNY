@@ -170,14 +170,14 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
             style={{ opacity: contentOpacity, pointerEvents: pointerEvents as any }}
           >
             {/* Hero Title */}
-            <h1 className="font-rexton text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-[#F4F5F8] uppercase drop-shadow-md">
-              Indoor & Outdoor Amenities
+            <h1 className="univ-h2-large text-[#F4F5F8] uppercase drop-shadow-md">
+              Indoor &amp; Outdoor Amenities
             </h1>
 
             {/* Scroll to Explore CTA */}
             <div className="pt-1">
               <div className="flex flex-col items-center gap-1 group opacity-85 hover:opacity-100 transition-opacity">
-                <span className="font-sora text-[10px] tracking-[0.25em] font-medium text-[#D6B585] uppercase">
+                <span className="univ-btn-primary text-[#D6B585] uppercase">
                   Scroll to Explore
                 </span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#D6B585] animate-bounce" />
@@ -191,14 +191,14 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
             style={{ opacity: roomLabelOpacity }}
           >
             <div key={activeRoom.id} className="transition-opacity duration-300 ease-out space-y-0.5">
-              <span className="font-sora text-[10px] sm:text-[11px] tracking-[0.2em] font-semibold text-[#D6B585] uppercase block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              <span className="univ-label-eyebrow text-[#D6B585] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {activeRoom.floor}
               </span>
-              <h2 className="font-rexton text-sm sm:text-base md:text-lg font-bold tracking-wider text-[#F4F5F8] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              <h2 className="univ-h2-overlay text-[#F4F5F8] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 {activeRoom.name}
               </h2>
               {activeRoom.description && (
-                <p className="font-sora text-xs sm:text-sm text-[#F4F5F8]/85 font-light leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pt-0.5">
+                <p className="univ-p-body text-[#F4F5F8]/85 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pt-0.5">
                   {activeRoom.description}
                 </p>
               )}
@@ -213,14 +213,14 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
           <p
             data-typo-id="ame-intro-label"
             data-typo-label="Amenities / Eyebrow Label"
-            className="font-sora text-[10px] tracking-[0.28em] font-semibold text-[#101535] uppercase"
+            className="univ-label-eyebrow text-[#101535]"
           >
             INDOOR &amp; OUTDOOR COURTYARD
           </p>
           <p
             data-typo-id="ame-intro-body"
             data-typo-label="Amenities / Intro Paragraph"
-            className="font-sora text-sm md:text-[15px] leading-[1.65] text-[#101535]/80 font-light tracking-tight max-w-2xl mx-auto text-center [text-wrap:balance]"
+            className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
           >
             A garden at the center of it all. More than 10,000 square feet of wellness, social, and remote work spaces enveloping an enchanting private landscaped courtyard.
           </p>
@@ -232,11 +232,11 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
           {/* Left Text */}
           <div className="lg:col-span-5 space-y-6">
-            <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
-              ENCHANTED COURTYARD & PRIVATE GARDENS
+            <h3 className="univ-h2-section text-[#101535] uppercase">
+              ENCHANTED COURTYARD &amp; PRIVATE GARDENS
             </h3>
-            <p className="font-sora page-body-p text-[#101535]/80 font-light">
-              Designed by Paul Duesing & Partners, the central courtyard garden serves as a peaceful green sanctuary. Custom outdoor lounges, seasonal flora, and subtle evening sconces balance quiet reflection with intimate social gatherings.
+            <p className="univ-p-body text-[#101535]/80">
+              Designed by Paul Duesing &amp; Partners, the central courtyard garden serves as a peaceful green sanctuary. Custom outdoor lounges, seasonal flora, and subtle evening sconces balance quiet reflection with intimate social gatherings.
             </p>
           </div>
 
@@ -266,7 +266,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
         <div className="w-full max-w-7xl mx-auto space-y-8">
           {/* Centered Heading */}
           <div className="text-center max-w-5xl mx-auto">
-            <h2 className="font-rexton text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#101535] leading-tight tracking-tighter uppercase">
+            <h2 className="univ-h2-section text-[#101535] uppercase [text-wrap:balance]">
               <span className="sm:whitespace-nowrap">GATHER AND <span className="text-[#D6B585]">CREATE</span></span> <br className="hidden sm:inline" />
               <span className="sm:whitespace-nowrap"><span className="text-[#D6B585]">UNFORGETTABLE</span> MOMENTS.</span>
             </h2>
@@ -344,8 +344,8 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
 
           {/* Text */}
           <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
-            <p className="font-sora text-base md:text-lg leading-relaxed text-[#101535]/80 font-light">
-              Residents at The Eastline New York enjoy more than 10,000 square feet of amenities surrounding an enchanting private garden courtyard, all beautifully envisioned by renowned hospitality designer Paul Duesing & Partners.
+            <p className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]">
+              Residents at The Eastline New York enjoy more than 10,000 square feet of amenities surrounding an enchanting private garden courtyard, all beautifully envisioned by renowned hospitality designer Paul Duesing &amp; Partners.
             </p>
           </div>
         </div>
@@ -374,10 +374,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
               </picture>
             </div>
             <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
-              <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
-                RECREATION & SOCIAL LOUNGE
+              <h3 className="univ-h2-section text-[#101535] uppercase">
+                RECREATION &amp; SOCIAL LOUNGE
               </h3>
-              <p className="font-sora page-body-p text-[#101535]/80 font-light">
+              <p className="univ-p-body text-[#101535]/80">
                 State-of-the-art social spaces featuring plush seating, game tables, and private bar alcoves for effortlessly entertaining guests or relaxing after a long day.
               </p>
             </div>
@@ -388,10 +388,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
         <section className="w-full overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
             <div className="lg:col-span-5 space-y-6">
-              <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
-                PRIVATE DINING & EVENT SUITE
+              <h3 className="univ-h2-section text-[#101535] uppercase">
+                PRIVATE DINING &amp; EVENT SUITE
               </h3>
-              <p className="font-sora page-body-p text-[#101535]/80 font-light">
+              <p className="univ-p-body text-[#101535]/80">
                 An intimate, reservable venue equipped with a catering kitchen, executive dining table, and direct courtyard access for hosting formal dinners and milestone celebrations.
               </p>
             </div>
@@ -410,11 +410,11 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
       {/* 6. FITNESS & WELLNESS SANCTUARY */}
       <section className="py-16 md:py-24 w-full text-center space-y-12">
         <div className="space-y-3 px-6 max-w-5xl mx-auto">
-          <h2 className="font-rexton text-3xl sm:text-5xl font-bold tracking-tight text-[#101535] uppercase page-heading">
-            STATELY FITNESS & WELLNESS CENTERS
+          <h2 className="univ-h2-section text-[#101535] uppercase">
+            STATELY FITNESS &amp; WELLNESS CENTERS
           </h2>
-          <p className="font-sora text-xs sm:text-sm tracking-[0.2em] font-medium text-[#D6B585] uppercase">
-            Designed for Peak Vitality & Restoration
+          <p className="univ-label-eyebrow text-[#D6B585]">
+            Designed for Peak Vitality &amp; Restoration
           </p>
         </div>
 
@@ -451,10 +451,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({
               />
             </div>
             <div className="lg:col-span-5 space-y-6">
-              <h3 className="font-rexton text-2xl sm:text-3xl md:text-4xl font-bold text-[#101535] uppercase page-heading">
-                CEDAR WOOD SAUNA & SPA
+              <h3 className="univ-h2-section text-[#101535] uppercase">
+                CEDAR WOOD SAUNA &amp; SPA
               </h3>
-              <p className="font-sora page-body-p text-[#101535]/80 font-light">
+              <p className="univ-p-body text-[#101535]/80">
                 Reenergize in a Scandinavian cedar-lined thermal sauna featuring glowing heater stones, adjacent rain shower refresh stalls, and plush relaxation benches.
               </p>
             </div>

@@ -148,20 +148,54 @@
   letter-spacing: -0.015em !important;
 }
 
-/* Global Matching Page Typography & Line Spacing Rules */
-.page-intro-p {
+/* Universal Site-Wide Design System Typography Utility Classes */
+.univ-h2-section {
+  font-family: 'Rexton', -apple-system, sans-serif !important;
+  font-size: 19px !important;
+  letter-spacing: -0.15em !important;
+  line-height: 1.05 !important;
+  font-weight: 700 !important;
+}
+
+.univ-h2-large {
+  font-family: 'Rexton', -apple-system, sans-serif !important;
+  font-size: 35px !important;
+  letter-spacing: -0.15em !important;
+  line-height: 1.0 !important;
+  font-weight: 700 !important;
+}
+
+.univ-h2-overlay {
+  font-family: 'Rexton', -apple-system, sans-serif !important;
+  font-size: 22px !important;
+  letter-spacing: -0.15em !important;
+  line-height: 1.0 !important;
+  font-weight: 700 !important;
+}
+
+.univ-p-body {
+  font-family: 'Sora', -apple-system, sans-serif !important;
   font-size: 15px !important;
-  letter-spacing: -0.02em !important;
-  line-height: 1.55 !important;
+  letter-spacing: -0.05em !important;
+  line-height: 1.0 !important;
+  font-weight: 300 !important;
 }
-.page-body-p {
-  font-size: 18px !important;
+
+.univ-label-eyebrow {
+  font-family: 'Sora', -apple-system, sans-serif !important;
+  font-size: 15px !important;
+  letter-spacing: -0.095em !important;
+  line-height: 0.7 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+.univ-btn-primary {
+  font-family: 'Sora', -apple-system, sans-serif !important;
+  font-size: 10px !important;
   letter-spacing: -0.015em !important;
-  line-height: 1.45 !important;
-}
-.page-heading {
-  letter-spacing: -0.08em !important;
-  line-height: 1.14 !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
 }
 
 /* Custom Typography Utilities for The Eastline New York */
