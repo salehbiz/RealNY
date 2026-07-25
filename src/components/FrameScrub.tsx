@@ -446,7 +446,7 @@ export default function FrameScrub({
             decodedCount++;
             decodingFrames.current.add(i);
 
-            createImageBitmap(blob, { resizeQuality: 'high' })
+            createImageBitmap(blob)
               .then((bmp) => {
                 decodingFrames.current.delete(i);
                 const currentCenter = Math.round(playhead.current);
@@ -512,8 +512,6 @@ export default function FrameScrub({
       }
     };
 
-    let pumpThrottleCount = 0;
-
     const loop = () => {
       playhead.current += (target.current - playhead.current) * LERP;
       const idealFrame = Math.round(playhead.current);
@@ -523,7 +521,7 @@ export default function FrameScrub({
         lastDrawn = frame;
       }
       decodeFrames(idealFrame);
-      if (pumpRef.current && pumpThrottleCount++ % 6 === 0) {
+      if (pumpRef.current) {
         pumpRef.current();
       }
       raf = requestAnimationFrame(loop);
