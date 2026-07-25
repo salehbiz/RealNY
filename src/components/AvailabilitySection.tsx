@@ -36,7 +36,7 @@ export const sampleResidences: Residence[] = [
     price: '$1,795,000',
     maintenance: '$1,120 / mo',
     taxes: '$980 / mo',
-    floorplanImg: media('/images/floorplan-2b.png'),
+    floorplanImg: media('/images/floorplan-2b.webp'),
     interiorImg: media('/images/residences-living-room.webp'),
     status: 'Available',
     concession: '1 Month Free',
@@ -52,7 +52,7 @@ export const sampleResidences: Residence[] = [
     price: '$3,250,000',
     maintenance: '$1,890 / mo',
     taxes: '$1,650 / mo',
-    floorplanImg: media('/images/floorplan-4a.png'),
+    floorplanImg: media('/images/floorplan-4a.webp'),
     interiorImg: media('/images/residences-kitchen.webp'),
     status: 'Available',
     concession: '2 Months Free',
@@ -68,7 +68,7 @@ export const sampleResidences: Residence[] = [
     price: '$2,985,000',
     maintenance: '$1,740 / mo',
     taxes: '$1,520 / mo',
-    floorplanImg: media('/images/floorplan-5c.png'),
+    floorplanImg: media('/images/floorplan-5c.webp'),
     interiorImg: media('/images/residences-living-room.webp'),
     status: 'Available',
     concession: '1 Month Free',
@@ -84,7 +84,7 @@ export const sampleResidences: Residence[] = [
     price: '$5,450,000',
     maintenance: '$2,860 / mo',
     taxes: '$2,480 / mo',
-    floorplanImg: media('/images/floorplan-7b.png'),
+    floorplanImg: media('/images/floorplan-7b.webp'),
     interiorImg: media('/images/residences-primary-bathroom.webp'),
     status: 'Available',
     concession: '3 Months Free',
@@ -108,13 +108,13 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
     <section id="availability" className="bg-[#ECE7DF] text-[#101535] py-14 md:py-20 px-6 border-t border-[#101535]/10">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#D6B585]/30 pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#7E6138]/30 pb-6">
           <div>
-            <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#D6B585] uppercase">
+            <span className="font-sora text-xs tracking-[0.2em] font-semibold text-[#7E6138] uppercase">
               Current Offerings
             </span>
             <h2 className="font-rexton text-3xl sm:text-4xl font-bold text-[#101535] mt-1">
-              Residence <span className="text-[#D6B585]">Availability</span>
+              Residence <span className="text-[#7E6138]">Availability</span>
             </h2>
           </div>
 
@@ -141,15 +141,15 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
           {filteredResidences.map((res) => (
             <div
               key={res.id}
-              className="bg-[#ECE7DF] border border-[#101535]/15 hover:border-[#D6B585] rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6 group"
+              className="bg-[#ECE7DF] border border-[#101535]/15 hover:border-[#7E6138] rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6 group"
             >
               {/* Left Info: Residence Title & Exposure */}
               <div className="space-y-1 lg:w-1/4">
                 <div className="flex items-center gap-2.5">
-                  <h3 className="font-sora text-lg sm:text-xl font-bold text-[#101535] group-hover:text-[#D6B585] transition-colors">
+                  <h3 className="font-sora text-lg sm:text-xl font-bold text-[#101535] group-hover:text-[#7E6138] transition-colors">
                     {res.name}
                   </h3>
-                  <span className="font-sora text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[#101535]/10 text-[#101535] border border-[#D6B585]/30">
+                  <span className="font-sora text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[#101535]/10 text-[#101535] border border-[#7E6138]/30">
                     {res.status}
                   </span>
                 </div>
@@ -176,7 +176,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({
 
                 <div>
                   <span className="block text-[#101535]/50 text-[10px] uppercase font-semibold">Price</span>
-                  <span className="font-sora text-sm sm:text-base font-bold text-[#D6B585] whitespace-nowrap">
+                  <span className="font-sora text-sm sm:text-base font-bold text-[#7E6138] whitespace-nowrap">
                     {res.price}
                   </span>
                 </div>

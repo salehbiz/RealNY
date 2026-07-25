@@ -1,8 +1,8 @@
-import { media } from '../lib/media';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import FrameScrub from './FrameScrub';
 import { getFrameTier, type FrameTier } from '../lib/frameTier';
+import { media } from '../lib/media';
 
 interface HeroProps {
   onScheduleClick?: () => void;
@@ -11,11 +11,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
   const [tier] = useState<FrameTier>(getFrameTier);
-  const [progress, setProgress] = useState(0);
-  const [currentFrame, setCurrentFrame] = useState(1);
 
-  // Exact tuned filter: brightness(1.16) contrast(0.84) saturate(0.88)
-  const activeFilterStyle = 'brightness(1.16) contrast(0.84) saturate(0.88)';
+
 
   const framePath = useCallback(
     (i: number) => {
@@ -32,57 +29,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
     },
     [tier]
   );
-
-  // Smoothly fade out text and overlay as soon as scroll starts past frame 2
-  const contentOpacity = currentFrame > 2 ? 0 : Math.max(0, 1 - progress * 10);
-
-  // River East text overlay opacity (Frames 2 - 17)
-  let riverEastOpacity = 0;
-  if (currentFrame >= 2 && currentFrame <= 17) {
-    if (currentFrame < 4) {
-      riverEastOpacity = (currentFrame - 1) / 3;
-    } else if (currentFrame > 14) {
-      riverEastOpacity = (17 - currentFrame) / 3;
-    } else {
-      riverEastOpacity = 1;
-    }
-  }
-
-  // Neighborhood text overlay opacity (Frames 30 - 61)
-  let neighborhoodOpacity = 0;
-  if (currentFrame >= 30 && currentFrame <= 61) {
-    if (currentFrame < 33) {
-      neighborhoodOpacity = (currentFrame - 30) / 3;
-    } else if (currentFrame > 58) {
-      neighborhoodOpacity = (61 - currentFrame) / 3;
-    } else {
-      neighborhoodOpacity = 1;
-    }
-  }
-
-  // The Eastline New York text overlay opacity (Frames 62 - 101)
-  let eastlineOpacity = 0;
-  if (currentFrame >= 62 && currentFrame <= 101) {
-    if (currentFrame < 65) {
-      eastlineOpacity = (currentFrame - 62) / 3;
-    } else if (currentFrame > 98) {
-      eastlineOpacity = (101 - currentFrame) / 3;
-    } else {
-      eastlineOpacity = 1;
-    }
-  }
-
-  // Lobby text overlay opacity (Frames 118 - 178)
-  let lobbyOpacity = 0;
-  if (currentFrame >= 118 && currentFrame <= 178) {
-    if (currentFrame < 121) {
-      lobbyOpacity = (currentFrame - 117) / 3;
-    } else if (currentFrame > 175) {
-      lobbyOpacity = (178 - currentFrame) / 3;
-    } else {
-      lobbyOpacity = 1;
-    }
-  }
 
   const handleSkipIntro = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -102,6 +48,13 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
     }
   };
 
+  // DOM Refs for scroll-driven text overlays
+  const riverEastRef = useRef<HTMLDivElement>(null);
+  const neighborhoodRef = useRef<HTMLDivElement>(null);
+  const eastlineRef = useRef<HTMLDivElement>(null);
+  const lobbyRef = useRef<HTMLDivElement>(null);
+  const ctasRef = useRef<HTMLDivElement>(null);
+
   return (
     <section id="hero" className="w-full relative select-none bg-[#101535]">
       <FrameScrub
@@ -116,18 +69,82 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         deferUntilLoad={true}
         tierResolved={!!tier}
         pathKey={tier ? tier.dir : ''}
-        filterStyle={activeFilterStyle}
         onProgress={(prog, frame) => {
-          setProgress(prog);
-          if (frame) setCurrentFrame(frame);
+          const frameNum = frame || 1;
+
+          // 1. CTAs opacity
+          const contentOpacity = frameNum > 2 ? 0 : Math.max(0, 1 - prog * 10);
+          if (ctasRef.current) {
+            ctasRef.current.style.opacity = String(contentOpacity);
+            ctasRef.current.style.pointerEvents = contentOpacity > 0 ? 'auto' : 'none';
+          }
+
+          // 2. River East text overlay opacity (Frames 2 - 17)
+          let riverEastOpacity = 0;
+          if (frameNum >= 2 && frameNum <= 17) {
+            if (frameNum < 4) {
+              riverEastOpacity = (frameNum - 1) / 3;
+            } else if (frameNum > 14) {
+              riverEastOpacity = (17 - frameNum) / 3;
+            } else {
+              riverEastOpacity = 1;
+            }
+          }
+          if (riverEastRef.current) {
+            riverEastRef.current.style.opacity = String(riverEastOpacity);
+          }
+
+          // 3. Neighborhood text overlay opacity (Frames 30 - 61)
+          let neighborhoodOpacity = 0;
+          if (frameNum >= 30 && frameNum <= 61) {
+            if (frameNum < 33) {
+              neighborhoodOpacity = (frameNum - 30) / 3;
+            } else if (frameNum > 58) {
+              neighborhoodOpacity = (61 - frameNum) / 3;
+            } else {
+              neighborhoodOpacity = 1;
+            }
+          }
+          if (neighborhoodRef.current) {
+            neighborhoodRef.current.style.opacity = String(neighborhoodOpacity);
+          }
+
+          // 4. The Eastline New York text overlay opacity (Frames 62 - 101)
+          let eastlineOpacity = 0;
+          if (frameNum >= 62 && frameNum <= 101) {
+            if (frameNum < 65) {
+              eastlineOpacity = (frameNum - 62) / 3;
+            } else if (frameNum > 98) {
+              eastlineOpacity = (101 - frameNum) / 3;
+            } else {
+              eastlineOpacity = 1;
+            }
+          }
+          if (eastlineRef.current) {
+            eastlineRef.current.style.opacity = String(eastlineOpacity);
+          }
+
+          // 5. Lobby text overlay opacity (Frames 118 - 178)
+          let lobbyOpacity = 0;
+          if (frameNum >= 118 && frameNum <= 178) {
+            if (frameNum < 121) {
+              lobbyOpacity = (frameNum - 117) / 3;
+            } else if (frameNum > 175) {
+              lobbyOpacity = (178 - frameNum) / 3;
+            } else {
+              lobbyOpacity = 1;
+            }
+          }
+          if (lobbyRef.current) {
+            lobbyRef.current.style.opacity = String(lobbyOpacity);
+          }
         }}
       >
-
-
         {/* Frame 2 - 17: East River Text Overlay */}
         <div
+          ref={riverEastRef}
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
-          style={{ opacity: riverEastOpacity }}
+          style={{ opacity: 0 }}
         >
           <h2
             data-typo-id="hero-f1-h2"
@@ -148,8 +165,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
+          ref={neighborhoodRef}
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
-          style={{ opacity: neighborhoodOpacity }}
+          style={{ opacity: 0 }}
         >
           <h2
             data-typo-id="hero-f2-h2"
@@ -173,8 +191,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 62 - 101: The Eastline New York Text Overlay */}
         <div
+          ref={eastlineRef}
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
-          style={{ opacity: eastlineOpacity }}
+          style={{ opacity: 0 }}
         >
           <h2
             data-typo-id="hero-f3-h2"
@@ -195,8 +214,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
+          ref={lobbyRef}
           className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
-          style={{ opacity: lobbyOpacity }}
+          style={{ opacity: 0 }}
         >
           <h2
             data-typo-id="hero-f4-h2"
@@ -226,8 +246,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
         {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
         <div
+          ref={ctasRef}
           className="absolute bottom-16 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
-          style={{ opacity: contentOpacity }}
+          style={{ opacity: 1 }}
         >
           {/* Centered Scroll to Explore on Desktop */}
           <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">

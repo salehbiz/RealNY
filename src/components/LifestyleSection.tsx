@@ -99,7 +99,7 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
         {/* Centered Heading with Equal Spacing */}
         <div className="text-center max-w-4xl mx-auto px-4 pb-20 md:pb-[120px] flex justify-center items-center">
           <h2 id="crossroads-heading" className="font-rexton text-[22.5px] font-bold text-[#101535] leading-[1.15] tracking-[-0.15em] uppercase text-center [text-wrap:balance]">
-            A New Line of <span className="text-[#D6B585] tracking-[-0.15em] font-bold uppercase">Luxury</span> has Arrived
+            A New Line of <span className="text-[#745831] tracking-[-0.15em] font-bold uppercase">Luxury</span> has Arrived
           </h2>
         </div>
 
@@ -109,24 +109,24 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
           <button
             onClick={handleScrollLeft}
             disabled={activeIndex === 0}
-            className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+            className={`absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
               activeIndex === 0 ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
             }`}
             aria-label="Previous Slide"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
 
           {/* Right Arrow Button */}
           <button
             onClick={handleScrollRight}
             disabled={activeIndex === (isMobile ? cards.length - 1 : cards.length - 2)}
-            className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
+            className={`absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-[#101535] text-white border border-white/25 flex items-center justify-center shadow-md hover:bg-[#242C5B] hover:scale-110 transition-all cursor-pointer ${
               activeIndex === (isMobile ? cards.length - 1 : cards.length - 2) ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
             }`}
             aria-label="Next Slide"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Scrollable Track */}
@@ -148,6 +148,10 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
                 <img
                   src={card.src}
                   alt={card.title}
+                  loading="lazy"
+                  decoding="async"
+                  width={640}
+                  height={400}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-none"
                 />
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
@@ -156,18 +160,22 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
           </div>
 
           {/* Slide Indicator Dots */}
-          <div className="flex justify-center items-center gap-2 pt-4">
+          <div className="flex justify-center items-center gap-1 pt-2">
             {(isMobile ? cards : cards.slice(0, cards.length - 1)).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => scrollToCard(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === activeIndex
-                    ? 'w-6 bg-[#D6B585]'
-                    : 'w-1.5 bg-[#101535]/20 hover:bg-[#101535]/50'
-                }`}
-              />
+                className="w-11 h-11 flex items-center justify-center cursor-pointer bg-transparent transition-all"
+              >
+                <span
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    idx === activeIndex
+                      ? 'w-6 bg-[#D6B585]'
+                      : 'w-1.5 bg-[#101535]/20 hover:bg-[#101535]/50'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>

@@ -1,0 +1,12 @@
+# The Eastline New York
+
+The Eastline New York (realny.vercel.app) is a modern luxury residential building located on the Upper East Side of Manhattan.
+
+## Building Information
+
+- Address: 1655 First Avenue / 355 East 86th Street, New York, NY 10028
+- Architect: INC Architecture & Design
+- Amenities Designer: Paul Duesing & Partners
+- Developer: Chess / Sponsor
+- Exclusive Leasing & Marketing: Real New York
+- Features: Over 10,000 sq ft of private wellness and social amenities surrounding a central landscaped garden courtyard.

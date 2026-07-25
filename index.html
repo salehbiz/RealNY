@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Eastline New York | Luxury Condominiums In Manhattan</title>
     <meta name="description" content="Introducing The Eastline New York, luxury boutique condominiums for sale in Midtown Manhattan." />
+    <link rel="canonical" href="https://realny.vercel.app/" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="The Eastline New York | Luxury Condominiums In Manhattan" />
+    <meta property="og:description" content="Introducing The Eastline New York, luxury boutique condominiums for sale in Midtown Manhattan." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://realny.vercel.app/" />
+    <meta property="og:image" content="https://realny.vercel.app/images/building-hero.webp" />
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RealEstateListing",
+        "name": "The Eastline New York",
+        "description": "Introducing The Eastline New York, luxury boutique condominiums for sale in Midtown Manhattan.",
+        "url": "https://realny.vercel.app/",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "355 East 86th Street",
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "postalCode": "10028",
+          "addressCountry": "US"
+        }
+      }
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/brand/Icon_Gold.svg" />
@@ -12,19 +39,24 @@
     <!-- Preload critical local fonts -->
     <link rel="preload" href="/fonts/Sora-Variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/Rexton-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/Rexton-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <script>
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
       window.scrollTo(0, 0);
     </script>
-    <link rel="preload" as="image" href="/frames/hero/mobile-poster.avif"
-          type="image/avif" fetchpriority="high" media="(max-width: 767px)">
-    <link rel="preload" as="image" href="/frames/hero/poster.avif"
-          type="image/avif" fetchpriority="high" media="(min-width: 768px)">
+    <link rel="preload" as="image" href="/frames/hero/mobile-poster.webp"
+          type="image/webp" fetchpriority="high" media="(max-width: 767px)">
+    <link rel="preload" as="image" href="/frames/hero/poster.webp"
+          type="image/webp" fetchpriority="high" media="(min-width: 768px)">
   </head>
   <body class="bg-[#101535] text-[#F4F5F8] antialiased selection:bg-[#D6B585] selection:text-[#101535]">
+    <noscript>
+      <div style="padding: 20px; text-align: center; background-color: #101535; color: #ECE7DF; font-family: sans-serif;">
+        <h1>The Eastline New York</h1>
+        <p>For the full cinematic experience, please enable JavaScript in your browser.</p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

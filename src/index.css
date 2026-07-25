@@ -310,3 +310,9 @@ header nav button {
   font-weight: 600 !important;
   text-transform: uppercase !important;
 }
+
+/* Below-fold homepage sections render optimization */
+#skyline, #amenities, #residences, #neighborhood, #inquire {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}

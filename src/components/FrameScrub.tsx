@@ -20,7 +20,6 @@ type Props = {
   fallbackFramePath?: (i: number) => string;
   pathKey?: string;
   snapPoints?: number[];
-  filterStyle?: string;
 };
 
 const LERP = 0.15;
@@ -40,7 +39,6 @@ export default function FrameScrub({
   fallbackFramePath,
   pathKey = '',
   snapPoints,
-  filterStyle,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -58,7 +56,39 @@ export default function FrameScrub({
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isFallenBack, setIsFallenBack] = useState(false);
-  const [firstFrameDrawn, setFirstFrameDrawn] = useState(false);
+  const [canvasDisplay, setCanvasDisplay] = useState<'none' | 'block'>('none');
+  const [canvasOpacity, setCanvasOpacity] = useState<number>(0);
+  const hasDrawnFirst = useRef(false);
+
+  const [loadFull, setLoadFull] = useState(false);
+  const setLoadFullRef = useRef(setLoadFull);
+  setLoadFullRef.current = setLoadFull;
+
+  const lastPathKey = useRef('');
+  const lastIsFallenBack = useRef(false);
+
+  useEffect(() => {
+    setIsFallenBack(false);
+    hasDrawnFirst.current = false;
+    setCanvasDisplay('none');
+    setCanvasOpacity(0);
+  }, [pathKey]);
+
+  useEffect(() => {
+    if (loadFull) return;
+    const triggerFullLoad = (e: Event) => {
+      if (e.type === 'scroll' && window.scrollY <= 2) return;
+      setLoadFullRef.current(true);
+    };
+    window.addEventListener('scroll', triggerFullLoad, { passive: true });
+    window.addEventListener('wheel', triggerFullLoad, { passive: true, once: true });
+    window.addEventListener('touchstart', triggerFullLoad, { passive: true, once: true });
+    return () => {
+      window.removeEventListener('scroll', triggerFullLoad);
+      window.removeEventListener('wheel', triggerFullLoad);
+      window.removeEventListener('touchstart', triggerFullLoad);
+    };
+  }, [loadFull]);
 
   const onProgressRef = useRef(onProgress);
   onProgressRef.current = onProgress;
@@ -68,11 +98,6 @@ export default function FrameScrub({
 
   const fallbackFramePathRef = useRef(fallbackFramePath);
   fallbackFramePathRef.current = fallbackFramePath;
-
-  useEffect(() => {
-    setIsFallenBack(false);
-    setFirstFrameDrawn(false);
-  }, [pathKey]);
 
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.innerWidth < 768
@@ -173,19 +198,47 @@ export default function FrameScrub({
     if (!visible || !tierResolved || reduced) return;
 
     let cancelled = false;
-    let loadedCount = 0;
-    const requiredForReady = Math.min(24, frameCount);
 
-    compressedBlobs.current.clear();
-    decodedBitmaps.current.forEach((bitmap) => bitmap.close());
-    decodedBitmaps.current.clear();
-    fetchedOrInFlight.current.clear();
-    decodingFrames.current.clear();
-    setReady(false);
+    // Upgrade of loadFull should not wipe the cached arrays!
+    const key = `${pathKey}_${isFallenBack}`;
+    const prevKey = `${lastPathKey.current}_${lastIsFallenBack.current}`;
+    if (key !== prevKey) {
+      compressedBlobs.current.clear();
+      decodedBitmaps.current.forEach((bitmap) => bitmap.close());
+      decodedBitmaps.current.clear();
+      fetchedOrInFlight.current.clear();
+      decodingFrames.current.clear();
+      setReady(false);
+      lastPathKey.current = pathKey;
+      lastIsFallenBack.current = isFallenBack;
+    }
+
+    let loadedCount = compressedBlobs.current.size;
+    const requiredForReady = Math.min(isMobile ? 12 : 24, frameCount);
+    if (loadedCount >= requiredForReady) {
+      setReady(true);
+    }
 
     const order: number[] = [];
     const step = isMobile ? 2 : 1;
-    for (const stride of [8, 4, 2, 1]) {
+
+    // Check connection telemetry
+    const conn = (navigator as any).connection;
+    const slowConn = conn?.saveData || conn?.effectiveType === '3g' || (conn?.downlink && conn.downlink < 3);
+
+    // Build stride list dynamically
+    const strides = [];
+    if (!loadFull) {
+      if (slowConn) {
+        strides.push(8);
+      } else {
+        strides.push(8, 4);
+      }
+    } else {
+      strides.push(8, 4, 2, 1);
+    }
+
+    for (const stride of strides) {
       const s = stride * step;
       for (let i = 1; i <= frameCount; i += s) {
         if (!order.includes(i)) order.push(i);
@@ -250,7 +303,7 @@ export default function FrameScrub({
             ? fallbackFramePathRef.current(currentFrame)
             : framePathRef.current(currentFrame);
 
-        fetch(targetPath)
+        fetch(targetPath, { priority: 'low' } as any)
           .then((res) => {
             if (!res.ok) throw new Error(`Status: ${res.status}`);
             return res.blob();
@@ -285,10 +338,13 @@ export default function FrameScrub({
       cancelled = true;
       pumpRef.current = undefined;
     };
-  }, [visible, frameCount, isMobile, tierResolved, reduced, isFallenBack]);
+  }, [visible, frameCount, isMobile, tierResolved, reduced, isFallenBack, loadFull]);
 
   // GSAP ScrollTrigger pinning and target calculation
   useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).__PRERENDER__) {
+      return;
+    }
     const track = trackRef.current;
     if (!track) return;
 
@@ -297,8 +353,6 @@ export default function FrameScrub({
         trigger: track,
         start: 'top top',
         end: () => `+=${window.innerHeight * (scrollLengthVh / 100 - 1)}`,
-        pin: true,
-        anticipatePin: 1,
         scrub: 0,
         snap:
           snapPoints && snapPoints.length > 0
@@ -312,6 +366,9 @@ export default function FrameScrub({
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
+          if (progress > 0) {
+            setLoadFullRef.current(true);
+          }
           target.current = 1 + progress * (frameCount - 1);
           if (onProgressRef.current) {
             onProgressRef.current(progress, Math.round(target.current));
@@ -401,6 +458,9 @@ export default function FrameScrub({
   // RAF Draw loop
   useEffect(() => {
     if (!ready || !tierResolved) return;
+    if (typeof window !== 'undefined' && (window as any).__PRERENDER__) {
+      return;
+    }
     let raf = 0,
       lastDrawn = -1;
 
@@ -430,8 +490,16 @@ export default function FrameScrub({
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(bmp, dx, dy, dw, dh);
-      setFirstFrameDrawn(true);
+      if (!hasDrawnFirst.current) {
+        hasDrawnFirst.current = true;
+        setCanvasDisplay('block');
+        requestAnimationFrame(() => {
+          setCanvasOpacity(1);
+        });
+      }
     };
+
+    let pumpThrottleCount = 0;
 
     const loop = () => {
       playhead.current += (target.current - playhead.current) * LERP;
@@ -442,7 +510,7 @@ export default function FrameScrub({
         lastDrawn = frame;
       }
       decodeFrames(idealFrame);
-      if (pumpRef.current) {
+      if (pumpRef.current && pumpThrottleCount++ % 6 === 0) {
         pumpRef.current();
       }
       raf = requestAnimationFrame(loop);
@@ -450,10 +518,11 @@ export default function FrameScrub({
 
     const resize = () => {
       const c = canvasRef.current;
-      if (!c) return;
+      const parent = stickyRef.current;
+      if (!c || !parent) return;
       const isMob = window.innerWidth < 768;
       const dpr = Math.min(window.devicePixelRatio || 1, isMob ? 1.5 : 2);
-      const r = c.getBoundingClientRect();
+      const r = parent.getBoundingClientRect();
       c.width = r.width * dpr;
       c.height = r.height * dpr;
       lastDrawn = -1;
@@ -472,9 +541,7 @@ export default function FrameScrub({
     if (posterBase) {
       return (
         <picture>
-          <source srcSet={media(`${posterBase}/mobile-poster.avif`)} type="image/avif" media="(max-width: 767px)" />
           <source srcSet={media(`${posterBase}/mobile-poster.webp`)} type="image/webp" media="(max-width: 767px)" />
-          <source srcSet={media(`${posterBase}/poster.avif`)} type="image/avif" />
           <img
             src={media(`${posterBase}/poster.webp`)}
             alt=""
@@ -500,23 +567,41 @@ export default function FrameScrub({
     );
   };
 
-  const activeFilter = filterStyle || 'brightness(1.16) contrast(0.84) saturate(0.88)';
+  const trackStyle: React.CSSProperties = reduced
+    ? { position: 'relative' }
+    : { position: 'relative', height: `${scrollLengthVh}vh` };
+
+  const stickyStyle: React.CSSProperties = reduced
+    ? { height: '100vh', overflow: 'hidden', position: 'relative' }
+    : {
+        height: '100vh',
+        overflow: 'hidden',
+        position: 'sticky',
+        top: 0,
+      };
 
   return (
-    <div ref={trackRef} className={className} style={{ position: 'relative' }}>
-      <div
-        ref={stickyRef}
-        style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}
-      >
+    <div ref={trackRef} className={className} style={trackStyle}>
+      <div ref={stickyRef} style={stickyStyle}>
         {reduced ? (
           renderPoster({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            filter: activeFilter,
           })
         ) : (
           <>
+            {renderPoster({
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 1,
+              pointerEvents: 'none',
+              display: 'block',
+              zIndex: 5,
+            })}
             <canvas
               ref={canvasRef}
               style={{
@@ -525,25 +610,13 @@ export default function FrameScrub({
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                opacity: firstFrameDrawn ? 1 : 0,
+                opacity: canvasOpacity,
                 transition: 'opacity 0.4s ease-out',
-                display: 'block',
+                display: canvasDisplay,
                 transform: 'translateZ(0)',
-                filter: activeFilter,
+                zIndex: 10,
               }}
             />
-            {renderPoster({
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: firstFrameDrawn ? 0 : 1,
-              transition: 'opacity 0.4s ease-out',
-              pointerEvents: 'none',
-              display: 'block',
-              filter: activeFilter,
-            })}
           </>
         )}
         <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between">
