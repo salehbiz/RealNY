@@ -22,9 +22,7 @@ export default defineConfig({
           ) {
             return 'react-vendor';
           }
-          if (id.includes('node_modules/gsap/')) {
-            return 'gsap';
-          }
+
         },
       },
     },

@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { media } from '../lib/media';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   frameCount: number;
@@ -44,9 +41,13 @@ export default function FrameScrub({
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
 
-  const compressedBlobs = useRef<Map<number, Blob>>(new Map());
-  const decodedBitmaps = useRef<Map<number, ImageBitmap>>(new Map());
-  const fetchedOrInFlight = useRef<Set<number>>(new Set());
+  const previewBlobs = useRef<Map<number, Blob>>(new Map());
+  const realBlobs = useRef<Map<number, Blob>>(new Map());
+  const previewFetchedOrInFlight = useRef<Set<number>>(new Set());
+  const realFetchedOrInFlight = useRef<Set<number>>(new Set());
+
+  const previewBitmaps = useRef<Map<number, ImageBitmap>>(new Map());
+  const realBitmaps = useRef<Map<number, ImageBitmap>>(new Map());
   const decodingFrames = useRef<Set<number>>(new Set());
   const pumpRef = useRef<(() => void) | undefined>(undefined);
 
@@ -54,6 +55,7 @@ export default function FrameScrub({
   const target = useRef(1);
 
   const [ready, setReady] = useState(false);
+  const [posterLoaded, setPosterLoaded] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isFallenBack, setIsFallenBack] = useState(false);
   const [canvasDisplay, setCanvasDisplay] = useState<'none' | 'block'>('none');
@@ -66,6 +68,7 @@ export default function FrameScrub({
 
   const lastPathKey = useRef('');
   const lastIsFallenBack = useRef(false);
+  const lastDrawn = useRef<{ frame: number; quality: 'preview' | 'real' | null }>({ frame: -1, quality: null });
 
   useEffect(() => {
     setIsFallenBack(false);
@@ -182,166 +185,264 @@ export default function FrameScrub({
   }, [eager, deferUntilLoad]);
 
   useEffect(() => {
-    const bitmaps = decodedBitmaps.current;
-    const blobs = compressedBlobs.current;
-    const inflight = fetchedOrInFlight.current;
+    const pBitmaps = previewBitmaps.current;
+    const rBitmaps = realBitmaps.current;
+    const pBlobs = previewBlobs.current;
+    const rBlobs = realBlobs.current;
+    const pInflight = previewFetchedOrInFlight.current;
+    const rInflight = realFetchedOrInFlight.current;
     const decoding = decodingFrames.current;
     return () => {
-      bitmaps.forEach((bitmap) => bitmap.close());
-      bitmaps.clear();
-      blobs.clear();
-      inflight.clear();
+      pBitmaps.forEach((bitmap) => bitmap.close());
+      pBitmaps.clear();
+      rBitmaps.forEach((bitmap) => bitmap.close());
+      rBitmaps.clear();
+      pBlobs.clear();
+      rBlobs.clear();
+      pInflight.clear();
+      rInflight.clear();
       decoding.clear();
       pumpRef.current = undefined;
     };
   }, []);
 
+  // Decode helper if the frame is very close to the active playhead
+  const decodeImmediateIfClose = (frame: number, blob: Blob, isReal: boolean) => {
+    const center = Math.round(playhead.current);
+    if (Math.abs(frame - center) <= 5) {
+      if (isReal && realBitmaps.current.has(frame)) return;
+      if (!isReal && previewBitmaps.current.has(frame)) return;
+      if (decodingFrames.current.has(frame)) return;
+
+      decodingFrames.current.add(frame);
+      createImageBitmap(blob)
+        .then((bmp) => {
+          decodingFrames.current.delete(frame);
+          if (isReal) {
+            realBitmaps.current.set(frame, bmp);
+          } else {
+            previewBitmaps.current.set(frame, bmp);
+          }
+        })
+        .catch(() => {
+          decodingFrames.current.delete(frame);
+        });
+    }
+  };
+
   // Stride-based downloading & playhead priority management
   useEffect(() => {
-    if (!visible || !tierResolved || reduced) return;
+    if (!visible || !tierResolved || reduced || !posterLoaded) return;
 
     let cancelled = false;
 
-    // Upgrade of loadFull should not wipe the cached arrays!
+    // Reset caches if the resolution path key changes
     const key = `${pathKey}_${isFallenBack}`;
     const prevKey = `${lastPathKey.current}_${lastIsFallenBack.current}`;
     if (key !== prevKey) {
-      compressedBlobs.current.clear();
-      decodedBitmaps.current.forEach((bitmap) => bitmap.close());
-      decodedBitmaps.current.clear();
-      fetchedOrInFlight.current.clear();
+      previewBlobs.current.clear();
+      previewBitmaps.current.forEach((bitmap) => bitmap.close());
+      previewBitmaps.current.clear();
+      previewFetchedOrInFlight.current.clear();
+
+      realBlobs.current.clear();
+      realBitmaps.current.forEach((bitmap) => bitmap.close());
+      realBitmaps.current.clear();
+      realFetchedOrInFlight.current.clear();
+
       decodingFrames.current.clear();
       setReady(false);
       lastPathKey.current = pathKey;
       lastIsFallenBack.current = isFallenBack;
     }
 
-    let loadedCount = compressedBlobs.current.size;
-    const requiredForReady = Math.min(isMobile ? 6 : 16, frameCount);
-    if (loadedCount >= requiredForReady) {
+    let previewDownloadedCount = previewBlobs.current.size;
+    const requiredForReady = isMobile ? 3 : 6;
+    if (previewDownloadedCount >= requiredForReady) {
       setReady(true);
     }
 
-    const order: number[] = [];
-    const step = 1;
-
-    // Check connection telemetry
-    const conn = (navigator as any).connection;
-    const slowConn = conn?.saveData || conn?.effectiveType === '3g' || (conn?.downlink && conn.downlink < 3);
-
-    // Build stride list dynamically
-    const strides = [];
-    if (!loadFull) {
-      if (slowConn) {
-        strides.push(8);
-      } else {
-        strides.push(4, 2);
-      }
-    } else {
-      strides.push(4, 2, 1);
-    }
-
+    // Stride-pyramid order for preview tier (Stride 8 -> 4 -> 2 -> 1)
+    const previewOrder: number[] = [];
+    const strides = [8, 4, 2, 1];
     for (const stride of strides) {
-      const s = stride * step;
-      for (let i = 1; i <= frameCount; i += s) {
-        if (!order.includes(i)) order.push(i);
+      for (let i = 1; i <= frameCount; i += stride) {
+        if (!previewOrder.includes(i)) previewOrder.push(i);
       }
     }
 
-    let idx = 0;
-    let inFlight = 0;
-    const inSet = (_f: number) => true;
-
-    const findPriorityFrame = (center: number, maxDistance = 15): number | null => {
-      for (let dist = 0; dist <= maxDistance; dist++) {
-        const framePlus = center + dist;
-        if (
-          framePlus >= 1 &&
-          framePlus <= frameCount &&
-          inSet(framePlus) &&
-          !fetchedOrInFlight.current.has(framePlus)
-        ) {
-          return framePlus;
-        }
-        if (dist > 0) {
-          const frameMinus = center - dist;
-          if (
-            frameMinus >= 1 &&
-            frameMinus <= frameCount &&
-            inSet(frameMinus) &&
-            !fetchedOrInFlight.current.has(frameMinus)
-          ) {
-            return frameMinus;
-          }
-        }
-      }
-      return null;
+    const getPreviewFramePath = (i: number) => {
+      const base = isMobile ? 'preview-mobile' : 'preview-desktop';
+      return framePathRef.current(i).replace(/\/(desktop-hq|desktop|mobile)\//, `/${base}/`);
     };
 
     const pump = () => {
       if (cancelled) return;
-      const concurrency = isMobile ? 4 : 6;
-      while (inFlight < concurrency) {
-        const center = Math.round(playhead.current);
-        let frame = findPriorityFrame(center, 15);
 
-        if (frame === null) {
-          while (idx < order.length) {
-            const candidate = order[idx++];
-            if (!fetchedOrInFlight.current.has(candidate)) {
-              frame = candidate;
+      const previewFinished = previewBlobs.current.size === frameCount;
+
+      if (!previewFinished) {
+        // --- PHASE A: Preview tier fetching (Pyramid order) ---
+        let inFlightPreview = previewFetchedOrInFlight.current.size - previewBlobs.current.size;
+        const maxPreviewInFlight = isMobile ? 6 : 10;
+
+        while (inFlightPreview < maxPreviewInFlight) {
+          let frame = null;
+          for (const f of previewOrder) {
+            if (!previewFetchedOrInFlight.current.has(f)) {
+              frame = f;
               break;
             }
           }
+
+          if (frame === null) break;
+
+          previewFetchedOrInFlight.current.add(frame);
+          inFlightPreview++;
+
+          const currentFrame = frame;
+          const targetPath = getPreviewFramePath(currentFrame);
+
+          const fetchPreviewFrame = async () => {
+            try {
+              let res: Response | undefined;
+              let cache: Cache | null = null;
+
+              try {
+                cache = await caches.open('frame-cache-v1');
+                const cachedRes = await cache.match(targetPath);
+                if (cachedRes) {
+                  res = cachedRes;
+                }
+              } catch { /* Cache API unavailable */ }
+
+              if (!res) {
+                const fetchPriority = (currentFrame === 1 || currentFrame === 9 || currentFrame === 17) ? 'high' : 'low';
+                res = await fetch(targetPath, { priority: fetchPriority } as any);
+                if (res.ok && cache) {
+                  try {
+                    cache.put(targetPath, res.clone());
+                  } catch { /* ignore */ }
+                }
+              }
+
+              if (!res.ok) throw new Error(`Status: ${res.status}`);
+              const blob = await res.blob();
+              if (cancelled) return;
+
+              previewBlobs.current.set(currentFrame, blob);
+              previewDownloadedCount++;
+
+              if (previewDownloadedCount >= requiredForReady) {
+                setReady(true);
+              }
+
+              decodeImmediateIfClose(currentFrame, blob, false);
+
+              if (previewBlobs.current.size === frameCount) {
+                setTimeout(() => {
+                  if (pumpRef.current) pumpRef.current();
+                }, 0);
+              } else {
+                pump();
+              }
+            } catch (err) {
+              if (cancelled) return;
+              previewFetchedOrInFlight.current.delete(currentFrame);
+              setTimeout(pump, 1000);
+            }
+          };
+
+          fetchPreviewFrame();
         }
+      } else {
+        // --- PHASE B: Real tier upgrading (Background, Playhead-aware) ---
+        let inFlightReal = realFetchedOrInFlight.current.size - realBlobs.current.size;
+        const maxRealInFlight = isMobile ? 4 : 6;
 
-        if (frame === null) break;
+        while (inFlightReal < maxRealInFlight) {
+          const center = Math.round(playhead.current);
+          const UPGRADE_WINDOW = isMobile ? 25 : 40;
 
-        fetchedOrInFlight.current.add(frame);
-        inFlight++;
+          const candidates: number[] = [];
+          const lo = Math.max(1, center - UPGRADE_WINDOW);
+          const hi = Math.min(frameCount, center + UPGRADE_WINDOW);
 
-        const currentFrame = frame;
-        const targetPath =
-          isFallenBack && fallbackFramePathRef.current
+          for (let i = lo; i <= hi; i++) {
+            if (!realFetchedOrInFlight.current.has(i)) {
+              candidates.push(i);
+            }
+          }
+
+          if (candidates.length === 0) break;
+
+          const diff = target.current - playhead.current;
+          const scrollDir = diff > 0 ? 1 : (diff < 0 ? -1 : 0);
+
+          candidates.sort((a, b) => {
+            const distA = Math.abs(a - center);
+            const distB = Math.abs(b - center);
+
+            const biasA = (scrollDir > 0 && a > center) || (scrollDir < 0 && a < center) ? 0.7 : 1.0;
+            const biasB = (scrollDir > 0 && b > center) || (scrollDir < 0 && b < center) ? 0.7 : 1.0;
+
+            return (distA * biasA) - (distB * biasB);
+          });
+
+          const frame = candidates[0];
+          realFetchedOrInFlight.current.add(frame);
+          inFlightReal++;
+
+          const currentFrame = frame;
+          const targetPath = isFallenBack && fallbackFramePathRef.current
             ? fallbackFramePathRef.current(currentFrame)
             : framePathRef.current(currentFrame);
 
-        const fetchFrame = async () => {
-          try {
-            let res: Response | undefined;
-            const cache = await caches.open('frame-cache-v1');
-            const cachedRes = await cache.match(targetPath);
-            if (cachedRes) {
-              res = cachedRes;
-            } else {
-              const fetchPriority = (eager && currentFrame <= 12) ? 'high' : 'low';
-              res = await fetch(targetPath, { priority: fetchPriority } as any);
-              if (res.ok) {
-                cache.put(targetPath, res.clone());
+          const fetchRealFrame = async () => {
+            try {
+              let res: Response | undefined;
+              let cache: Cache | null = null;
+
+              try {
+                cache = await caches.open('frame-cache-v1');
+                const cachedRes = await cache.match(targetPath);
+                if (cachedRes) {
+                  res = cachedRes;
+                }
+              } catch { /* Cache API unavailable */ }
+
+              if (!res) {
+                res = await fetch(targetPath, { priority: 'low' } as any);
+                if (res.ok && cache) {
+                  try {
+                    cache.put(targetPath, res.clone());
+                  } catch { /* ignore */ }
+                }
+              }
+
+              if (!res.ok) throw new Error(`Status: ${res.status}`);
+              const blob = await res.blob();
+              if (cancelled) return;
+
+              realBlobs.current.set(currentFrame, blob);
+
+              decodeImmediateIfClose(currentFrame, blob, true);
+
+              pump();
+            } catch (err) {
+              if (cancelled) return;
+              if (!isFallenBack && fallbackFramePathRef.current) {
+                setIsFallenBack(true);
+                cancelled = true;
+              } else {
+                realFetchedOrInFlight.current.delete(currentFrame);
+                setTimeout(pump, 1000);
               }
             }
-            if (!res.ok) throw new Error(`Status: ${res.status}`);
-            const blob = await res.blob();
-            if (cancelled) return;
-            compressedBlobs.current.set(currentFrame, blob);
-            loadedCount++;
-            if (loadedCount >= requiredForReady) {
-              setReady(true);
-            }
-            inFlight--;
-            pump();
-          } catch (err) {
-            if (cancelled) return;
-            if (!isFallenBack && fallbackFramePathRef.current) {
-              setIsFallenBack(true);
-              cancelled = true;
-            } else {
-              inFlight--;
-              pump();
-            }
-          }
-        };
-        fetchFrame();
+          };
+
+          fetchRealFrame();
+        }
       }
     };
 
@@ -352,7 +453,7 @@ export default function FrameScrub({
       cancelled = true;
       pumpRef.current = undefined;
     };
-  }, [visible, frameCount, isMobile, tierResolved, reduced, isFallenBack, loadFull]);
+  }, [visible, frameCount, isMobile, tierResolved, reduced, isFallenBack, loadFull, posterLoaded]);
 
   // GSAP ScrollTrigger pinning and target calculation
   useEffect(() => {
@@ -362,101 +463,257 @@ export default function FrameScrub({
     const track = trackRef.current;
     if (!track) return;
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: track,
-        start: 'top top',
-        end: () => `+=${window.innerHeight * (scrollLengthVh / 100 - 1)}`,
-        pin: true,
-        anticipatePin: 1,
-        scrub: 0,
-        snap:
-          snapPoints && snapPoints.length > 0
-            ? {
-                snapTo: snapPoints,
-                duration: { min: 0.25, max: 0.5 },
-                delay: 0.08,
-                ease: 'power1.inOut',
-              }
-            : undefined,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          if (progress > 0) {
-            setLoadFullRef.current(true);
-          }
-          target.current = 1 + progress * (frameCount - 1);
-          if (onProgressRef.current) {
-            onProgressRef.current(progress, Math.round(target.current));
-          }
-        },
-      });
-    }, track);
+    let ctx: any;
+    let timer: ReturnType<typeof setTimeout>;
+    let cancelled = false;
 
-    const timer = setTimeout(() => ScrollTrigger.refresh(), 300);
+    const init = async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: track,
+          start: 'top top',
+          end: () => `+=${window.innerHeight * (scrollLengthVh / 100 - 1)}`,
+          pin: true,
+          anticipatePin: 1,
+          scrub: 0,
+          snap:
+            snapPoints && snapPoints.length > 0
+              ? {
+                  snapTo: snapPoints,
+                  duration: { min: 0.25, max: 0.5 },
+                  delay: 0.08,
+                  ease: 'power1.inOut',
+                }
+              : undefined,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            if (progress > 0) {
+              setLoadFullRef.current(true);
+            }
+            target.current = 1 + progress * (frameCount - 1);
+            if (onProgressRef.current) {
+              onProgressRef.current(progress, Math.round(target.current));
+            }
+          },
+        });
+      }, track);
+
+      timer = setTimeout(() => ScrollTrigger.refresh(), 300);
+    };
+
+    init();
+
     return () => {
-      clearTimeout(timer);
-      ctx.revert();
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+      if (ctx) ctx.revert();
     };
   }, [frameCount, scrollLengthVh, snapPoints]);
 
+  // Distance-first, Quality-second Nearest Frame Selection
   const findNearestFrame = useCallback((frame: number): number | null => {
-    if (decodedBitmaps.current.has(frame)) return frame;
-    for (let delta = 1; delta <= 20; delta++) {
-      if (decodedBitmaps.current.has(frame + delta)) return frame + delta;
-      if (decodedBitmaps.current.has(frame - delta)) return frame - delta;
+    if (realBitmaps.current.has(frame)) return frame;
+    if (previewBitmaps.current.has(frame)) return frame;
+
+    let minDistance = Infinity;
+    let nearest: { frame: number; isReal: boolean } | null = null;
+
+    for (const key of realBitmaps.current.keys()) {
+      const dist = Math.abs(key - frame);
+      if (dist < minDistance) {
+        minDistance = dist;
+        nearest = { frame: key, isReal: true };
+      }
     }
-    return null;
-  }, []);
+    for (const key of previewBitmaps.current.keys()) {
+      const dist = Math.abs(key - frame);
+      if (dist < minDistance) {
+        minDistance = dist;
+        nearest = { frame: key, isReal: false };
+      } else if (dist === minDistance) {
+        // Real-tier preferred if distance is equal
+        if (nearest && !nearest.isReal) {
+          // nearest is already preview, no change needed
+        }
+      }
+    }
 
-  const decodeFrames = useCallback(
-    async (center: number) => {
-      const DECODE_WINDOW = isMobile ? 15 : 30;
-      const lo = Math.max(1, center - DECODE_WINDOW);
-      const hi = Math.min(frameCount, center + DECODE_WINDOW);
+    if (nearest !== null) {
+      let finalFrame = nearest.frame;
+      let finalIsReal = nearest.isReal;
 
-      // Evict offscreen ImageBitmaps with bitmap.close()
-      for (const [key, bitmap] of decodedBitmaps.current) {
-        if (key < lo || key > hi) {
-          bitmap.close();
-          decodedBitmaps.current.delete(key);
+      if (!finalIsReal) {
+        let bestRealFrame = null;
+        let minRealDist = Infinity;
+        for (const key of realBitmaps.current.keys()) {
+          const dist = Math.abs(key - frame);
+          if (dist < minRealDist) {
+            minRealDist = dist;
+            bestRealFrame = key;
+          }
+        }
+        if (bestRealFrame !== null && minRealDist <= minDistance + 2) {
+          finalFrame = bestRealFrame;
+          finalIsReal = true;
         }
       }
 
-      const decodeOrder: number[] = [];
-      for (let dist = 0; dist <= DECODE_WINDOW; dist++) {
+      return finalFrame;
+    }
+
+    let nearestBlobFrame = null;
+    let minBlobDist = Infinity;
+    let isRealBlob = false;
+
+    for (const key of realBlobs.current.keys()) {
+      const dist = Math.abs(key - frame);
+      if (dist < minBlobDist) {
+        minBlobDist = dist;
+        nearestBlobFrame = key;
+        isRealBlob = true;
+      }
+    }
+    for (const key of previewBlobs.current.keys()) {
+      const dist = Math.abs(key - frame);
+      if (dist < minBlobDist || (dist === minBlobDist && isRealBlob)) {
+        minBlobDist = dist;
+        nearestBlobFrame = key;
+        isRealBlob = false;
+      }
+    }
+
+    if (nearestBlobFrame !== null) {
+      const blob = isRealBlob ? realBlobs.current.get(nearestBlobFrame) : previewBlobs.current.get(nearestBlobFrame);
+      if (blob && !decodingFrames.current.has(nearestBlobFrame)) {
+        decodingFrames.current.add(nearestBlobFrame);
+        createImageBitmap(blob)
+          .then((bmp) => {
+            decodingFrames.current.delete(nearestBlobFrame!);
+            if (isRealBlob) {
+              realBitmaps.current.set(nearestBlobFrame!, bmp);
+            } else {
+              previewBitmaps.current.set(nearestBlobFrame!, bmp);
+            }
+          })
+          .catch(() => {
+            decodingFrames.current.delete(nearestBlobFrame!);
+          });
+      }
+    }
+
+    return null;
+  }, []);
+
+  // Sliding Decode Window with Eviction and Budgeting
+  const decodeFrames = useCallback(
+    async (center: number) => {
+      const PREVIEW_WINDOW = isMobile ? 40 : 60;
+      const REAL_WINDOW = isMobile ? 25 : 40;
+
+      const pLo = Math.max(1, center - PREVIEW_WINDOW);
+      const pHi = Math.min(frameCount, center + PREVIEW_WINDOW);
+
+      const rLo = Math.max(1, center - REAL_WINDOW);
+      const rHi = Math.min(frameCount, center + REAL_WINDOW);
+
+      // 1. Evict offscreen preview bitmaps
+      for (const [key, bitmap] of previewBitmaps.current) {
+        if (key < pLo || key > pHi) {
+          bitmap.close();
+          previewBitmaps.current.delete(key);
+        }
+      }
+
+      // 2. Evict offscreen real bitmaps
+      for (const [key, bitmap] of realBitmaps.current) {
+        if (key < rLo || key > rHi) {
+          bitmap.close();
+          realBitmaps.current.delete(key);
+        }
+      }
+
+      // 3. Budget-controlled decode of real frames
+      const realDecodeOrder: number[] = [];
+      for (let dist = 0; dist <= REAL_WINDOW; dist++) {
         const p = center + dist;
-        if (p >= lo && p <= hi) decodeOrder.push(p);
+        if (p >= rLo && p <= rHi) realDecodeOrder.push(p);
         if (dist > 0) {
           const m = center - dist;
-          if (m >= lo && m <= hi) decodeOrder.push(m);
+          if (m >= rLo && m <= rHi) realDecodeOrder.push(m);
         }
       }
 
       let decodedCount = 0;
       const BUDGET = 4;
 
-      for (const i of decodeOrder) {
+      for (const i of realDecodeOrder) {
         if (decodedCount >= BUDGET) break;
-
         if (
-          !decodedBitmaps.current.has(i) &&
+          !realBitmaps.current.has(i) &&
           !decodingFrames.current.has(i) &&
-          compressedBlobs.current.has(i)
+          realBlobs.current.has(i)
         ) {
-          const blob = compressedBlobs.current.get(i);
+          const blob = realBlobs.current.get(i);
           if (blob) {
             decodedCount++;
             decodingFrames.current.add(i);
-
             createImageBitmap(blob)
               .then((bmp) => {
                 decodingFrames.current.delete(i);
                 const currentCenter = Math.round(playhead.current);
-                const currentLo = Math.max(1, currentCenter - DECODE_WINDOW);
-                const currentHi = Math.min(frameCount, currentCenter + DECODE_WINDOW);
+                const currentLo = Math.max(1, currentCenter - REAL_WINDOW);
+                const currentHi = Math.min(frameCount, currentCenter + REAL_WINDOW);
                 if (i >= currentLo && i <= currentHi) {
-                  decodedBitmaps.current.set(i, bmp);
+                  realBitmaps.current.set(i, bmp);
+                } else {
+                  bmp.close();
+                }
+              })
+              .catch(() => {
+                decodingFrames.current.delete(i);
+              });
+          }
+        }
+      }
+
+      // 4. Budget-controlled decode of preview frames
+      const previewDecodeOrder: number[] = [];
+      for (let dist = 0; dist <= PREVIEW_WINDOW; dist++) {
+        const p = center + dist;
+        if (p >= pLo && p <= pHi) previewDecodeOrder.push(p);
+        if (dist > 0) {
+          const m = center - dist;
+          if (m >= pLo && m <= pHi) previewDecodeOrder.push(m);
+        }
+      }
+
+      for (const i of previewDecodeOrder) {
+        if (decodedCount >= BUDGET) break;
+        if (
+          !previewBitmaps.current.has(i) &&
+          !decodingFrames.current.has(i) &&
+          previewBlobs.current.has(i)
+        ) {
+          const blob = previewBlobs.current.get(i);
+          if (blob) {
+            decodedCount++;
+            decodingFrames.current.add(i);
+            createImageBitmap(blob)
+              .then((bmp) => {
+                decodingFrames.current.delete(i);
+                const currentCenter = Math.round(playhead.current);
+                const currentLo = Math.max(1, currentCenter - PREVIEW_WINDOW);
+                const currentHi = Math.min(frameCount, currentCenter + PREVIEW_WINDOW);
+                if (i >= currentLo && i <= currentHi) {
+                  previewBitmaps.current.set(i, bmp);
                 } else {
                   bmp.close();
                 }
@@ -477,12 +734,11 @@ export default function FrameScrub({
     if (typeof window !== 'undefined' && (window as any).__PRERENDER__) {
       return;
     }
-    let raf = 0,
-      lastDrawn = -1;
+    let raf = 0;
 
     const draw = (frame: number) => {
       const canvas = canvasRef.current;
-      const bmp = decodedBitmaps.current.get(frame);
+      const bmp = realBitmaps.current.get(frame) || previewBitmaps.current.get(frame);
       if (!canvas || !bmp) return;
       const ctx = canvas.getContext('2d', { alpha: false });
       if (!ctx) return;
@@ -511,6 +767,11 @@ export default function FrameScrub({
         setCanvasDisplay('block');
         requestAnimationFrame(() => {
           setCanvasOpacity(1);
+          const lqip = document.getElementById('hero-lqip');
+          if (lqip) {
+            lqip.style.opacity = '0';
+            setTimeout(() => lqip.remove(), 400);
+          }
         });
       }
     };
@@ -519,10 +780,15 @@ export default function FrameScrub({
       playhead.current += (target.current - playhead.current) * LERP;
       const idealFrame = Math.round(playhead.current);
       const frame = findNearestFrame(idealFrame);
-      if (frame !== null && frame !== lastDrawn) {
-        draw(frame);
-        lastDrawn = frame;
+
+      if (frame !== null) {
+        const quality = realBitmaps.current.has(frame) ? 'real' : 'preview';
+        if (frame !== lastDrawn.current.frame || quality !== lastDrawn.current.quality) {
+          draw(frame);
+          lastDrawn.current = { frame, quality };
+        }
       }
+
       decodeFrames(idealFrame);
       if (pumpRef.current) {
         pumpRef.current();
@@ -539,7 +805,7 @@ export default function FrameScrub({
       const r = parent.getBoundingClientRect();
       c.width = r.width * dpr;
       c.height = r.height * dpr;
-      lastDrawn = -1;
+      lastDrawn.current = { frame: -1, quality: null };
     };
 
     resize();
@@ -551,12 +817,47 @@ export default function FrameScrub({
     };
   }, [ready, findNearestFrame, decodeFrames, tierResolved]);
 
+  const posterImgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = posterImgRef.current;
+    const canvas = canvasRef.current;
+    if (!img || !canvas || reduced) {
+      setPosterLoaded(true);
+      return;
+    }
+
+    const onLoad = async () => {
+      try {
+        const bmp = await createImageBitmap(img);
+        if (!realBitmaps.current.has(1)) {
+          realBitmaps.current.set(1, bmp);
+        }
+        setReady(true);
+      } catch (err) {
+        // poster decode failed, fall through to normal flow
+      }
+      setPosterLoaded(true);
+    };
+
+    if (img.complete && img.naturalWidth > 0) {
+      onLoad();
+    } else {
+      img.addEventListener('load', onLoad, { once: true });
+      img.addEventListener('error', () => {
+        setPosterLoaded(true);
+      }, { once: true });
+      return () => img.removeEventListener('load', onLoad);
+    }
+  }, [reduced]);
+
   const renderPoster = (style: React.CSSProperties) => {
     if (posterBase) {
       return (
         <picture>
           <source srcSet={media(`${posterBase}/mobile-poster.webp`)} type="image/webp" media="(max-width: 767px)" />
           <img
+            ref={posterImgRef}
             src={media(`${posterBase}/poster.webp`)}
             alt=""
             fetchPriority="high"
@@ -570,6 +871,7 @@ export default function FrameScrub({
     }
     return (
       <img
+        ref={posterImgRef}
         src={poster}
         alt=""
         fetchPriority="high"
@@ -595,8 +897,8 @@ export default function FrameScrub({
             {renderPoster({
               position: 'absolute',
               inset: 0,
-              width: '100%',
-              height: '100%',
+              width: 'calc(100% - 1px)',
+              height: 'calc(100% - 1px)',
               objectFit: 'cover',
               opacity: 1,
               pointerEvents: 'none',
@@ -608,8 +910,8 @@ export default function FrameScrub({
               style={{
                 position: 'absolute',
                 inset: 0,
-                width: '100%',
-                height: '100%',
+                width: 'calc(100% - 1px)',
+                height: 'calc(100% - 1px)',
                 objectFit: 'cover',
                 opacity: canvasOpacity,
                 transition: 'opacity 0.4s ease-out',

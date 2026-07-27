@@ -1,5 +1,5 @@
 export type FrameTier = {
-  dir: 'desktop-hq' | 'desktop' | 'mobile';
+  dir: 'desktop-hq' | 'desktop' | 'mobile' | 'preview-desktop' | 'preview-mobile';
   ext: 'webp';
 };
 

@@ -5,6 +5,33 @@
   ],
   "headers": [
     {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</frames/hero/mobile-poster.webp>; rel=preload; as=image; type=image/webp; media=\"(max-width: 767px)\"; fetchpriority=high, </frames/hero/poster.webp>; rel=preload; as=image; type=image/webp; media=\"(min-width: 768px)\"; fetchpriority=high"
+        }
+      ]
+    },
+    {
+      "source": "/residences",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</frames/residences/mobile-poster.webp>; rel=preload; as=image; type=image/webp; media=\"(max-width: 767px)\"; fetchpriority=high, </frames/residences/poster.webp>; rel=preload; as=image; type=image/webp; media=\"(min-width: 768px)\"; fetchpriority=high"
+        }
+      ]
+    },
+    {
+      "source": "/amenities",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</frames/amenities/mobile-poster.webp>; rel=preload; as=image; type=image/webp; media=\"(max-width: 767px)\"; fetchpriority=high, </frames/amenities/poster.webp>; rel=preload; as=image; type=image/webp; media=\"(min-width: 768px)\"; fetchpriority=high"
+        }
+      ]
+    },
+    {
       "source": "/(frames|images|fonts|brand|img)/(.*)",
       "headers": [
         {
