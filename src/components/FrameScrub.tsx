@@ -76,11 +76,14 @@ export default function FrameScrub({
 
   useEffect(() => {
     if (loadFull) return;
-    const triggerFullLoad = (e: Event) => {
-      if (e.type === 'scroll' && window.scrollY <= 2) return;
+    if (eager) {
+      setLoadFullRef.current(true);
+      return;
+    }
+    const triggerFullLoad = () => {
       setLoadFullRef.current(true);
     };
-    window.addEventListener('scroll', triggerFullLoad, { passive: true });
+    window.addEventListener('scroll', triggerFullLoad, { passive: true, once: true });
     window.addEventListener('wheel', triggerFullLoad, { passive: true, once: true });
     window.addEventListener('touchstart', triggerFullLoad, { passive: true, once: true });
     return () => {
@@ -88,7 +91,7 @@ export default function FrameScrub({
       window.removeEventListener('wheel', triggerFullLoad);
       window.removeEventListener('touchstart', triggerFullLoad);
     };
-  }, [loadFull]);
+  }, [loadFull, eager]);
 
   const onProgressRef = useRef(onProgress);
   onProgressRef.current = onProgress;
@@ -214,13 +217,13 @@ export default function FrameScrub({
     }
 
     let loadedCount = compressedBlobs.current.size;
-    const requiredForReady = Math.min(isMobile ? 12 : 24, frameCount);
+    const requiredForReady = Math.min(isMobile ? 6 : 16, frameCount);
     if (loadedCount >= requiredForReady) {
       setReady(true);
     }
 
     const order: number[] = [];
-    const step = isMobile ? 2 : 1;
+    const step = 1;
 
     // Check connection telemetry
     const conn = (navigator as any).connection;
@@ -232,10 +235,10 @@ export default function FrameScrub({
       if (slowConn) {
         strides.push(8);
       } else {
-        strides.push(8, 4);
+        strides.push(4, 2);
       }
     } else {
-      strides.push(8, 4, 2, 1);
+      strides.push(4, 2, 1);
     }
 
     for (const stride of strides) {
@@ -247,7 +250,7 @@ export default function FrameScrub({
 
     let idx = 0;
     let inFlight = 0;
-    const inSet = (f: number) => !isMobile || (f - 1) % step === 0;
+    const inSet = (_f: number) => true;
 
     const findPriorityFrame = (center: number, maxDistance = 15): number | null => {
       for (let dist = 0; dist <= maxDistance; dist++) {
@@ -399,7 +402,7 @@ export default function FrameScrub({
 
   const findNearestFrame = useCallback((frame: number): number | null => {
     if (decodedBitmaps.current.has(frame)) return frame;
-    for (let delta = 1; delta <= 10; delta++) {
+    for (let delta = 1; delta <= 20; delta++) {
       if (decodedBitmaps.current.has(frame + delta)) return frame + delta;
       if (decodedBitmaps.current.has(frame - delta)) return frame - delta;
     }

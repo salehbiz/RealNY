@@ -110,9 +110,22 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [tier] = useState<FrameTier>(getFrameTier);
+  const [tier, setTier] = useState<FrameTier>(getFrameTier);
   const [progress, setProgress] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newTier = getFrameTier();
+      setTier((prev) => (prev.dir !== newTier.dir ? newTier : prev));
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
 
   const handleSkipIntro = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -145,9 +158,11 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
 
   const fallbackFramePath = useCallback(
     (i: number) => {
-      return tier && tier.dir === 'desktop-hq'
-        ? media(`/frames/residences/desktop/${String(i).padStart(4, '0')}.webp`)
-        : '';
+      if (!tier) return '';
+      if (tier.dir === 'desktop-hq' || tier.dir === 'mobile') {
+        return media(`/frames/residences/desktop/${String(i).padStart(4, '0')}.webp`);
+      }
+      return '';
     },
     [tier]
   );
@@ -213,7 +228,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
         <FrameScrub
           frameCount={180}
           framePath={framePath}
-          fallbackFramePath={tier && tier.dir === 'desktop-hq' ? fallbackFramePath : undefined}
+          fallbackFramePath={fallbackFramePath}
           poster={media("/frames/residences/poster.webp")}
           posterBase="/frames/residences"
           scrollLengthVh={400}
@@ -234,35 +249,35 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           {/* Top Header Spacer */}
           <div className="pt-24 z-20 pointer-events-auto" />
 
-          {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
+          {/* Bottom Hero CTAs Bar (Centered on Desktop & Mobile, Parallel Skip Intro on Left for Mobile) */}
           <div
-            className="absolute bottom-16 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
+            className="absolute bottom-24 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-center pointer-events-none transition-opacity duration-300 ease-out"
             style={{ opacity: contentOpacity }}
           >
-            {/* Centered Scroll to Explore on Desktop */}
+            {/* Skip Intro Button: Parallel on Left on Mobile, Right on Desktop */}
+            <button
+              onClick={handleSkipIntro}
+              className="absolute left-5 sm:left-auto sm:right-10 flex flex-col sm:flex-col items-start sm:items-center gap-0.5 sm:gap-1 pointer-events-auto opacity-75 sm:opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+              aria-label="Skip the intro"
+            >
+              <span className="font-sora text-[9px] sm:text-[10px] tracking-[0.05em] sm:tracking-[-0.015em] leading-[1.5] font-medium text-white/90 sm:text-white uppercase border-b border-white/30 sm:border-none pb-0.5 sm:pb-0">
+                Skip the intro
+              </span>
+              <ChevronDown className="hidden sm:block w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce group-hover:translate-y-0.5 transition-transform" />
+            </button>
+
+            {/* Centered Scroll to Explore */}
             <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
               <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
                 Scroll to Explore
               </span>
               <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce" />
             </div>
-
-            {/* Right-Aligned Skip Intro Button */}
-            <button
-              onClick={handleSkipIntro}
-              className="sm:absolute sm:right-10 flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
-              aria-label="Skip the intro"
-            >
-              <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
-                Skip the intro
-              </span>
-              <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce group-hover:translate-y-0.5 transition-transform" />
-            </button>
           </div>
 
           {/* Pinned Bottom-Left Room Label Overlay (Fades in as user scrubs sequence) */}
           <div
-            className="absolute bottom-8 left-8 sm:bottom-12 sm:left-12 md:left-16 z-30 flex flex-col items-start pointer-events-none transition-opacity duration-300 ease-out max-w-sm sm:max-w-md"
+            className="absolute bottom-36 left-5 sm:bottom-12 sm:left-12 md:left-16 z-30 flex flex-col items-start pointer-events-none transition-opacity duration-300 ease-out max-w-sm sm:max-w-md px-1 sm:px-0"
             style={{ opacity: roomLabelOpacity }}
           >
             <div key={activeRoom.id} className="transition-opacity duration-300 ease-out space-y-0.5">

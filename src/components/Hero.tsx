@@ -10,9 +10,20 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
-  const [tier] = useState<FrameTier>(getFrameTier);
+  const [tier, setTier] = useState<FrameTier>(getFrameTier);
 
-
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newTier = getFrameTier();
+      setTier((prev) => (prev.dir !== newTier.dir ? newTier : prev));
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
 
   const framePath = useCallback(
     (i: number) => {
@@ -23,9 +34,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
 
   const fallbackFramePath = useCallback(
     (i: number) => {
-      return tier && tier.dir === 'desktop-hq'
-        ? media(`/frames/hero/desktop/${String(i).padStart(4, '0')}.webp`)
-        : '';
+      if (!tier) return '';
+      if (tier.dir === 'desktop-hq' || tier.dir === 'mobile') {
+        return media(`/frames/hero/desktop/${String(i).padStart(4, '0')}.webp`);
+      }
+      return '';
     },
     [tier]
   );
@@ -60,7 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
       <FrameScrub
         frameCount={180}
         framePath={framePath}
-        fallbackFramePath={tier && tier.dir === 'desktop-hq' ? fallbackFramePath : undefined}
+        fallbackFramePath={fallbackFramePath}
         poster={media("/frames/hero/poster.webp")}
         posterBase="/frames/hero"
         scrollLengthVh={350}
@@ -142,7 +155,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 2 - 17: East River Text Overlay */}
         <div
           ref={riverEastRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -165,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
           ref={neighborhoodRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -191,7 +204,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 62 - 101: The Eastline New York Text Overlay */}
         <div
           ref={eastlineRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -214,7 +227,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
           ref={lobbyRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-32 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -243,31 +256,31 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Top Header Spacer */}
         <div className="pt-24 z-20 pointer-events-auto" />
 
-        {/* Bottom Hero CTAs Bar (Centered on Desktop, Side-by-Side on Mobile) */}
+        {/* Bottom Hero CTAs Bar (Centered on Desktop & Mobile, Parallel Skip Intro on Left for Mobile) */}
         <div
           ref={ctasRef}
-          className="absolute bottom-16 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-between sm:justify-center pointer-events-none transition-opacity duration-300 ease-out"
+          className="absolute bottom-24 sm:bottom-8 md:bottom-12 left-0 right-0 z-30 px-5 sm:px-10 flex items-center justify-center pointer-events-none transition-opacity duration-300 ease-out"
           style={{ opacity: 1 }}
         >
-          {/* Centered Scroll to Explore on Desktop */}
+          {/* Skip Intro Button: Parallel on Left on Mobile, Right on Desktop */}
+          <button
+            onClick={handleSkipIntro}
+            className="absolute left-5 sm:left-auto sm:right-10 flex flex-col sm:flex-col items-start sm:items-center gap-0.5 sm:gap-1 pointer-events-auto opacity-75 sm:opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            aria-label="Skip the intro"
+          >
+            <span className="font-sora text-[9px] sm:text-[10px] tracking-[0.05em] sm:tracking-[-0.015em] leading-[1.5] font-medium text-white/90 sm:text-white uppercase border-b border-white/30 sm:border-none pb-0.5 sm:pb-0">
+              Skip the intro
+            </span>
+            <ChevronDown className="hidden sm:block w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce group-hover:translate-y-0.5 transition-transform" />
+          </button>
+
+          {/* Centered Scroll to Explore */}
           <div className="flex flex-col items-center gap-1 opacity-90 select-none pointer-events-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
             <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
               Scroll to Explore
             </span>
             <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce" />
           </div>
-
-          {/* Right-Aligned Skip Intro Button */}
-          <button
-            onClick={handleSkipIntro}
-            className="sm:absolute sm:right-10 flex flex-col items-center gap-1 pointer-events-auto opacity-85 hover:opacity-100 transition-opacity cursor-pointer group drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
-            aria-label="Skip the intro"
-          >
-            <span className="font-sora text-[10px] tracking-[-0.015em] leading-[1.5] font-medium text-white uppercase">
-              Skip the intro
-            </span>
-            <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-bounce group-hover:translate-y-0.5 transition-transform" />
-          </button>
         </div>
       </FrameScrub>
     </section>
