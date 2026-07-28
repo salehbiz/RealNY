@@ -32,3 +32,9 @@ s3-halo-check.png
 /scripts/original_screenshots
 
 .vercel
+
+# Environment variables
+.env
+.env.*
+!.env.example
+

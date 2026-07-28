@@ -25,22 +25,43 @@ export const FloorplanModal: React.FC<FloorplanModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [downloadNotified, setDownloadNotified] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(async () => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      const confetti = (await import('canvas-confetti')).default;
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.6 },
-        colors: ['#101535', '#D6B585', '#242C5B', '#F4F5F8'],
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/eastline@realnyproperties.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          residenceName: residence.name,
+          _subject: `New Floorplan Request for ${residence.name} from ${formData.firstName} ${formData.lastName}`,
+        }),
       });
-    }, 800);
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form to FormSubmit.co');
+      }
+    } catch (error) {
+      console.error('Error submitting form to FormSubmit.co:', error);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
+    const confetti = (await import('canvas-confetti')).default;
+    confetti({
+      particleCount: 80,
+      spread: 60,
+      origin: { y: 0.6 },
+      colors: ['#101535', '#D6B585', '#242C5B', '#F4F5F8'],
+    });
   };
+
+
 
   const handleDownloadNotify = () => {
     console.log(`[Notification System] Email sent to broker: A visitor has downloaded the floorplan PDF for ${residence.name}`);
