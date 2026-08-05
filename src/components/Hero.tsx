@@ -156,11 +156,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <p
             data-typo-id="hero-f2-p"
             data-typo-label="[Hero Section] Paragraph 2: Welcome to Upper East Side"
-            className="font-sora text-[7px] xs:text-[7.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[8px] xs:text-[8.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
-              A quieter side of Manhattan, where tree-lined streets<br />
-              meet all the shopping & transit conveniences.
+              <span className="whitespace-nowrap block">A quieter side of Manhattan, where tree-lined streets</span>
+              <span className="whitespace-nowrap block">meet all the shopping & transit conveniences.</span>
             </span>
             <span className="hidden sm:inline">A quieter side of Manhattan, where tree-lined streets<br />meet all the shopping & transit conveniences.</span>
           </p>
@@ -182,11 +182,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <p
             data-typo-id="hero-f3-p"
             data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
-            className="font-sora text-[6.2px] xs:text-[6.8px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[8px] xs:text-[8.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            23-stories tall with over fifteen amenity spaces between them.<br />
-            198 spectacular homes, ranging from studios to three-bedrooms<br />
-            with private outdoor spaces in select units.
+            <span className="sm:hidden block">
+              <span className="whitespace-nowrap block">23-stories tall with over fifteen amenity spaces between them.</span>
+              <span className="whitespace-nowrap block">198 spectacular homes, ranging from studios to three-bedrooms</span>
+              <span className="whitespace-nowrap block">with private outdoor spaces in select units.</span>
+            </span>
+            <span className="hidden sm:inline">
+              23-stories tall with over fifteen amenity spaces between them.<br />
+              198 spectacular homes, ranging from studios to three-bedrooms<br />
+              with private outdoor spaces in select units.
+            </span>
           </p>
         </div>
 
