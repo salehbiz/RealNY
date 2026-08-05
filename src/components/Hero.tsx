@@ -177,15 +177,22 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             data-typo-label="[Hero Section] Heading 3: The Eastline New York"
             className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            The Eastline New York
+            THE EASTLINE
           </h2>
           <p
             data-typo-id="hero-f3-p"
             data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
             className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            <span className="sm:hidden">The Eastline New York rises where the city quiets,<br />a modern address built for calm and everyday ease.</span>
-            <span className="hidden sm:inline">The Eastline New York rises where the city quiets,<br />a modern address built for calm, light, and everyday ease.</span>
+            <span className="sm:hidden">
+              23-stories tall with over fifteen amenity spaces between them.<br />
+              198 spectacular homes, ranging from studios to three-bedrooms<br />
+              with private outdoor spaces in select units.
+            </span>
+            <span className="hidden sm:inline">
+              23-stories tall with over fifteen amenity spaces between them.<br />
+              198 spectacular homes, ranging from studios to three-bedrooms with private outdoor spaces in select units.
+            </span>
           </p>
         </div>
 
