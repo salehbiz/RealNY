@@ -143,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
           ref={neighborhoodRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -159,8 +159,8 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             className="font-sora text-[8px] xs:text-[8.5px] sm:text-[10.5px] md:text-[11.5px] font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
-              <span className="block">A quieter side of Manhattan, where tree-lined streets</span>
-              <span className="block">meet all the shopping & transit conveniences.</span>
+              A quieter side of Manhattan, where tree-lined streets<br />
+              meet all the shopping & transit conveniences.
             </span>
             <span className="hidden sm:inline">A quieter side of Manhattan, where tree-lined streets<br />meet all the shopping & transit conveniences.</span>
           </p>
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 62 - 101: The Eastline New York Text Overlay */}
         <div
           ref={eastlineRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -193,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
           ref={lobbyRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
