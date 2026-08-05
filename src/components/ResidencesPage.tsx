@@ -24,44 +24,44 @@ export const RESIDENCE_ROOMS: ResidenceRoomConfig[] = [
   {
     id: 'kitchen-dining',
     name: 'Kitchen & Dining',
-    subLabel: 'Galley Kitchen & Dining',
+    subLabel: 'The Materials',
     startFrame: 1,
-    description: 'Custom white oak cabinetry, honed marble countertops, and integrated Gaggenau appliances.',
+    description: 'Pale fluted upper cabinetry over light oak below, with stone countertops — or grey fluted uppers over grey lowers, same stone, same architecture.',
   },
   {
     id: 'kitchen-island',
-    name: 'Waterfall Kitchen',
-    subLabel: 'Custom Oak & Marble Island',
+    name: 'Kitchen Appliances',
+    subLabel: 'The Features',
     startFrame: 31,
-    description: 'Sculptural stone island framed by architectural brass accents and ambient lighting.',
+    description: 'A full electric appliance suite: range, refrigerator, dishwasher, and countertop microwave from GE and LG, with Fisher & Paykel appliances in select residences.',
   },
   {
     id: 'living-room',
     name: 'Living Room',
-    subLabel: 'Corner Living Suite',
+    subLabel: 'Light-Flooded',
     startFrame: 61,
-    description: 'Expansive floor-to-ceiling corner windows framing panoramic Manhattan views.',
+    description: 'Ceilings reach up to nine feet. Floor-to-ceiling windows deliver daylight deep into the plan, and select residences carry double exposures, private balconies, or terraces.',
   },
   {
     id: 'bedroom',
-    name: 'Primary Bedroom',
-    subLabel: 'Sunlit Bedroom Suite',
+    name: 'The Bedroom',
+    subLabel: 'A Quiet Escape',
     startFrame: 91,
-    description: 'Tranquil sanctuary with tailored acoustic detailing and serene natural light.',
+    description: 'Blackout shades installed before move-in, with individually controlled central heating and cooling.',
   },
   {
     id: 'primary-bath',
-    name: 'Master Bathroom',
-    subLabel: 'Calacatta Marble Spa Bath',
+    name: 'Primary Bathroom',
+    subLabel: 'Spa-Like',
     startFrame: 121,
-    description: 'Enveloped in floor-to-ceiling Calacatta marble with custom rain shower and soaking tub.',
+    description: 'The same discipline, in two registers. A dark scheme in charcoal and black marble-look porcelain, carried floor to ceiling. A light scheme in pale marble-look porcelain, equally continuous, with lighter shower tiling.',
   },
   {
     id: 'guest-bath',
-    name: 'Bathroom',
-    subLabel: 'Sculptural Guest Bath',
+    name: 'Typical Bathroom',
+    subLabel: 'Refreshingly Calm',
     startFrame: 151,
-    description: 'Refined marble vanity with bespoke wall-mounted Dornbracht bronze hardware.',
+    description: 'Typical bathrooms pair a dark charcoal floor with light marble-look walls and a darker lower band, or run light porcelain floor to ceiling throughout; Italian porcelain, specified for depth of veining rather than sheen.',
   },
 ];
 
@@ -277,7 +277,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
 
           {/* Pinned Bottom-Left Room Label Overlay (Fades in as user scrubs sequence) */}
           <div
-            className="absolute bottom-36 left-5 sm:bottom-12 sm:left-12 md:left-16 z-30 flex flex-col items-start pointer-events-none transition-opacity duration-300 ease-out max-w-sm sm:max-w-md px-1 sm:px-0"
+            className="absolute bottom-28 left-4 sm:bottom-12 sm:left-12 md:left-16 z-30 flex flex-col items-start pointer-events-none transition-opacity duration-300 ease-out max-w-[210px] sm:max-w-sm md:max-w-md px-1 sm:px-0"
             style={{ opacity: roomLabelOpacity }}
           >
             <div key={activeRoom.id} className="transition-opacity duration-300 ease-out space-y-0.5">
@@ -308,7 +308,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
             data-typo-label="Residences / Intro Paragraph"
             className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
           >
-            A boutique collection of studio through three-bedroom homes, duplexes, and penthouse suites—crafted with natural oak, soft light, and refined detail for mindful luxury.
+            198 residences, studio through three-bedroom, designed around the two things Manhattan apartments most often surrender: light and storage. Ceilings reach up to nine feet over engineered prefinished hardwood. Every residence includes custom built-out closets, installed window treatments: blackout shades in the bedrooms, privacy shades in the living areas, individually controlled central heating and cooling, and a vented in-home LG washer and dryer. Select residences carry double exposures, private balconies, and/or terraces.*
           </p>
         </div>
       </section>
@@ -319,10 +319,10 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           {/* Left Text */}
           <div className="lg:col-span-5 space-y-6">
             <h3 className="univ-h2-section text-[#101535] uppercase">
-              SUNLIT LIVING &amp; DINING SANCTUARIES
+              LIGHT AND STORAGE, BOTH DESIGNED RATHER THAN IMPROVISED
             </h3>
             <p className="univ-p-body text-[#101535]/80">
-              Featuring 10-foot ceiling heights, custom wide-plank white oak flooring in chevron patterns, and floor-to-ceiling corner windows framing tree-lined cityscapes between Park and Madison.
+              The closets are built out, not left to the resident. The window treatments are installed, not budgeted for later. The heating and cooling are controlled residence by residence. These are the decisions that determine how a home actually lives.
             </p>
           </div>
 
@@ -361,8 +361,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           {/* Centered Heading */}
           <div className="text-center max-w-4xl mx-auto px-4">
             <h2 className="univ-h2-section text-[#101535] uppercase [text-wrap:balance]">
-              Crafted with <span className="text-[#D6B585]">Uncompromising</span> <br className="hidden md:inline" />
-              Architectural <span className="text-[#D6B585]">Detail</span>.
+              AN UNWAIVERING ATTENTION TO DETAIL, <span className="text-[#D6B585]">PERFECTED.</span>
             </h2>
           </div>
 
@@ -447,7 +446,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           {/* Text */}
           <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
             <p className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]">
-              Every residence at The Eastline New York is crafted with custom Italian cabinetry, honed marble surfaces, Dornbracht fixtures, and warm oak finishes by INC Architecture &amp; Design.
+              Two palettes run through the building, each built on the same architecture of fluted cabinetry and stone. The first pairs pale fluted uppers with light oak below, warm, quiet, grain-forward. The second runs grey fluted uppers over grey lowers for something cooler and more graphic. Stone countertops in both, with a full electric appliance suite from GE and LG: range, refrigerator, dishwasher, and countertop microwave. Fisher &amp; Paykel appliances in select residences.*
             </p>
           </div>
         </div>
@@ -472,40 +471,15 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
             </div>
             <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
               <h3 className="univ-h2-section text-[#101535] uppercase">
-                SPA-INSPIRED PRIMARY SUITES
+                SPA-INSPIRED BATHROOMS
               </h3>
               <p className="univ-p-body text-[#101535]/80">
-                Enveloped in full-height honed Calacatta marble with radiantly heated floors, floating custom oak vanities, freestanding soaking tubs, and thermostatic rain showers.
+                The same discipline, in two registers. Primary baths run either dark, charcoal and black marble-look porcelain, floor to ceiling, or light, in marble-look porcelain carried the same full height with lighter shower tiling. Typical baths pair a dark charcoal floor with light marble-look walls and a darker lower band, or run light porcelain floor to ceiling throughout, in Italgraniti tile. Walk-in showers are finished with frameless glass; select residences include soaking tubs with fixed glass panels.* Recessed medicine cabinets with integrated mirrors keep the wall plane clean.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Block B: Text Left + Image Right */}
-        <section className="w-full overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
-            <div className="lg:col-span-5 space-y-6">
-              <h3 className="univ-h2-section text-[#101535] uppercase">
-                SCULPTURAL GUEST POWDER ROOMS
-              </h3>
-              <p className="univ-p-body text-[#101535]/80">
-                Dramatic guest powder rooms featuring custom monolithic stone pedestal basins, wall-mounted bronze Dornbracht fixtures, and rich warm sconce illumination.
-              </p>
-            </div>
-            <div className="lg:col-span-7 w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px] overflow-hidden shadow-2xl">
-              <img
-                onClick={() => onImageClick( media('/images/residences-powder-room.webp'), 'Guest Powder Room')}
-                src={media("/images/residences-powder-room.webp")}
-                alt="Powder Room"
-                loading="lazy"
-                decoding="async"
-                width={875}
-                height={650}
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-              />
-            </div>
-          </div>
-        </section>
       </div>
 
       {/* 6. PENTHOUSE & TERRACES FEATURE SECTION */}
