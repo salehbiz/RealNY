@@ -126,7 +126,7 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
             <h2 className="font-rexton text-[15px] sm:text-[19.5px] font-bold text-white tracking-[-0.15em] leading-[1.25] uppercase">
               {currentCategory.title}
             </h2>
-            <p className="font-sora text-[11px] sm:text-[14.5px] text-white/95 font-light tracking-[-0.015em] leading-[1.3] max-w-lg md:max-w-xl line-clamp-3 sm:line-clamp-2 [text-wrap:balance]">
+            <p className="font-sora text-[11px] sm:text-[14.5px] text-white/95 font-light tracking-[-0.015em] leading-[1.3] max-w-lg md:max-w-xl [text-wrap:balance]">
               {currentCategory.description}
             </p>
           </div>
