@@ -188,6 +188,13 @@
   font-weight: 100 !important;
 }
 
+@media (max-width: 639px) {
+  .univ-p-body {
+    font-size: 12.5px !important;
+    line-height: 1.25 !important;
+  }
+}
+
 .univ-label-eyebrow {
   font-family: 'Sora', -apple-system, sans-serif !important;
   font-size: 15px !important;
