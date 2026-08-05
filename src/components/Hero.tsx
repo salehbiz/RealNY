@@ -149,14 +149,14 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <h2
             data-typo-id="hero-f2-h2"
             data-typo-label="[Hero Section] Heading 2: Welcome to Upper East Side"
-            className="font-rexton text-[8.5px] xs:text-[9.5px] sm:text-[11.5px] md:text-[12.5px] font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-rexton text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             Welcome to The Upper East Side
           </h2>
           <p
             data-typo-id="hero-f2-p"
             data-typo-label="[Hero Section] Paragraph 2: Welcome to Upper East Side"
-            className="font-sora text-[8px] xs:text-[8.5px] sm:text-[10.5px] md:text-[11.5px] font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[7px] xs:text-[7.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
               A quieter side of Manhattan, where tree-lined streets<br />
@@ -175,14 +175,14 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <h2
             data-typo-id="hero-f3-h2"
             data-typo-label="[Hero Section] Heading 3: The Eastline New York"
-            className="font-rexton text-[8.5px] xs:text-[9.5px] sm:text-[11.5px] md:text-[12.5px] font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             THE EASTLINE
           </h2>
           <p
             data-typo-id="hero-f3-p"
             data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
-            className="font-sora text-[8px] xs:text-[8.5px] sm:text-[10.5px] md:text-[11.5px] font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[7px] xs:text-[7.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             23-stories tall with over fifteen amenity spaces between them.<br />
             198 spectacular homes, ranging from studios to three-bedrooms<br />
@@ -199,7 +199,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <h2
             data-typo-id="hero-f4-h2"
             data-typo-label="[Hero Section] Heading 4: Step into Luxury"
-            className="font-rexton text-[8.5px] xs:text-[9.5px] sm:text-[11.5px] md:text-[12.5px] font-bold tracking-[0.2em] sm:tracking-[0.25em] text-white uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-white uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             Ready to Experience<br />a New Line of Luxury?
           </h2>
