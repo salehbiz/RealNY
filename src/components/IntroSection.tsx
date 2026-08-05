@@ -15,7 +15,7 @@ export const IntroSection: React.FC<IntroSectionProps> = ({ onScheduleClick }) =
           data-typo-label="Home / Intro Paragraph"
           className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
         >
-          The Eastline New York, at 355 East 86th Street, New York, NY 10028, is ideally positioned between Park and Madison Avenues on a rare, tree-lined block. This exceptional new Midtown condominium offers a sophisticated retreat in the heart of Manhattan. The Eastline New York places residents moments from Madison Square Park, Bryant Park, NoMad, and the very best of New York City living.
+          The Eastline stands at 1655 First Avenue and 355 East 86th Street. Two addresses hold 198 residences, from studio through three-bedroom, and more than fifteen amenity spaces across two connected buildings. The very best in luxury living on the Upper East Side is here.
         </p>
         {/* CTA Button */}
         <div className="pt-1">
