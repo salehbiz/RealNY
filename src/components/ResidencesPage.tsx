@@ -168,7 +168,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
   );
 
   const contentOpacity = Math.max(0, 1 - progress * 12);
-  const roomLabelOpacity = Math.min(1, Math.max(0, (progress - 0.04) * 20));
+  const roomLabelOpacity = Math.min(1, progress * 40);
 
   const sliderCards = [
     {
