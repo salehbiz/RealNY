@@ -62,7 +62,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
   };
 
   // DOM Refs for scroll-driven text overlays
-  const riverEastRef = useRef<HTMLDivElement>(null);
   const neighborhoodRef = useRef<HTMLDivElement>(null);
   const eastlineRef = useRef<HTMLDivElement>(null);
   const lobbyRef = useRef<HTMLDivElement>(null);
@@ -91,20 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             ctasRef.current.style.pointerEvents = contentOpacity > 0 ? 'auto' : 'none';
           }
 
-          // 2. River East text overlay opacity (Frames 2 - 17)
-          let riverEastOpacity = 0;
-          if (frameNum >= 2 && frameNum <= 17) {
-            if (frameNum < 4) {
-              riverEastOpacity = (frameNum - 1) / 3;
-            } else if (frameNum > 14) {
-              riverEastOpacity = (17 - frameNum) / 3;
-            } else {
-              riverEastOpacity = 1;
-            }
-          }
-          if (riverEastRef.current) {
-            riverEastRef.current.style.opacity = String(riverEastOpacity);
-          }
+
 
           // 3. Neighborhood text overlay opacity (Frames 30 - 61)
           let neighborhoodOpacity = 0;
@@ -152,28 +138,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           }
         }}
       >
-        {/* Frame 2 - 17: East River Text Overlay */}
-        <div
-          ref={riverEastRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-[95vw] sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-2 sm:px-0"
-          style={{ opacity: 0 }}
-        >
-          <h2
-            data-typo-id="hero-f1-h2"
-            data-typo-label="[Hero Section] Heading 1: East River"
-            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
-          >
-            East River
-          </h2>
-          <p
-            data-typo-id="hero-f1-p"
-            data-typo-label="[Hero Section] Paragraph 1: East River"
-            className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
-          >
-            <span className="sm:hidden">Where Manhattan meets the water, a rare stretch<br />of calm along the East River's edge.</span>
-            <span className="hidden sm:inline">Where Manhattan meets the water, a rare stretch of calm<br />along the East River's edge.</span>
-          </p>
-        </div>
+
 
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
