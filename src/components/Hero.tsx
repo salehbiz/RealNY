@@ -151,7 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             data-typo-label="[Hero Section] Heading 2: Welcome to Upper East Side"
             className="font-rexton text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.16em] sm:tracking-[0.25em] text-[#D6B585] uppercase whitespace-nowrap sm:whitespace-normal drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            Welcome to the Upper East Side
+            Welcome to The Upper East Side
           </h2>
           <p
             data-typo-id="hero-f2-p"
@@ -159,10 +159,10 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             className="font-sora text-[9px] xs:text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
-              <span className="whitespace-nowrap block">A quieter side of Manhattan, where leafy streets</span>
-              <span className="whitespace-nowrap block">meet the river and the city stays within reach.</span>
+              <span className="whitespace-nowrap block">A quieter side of Manhattan, where tree-lined streets</span>
+              <span className="whitespace-nowrap block">meet all the shopping & transit conveniences.</span>
             </span>
-            <span className="hidden sm:inline">A quieter side of Manhattan, where leafy streets meet the open river<br />and the whole city stays within reach.</span>
+            <span className="hidden sm:inline">A quieter side of Manhattan, where tree-lined streets<br />meet all the shopping & transit conveniences.</span>
           </p>
         </div>
 
