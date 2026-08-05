@@ -183,7 +183,7 @@ export const LifestyleSection: React.FC<LifestyleSectionProps> = ({
         {/* Text & Action CTA */}
         <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
           <p className="font-sora text-[15px] tracking-[-0.015em] leading-[1.0] text-[#101535]/80 font-light max-w-2xl mx-auto text-center [text-wrap:balance]">
-            Residents at The Eastline New York enjoy more than 10,000 square feet of amenities surrounding an enchanting private garden courtyard, all beautifully envisioned by renowned hospitality designer Paul Duesing &amp; Partners.
+            The courtyards open the base of the buildings to daylight and air, so the shared spaces read as outdoor rooms rather than interior corridors. Above, two landscaped rooftops crown the towers, and the 23rd floor holds the Sky Lounge: the highest room in the building.
           </p>
 
           <div>
