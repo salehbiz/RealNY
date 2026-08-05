@@ -201,16 +201,13 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             data-typo-label="[Hero Section] Heading 4: Step into Luxury"
             className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            Step into Luxury
+            <span className="sm:hidden">
+              Ready to Experience<br />a New Line of Luxury?
+            </span>
+            <span className="hidden sm:inline">
+              Ready to Experience a New Line of Luxury?
+            </span>
           </h2>
-          <p
-            data-typo-id="hero-f4-p"
-            data-typo-label="[Hero Section] Paragraph 4: Step into Luxury"
-            className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
-          >
-            <span className="sm:hidden">Step inside to a warm, light-filled lobby<br />where the city softens and home begins.</span>
-            <span className="hidden sm:inline">Step inside to a warm, light-filled lobby<br />where the city softens and home begins.</span>
-          </p>
         </div>
 
         {/* Top-only header overlay for button & logo clarity */}
