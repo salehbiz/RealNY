@@ -184,15 +184,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
             data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
             className="font-sora text-[9.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            <span className="sm:hidden">
-              23-stories tall with over fifteen amenity spaces between them.<br />
-              198 spectacular homes, ranging from studios to three-bedrooms<br />
-              with private outdoor spaces in select units.
-            </span>
-            <span className="hidden sm:inline">
-              23-stories tall with over fifteen amenity spaces between them.<br />
-              198 spectacular homes, ranging from studios to three-bedrooms with private outdoor spaces in select units.
-            </span>
+            23-stories tall with over fifteen amenity spaces between them.<br />
+            198 spectacular homes, ranging from studios to three-bedrooms<br />
+            with private outdoor spaces in select units.
           </p>
         </div>
 
