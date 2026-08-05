@@ -199,14 +199,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <h2
             data-typo-id="hero-f4-h2"
             data-typo-label="[Hero Section] Heading 4: Step into Luxury"
-            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-white uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            <span className="sm:hidden">
-              Ready to Experience<br />a New Line of Luxury?
-            </span>
-            <span className="hidden sm:inline">
-              Ready to Experience a New Line of Luxury?
-            </span>
+            Ready to Experience<br />a New Line of Luxury?
           </h2>
         </div>
 
