@@ -143,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 30 - 61: Welcome to the Upper East Side Text Overlay */}
         <div
           ref={neighborhoodRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-1 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -156,7 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <p
             data-typo-id="hero-f2-p"
             data-typo-label="[Hero Section] Paragraph 2: Welcome to Upper East Side"
-            className="font-sora text-[8px] xs:text-[8.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[7.2px] xs:text-[7.6px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
               <span className="whitespace-nowrap block">A quieter side of Manhattan, where tree-lined streets</span>
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 62 - 101: The Eastline New York Text Overlay */}
         <div
           ref={eastlineRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-1 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
@@ -182,7 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           <p
             data-typo-id="hero-f3-p"
             data-typo-label="[Hero Section] Paragraph 3: The Eastline New York"
-            className="font-sora text-[8px] xs:text-[8.5px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-sora text-[7.2px] xs:text-[7.6px] sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
             <span className="sm:hidden block">
               <span className="whitespace-nowrap block">23-stories tall with over fifteen amenity spaces between them.</span>
@@ -200,7 +200,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
           ref={lobbyRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-1 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
