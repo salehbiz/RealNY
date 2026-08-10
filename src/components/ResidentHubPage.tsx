@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { media } from '../lib/media';
+import { InquireSection } from './InquireSection';
 import { Footer } from './Footer';
 
 interface ResidentHubPageProps {
@@ -118,6 +120,9 @@ export const ResidentHubPage: React.FC<ResidentHubPageProps> = ({ onOpenInquire 
           </p>
         </div>
       </section>
+
+      {/* Contact Form */}
+      <InquireSection initialResidence="" sideImage={media('/images/skyline-architecture.webp')} />
 
       <Footer onNavigateSection={() => {}} onOpenInquire={onOpenInquire} />
     </>
