@@ -2,7 +2,7 @@ import { media } from '../lib/media';
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 
-export type PageType = 'home' | 'residences' | 'amenities';
+export type PageType = 'home' | 'residences' | 'amenities' | 'residenthub';
 
 interface NavbarProps {
   currentPage: PageType;
@@ -29,6 +29,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         heroEl = document.getElementById('residences-hero');
       } else if (currentPage === 'amenities') {
         heroEl = document.getElementById('amenities-hero');
+      } else if (currentPage === 'residenthub') {
+        heroEl = document.getElementById('residenthub-hero');
       }
 
       if (heroEl) {
@@ -55,6 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'HOME', id: 'home' },
     { label: 'RESIDENCES', id: 'residences' },
     { label: 'AMENITIES', id: 'amenities' },
+    { label: 'RESIDENT HUB', id: 'residenthub' },
   ];
 
   const handleLinkClick = (id: PageType) => {
@@ -100,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     key={link.id}
                     onClick={() => handleLinkClick(link.id)}
-                    className={`font-sora text-[12px] tracking-[-0.015em] leading-[1.33] font-semibold uppercase transition-all duration-300 relative py-1 cursor-pointer group/nav drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] ${
+                    className={`font-sora text-[12px] tracking-[-0.015em] leading-[1.33] font-semibold uppercase whitespace-nowrap transition-all duration-300 relative py-1 cursor-pointer group/nav drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] ${
                       isActive
                         ? 'text-[#D6B585]'
                         : 'text-[#F4F5F8]/90 hover:text-[#D6B585]'

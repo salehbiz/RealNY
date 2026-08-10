@@ -21,10 +21,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
     { label: 'Residences', target: 'residences' },
     { label: 'Amenities', target: 'amenities' },
     { label: 'Availability', target: 'availability' },
+    { label: 'Resident Hub', target: 'residenthub' },
     { label: 'Inquire', target: 'inquire' },
   ];
 
-  const handleNavClick = (target: 'home' | 'residences' | 'amenities' | 'availability' | 'inquire') => {
+  const handleNavClick = (target: 'home' | 'residences' | 'amenities' | 'availability' | 'residenthub' | 'inquire') => {
     if (target === 'home') {
       if (location.pathname === '/') {
         window.scrollTo(0, 0);
@@ -44,6 +45,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquire }) => {
         window.scrollTo(0, 0);
       } else {
         navigate('/amenities');
+        window.scrollTo(0, 0);
+      }
+    } else if (target === 'residenthub') {
+      if (location.pathname === '/residenthub') {
+        window.scrollTo(0, 0);
+      } else {
+        navigate('/residenthub');
         window.scrollTo(0, 0);
       }
     } else if (target === 'availability') {

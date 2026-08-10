@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import type { PageType } from './components/Navbar';
@@ -18,6 +18,7 @@ import type { ExploreType } from './components/ExploreModal';
 
 const ResidencesPage = React.lazy(() => import('./components/ResidencesPage').then(m => ({ default: m.ResidencesPage })));
 const AmenitiesPage = React.lazy(() => import('./components/AmenitiesPage').then(m => ({ default: m.AmenitiesPage })));
+const ResidentHubPage = React.lazy(() => import('./components/ResidentHubPage').then(m => ({ default: m.ResidentHubPage })));
 const LightBoxModal = React.lazy(() => import('./components/LightBoxModal').then(m => ({ default: m.LightBoxModal })));
 const FloorplanModal = React.lazy(() => import('./components/FloorplanModal').then(m => ({ default: m.FloorplanModal })));
 const ExploreModal = React.lazy(() => import('./components/ExploreModal').then(m => ({ default: m.ExploreModal })));
@@ -31,6 +32,7 @@ export function App() {
   const currentPage: PageType = useMemo(() => {
     if (location.pathname === '/residences') return 'residences';
     if (location.pathname === '/amenities') return 'amenities';
+    if (location.pathname === '/residenthub') return 'residenthub';
     return 'home';
   }, [location.pathname]);
 
@@ -53,8 +55,26 @@ export function App() {
 
   const handleOpenInquireWithName = (residenceName: string = '') => {
     setInquireResidenceName(residenceName);
-    scrollToSection('inquire');
+    // Pages without an embedded inquire section (e.g. Resident Hub) redirect
+    // to the homepage contact section above the footer.
+    if (document.getElementById('inquire')) {
+      scrollToSection('inquire');
+    } else {
+      navigate('/', { state: { scrollTo: 'inquire' } });
+    }
   };
+
+  useEffect(() => {
+    const state = location.state as { scrollTo?: string } | null;
+    if (location.pathname === '/' && state?.scrollTo) {
+      navigate(location.pathname, { replace: true, state: {} });
+      const target = state.scrollTo;
+      setTimeout(() => {
+        const el = document.getElementById(target);
+        if (el) el.scrollIntoView();
+      }, 150);
+    }
+  }, [location, navigate]);
 
   const handleNavigatePage = (page: PageType) => {
     const path = page === 'home' ? '/' : `/${page}`;
@@ -152,6 +172,10 @@ export function App() {
                 onNavigatePage={handleNavigatePage}
                 onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
               />
+            } />
+
+            <Route path="/residenthub" element={
+              <ResidentHubPage onOpenInquire={() => handleOpenInquireWithName('')} />
             } />
           </Routes>
         </Suspense>
