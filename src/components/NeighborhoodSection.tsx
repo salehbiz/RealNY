@@ -1,13 +1,51 @@
 import { media } from '../lib/media';
-import React from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
+
+// Lazy so maplibre-gl never lands in the initial homepage bundle.
+const NeighborhoodMap = React.lazy(() =>
+  import('./NeighborhoodMap').then((m) => ({ default: m.NeighborhoodMap })),
+);
 
 interface NeighborhoodSectionProps {
   onImageClick: (src: string, title: string, groupImages?: { src: string; title?: string }[]) => void;
 }
 
+const MapPlaceholder: React.FC = () => (
+  <div className="h-[420px] sm:h-[520px] lg:h-[640px] grid place-items-center border border-[#101535]/12 bg-[#EFE9DC]">
+    <span className="font-sora text-[11px] tracking-[0.2em] uppercase text-[#101535]/40">
+      Loading map…
+    </span>
+  </div>
+);
+
 export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
   onImageClick,
 }) => {
+  // Only pull in maplibre once the map is close to the viewport — otherwise
+  // every homepage visit downloads it whether or not the visitor scrolls here.
+  const mapSlotRef = useRef<HTMLDivElement | null>(null);
+  const [showMap, setShowMap] = useState(false);
+
+  useEffect(() => {
+    const el = mapSlotRef.current;
+    if (!el || showMap) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setShowMap(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShowMap(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '400px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [showMap]);
+
   const cards = [
     {
       src: media('/images/neighborhood-river-east.webp'),
@@ -60,6 +98,31 @@ export const NeighborhoodSection: React.FC<NeighborhoodSectionProps> = ({
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
             </div>
           ))}
+        </div>
+
+        {/* Interactive neighbourhood map */}
+        <div className="w-full max-w-[1500px] mx-auto pb-20 md:pb-[120px] select-text">
+          <div className="text-center max-w-3xl mx-auto pb-10 md:pb-14 space-y-4">
+            <span className="font-sora text-[11px] tracking-[0.3em] font-semibold uppercase text-[#745831]">
+              The Neighbourhood
+            </span>
+            <h3 className="univ-h2-section text-[#101535] uppercase">
+              Everything Within Reach
+            </h3>
+            <p className="font-sora text-sm text-[#101535]/70 leading-relaxed max-w-xl mx-auto">
+              Cafés, dining, culture, parks and transit — the Upper East Side,
+              mapped from the front door of 355 East 86th Street.
+            </p>
+          </div>
+          <div ref={mapSlotRef}>
+            {showMap ? (
+              <Suspense fallback={<MapPlaceholder />}>
+                <NeighborhoodMap />
+              </Suspense>
+            ) : (
+              <MapPlaceholder />
+            )}
+          </div>
         </div>
 
         {/* Text & Action CTA */}
