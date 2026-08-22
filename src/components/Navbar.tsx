@@ -75,12 +75,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           isDarkHeader ? 'bg-transparent py-5' : 'glass-header-scrolled py-3 shadow-md'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="relative max-w-7xl min-[1320px]:max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Left side: Empty */}
           <div className="flex-1 hidden lg:block" />
 
-          {/* Middle: Logo Only (Emblem SVG removed) */}
-          <div className="flex-1 flex justify-start lg:justify-center">
+          {/* Middle: Logo Only (Emblem SVG removed).
+              From 1320px up the logo is pinned to the true horizontal centre of
+              the header so it stays centred regardless of how wide the nav
+              cluster on the right grows. Below that there isn't enough width to
+              clear the nav links, so it stays in the normal flex flow. */}
+          <div className="flex-1 flex justify-start lg:justify-center min-[1320px]:flex-none min-[1320px]:absolute min-[1320px]:left-1/2 min-[1320px]:top-1/2 min-[1320px]:-translate-x-1/2 min-[1320px]:-translate-y-1/2">
             <div
               className="flex items-center cursor-pointer group shrink-0"
               onClick={() => handleLinkClick('home')}
@@ -94,9 +98,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right side: Navigation Menu Bar & CTA Buttons */}
-          <div className="flex-1 flex justify-end items-center gap-3 xl:gap-4.5 shrink-0">
+          <div className="flex-1 flex justify-end items-center gap-2 xl:gap-3 shrink-0">
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3.5">
+            <nav className="hidden lg:flex items-center gap-2 xl:gap-2.5">
               {navLinks.map((link) => {
                 const isActive = link.id === currentPage;
                 return (
@@ -137,14 +141,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Desktop CTA Buttons */}
               <button
                 onClick={onOpenAvailability}
-                className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#D6B585]/50 bg-transparent text-[#F4F5F8] hover:border-[#D6B585] hover:text-[#D6B585] font-sora text-[11px] tracking-[0.18em] font-medium uppercase transition-all duration-300 cursor-pointer"
+                className="hidden sm:inline-flex items-center px-3.5 py-2 rounded-full border border-[#D6B585]/50 bg-transparent text-[#F4F5F8] hover:border-[#D6B585] hover:text-[#D6B585] font-sora text-[11px] tracking-[0.18em] font-medium uppercase transition-all duration-300 cursor-pointer"
               >
                 Availability
               </button>
 
               <button
                 onClick={onOpenInquire}
-                className="inline-flex items-center px-5 py-2 rounded-full font-sora text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 shadow-xl cursor-pointer bg-[#D6B585] text-[#101535] hover:bg-[#E8CA9D] hover:scale-105"
+                className="inline-flex items-center px-4.5 py-2 rounded-full font-sora text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 shadow-xl cursor-pointer bg-[#D6B585] text-[#101535] hover:bg-[#E8CA9D] hover:scale-105"
               >
                 Inquire
               </button>
