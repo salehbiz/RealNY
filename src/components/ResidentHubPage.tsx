@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { media } from '../lib/media';
-import { InquireSection } from './InquireSection';
 import { Footer } from './Footer';
 
 interface ResidentHubPageProps {
@@ -22,6 +21,7 @@ const HUB_LINKS: HubLink[] = [
     id: 'request',
     title: 'Request Center',
     description: 'Report maintenance issues or submit a building-related request directly to our team.',
+    href: 'https://www.chessmanagementny.com/',
     cta: 'Submit a Request',
   },
   {
@@ -121,8 +121,30 @@ export const ResidentHubPage: React.FC<ResidentHubPageProps> = ({ onOpenInquire 
         </div>
       </section>
 
-      {/* Contact Form */}
-      <InquireSection initialResidence="" sideImage={media('/images/skyline-architecture.webp')} />
+      {/* Full-width building photography (replaces the inquiry form — residents
+          reach the team via the assistance note above or the homepage form) */}
+      <section className="relative w-full h-screen overflow-hidden select-none border-y border-[#101535]/10">
+        <picture className="w-full h-full block">
+          <source
+            media="(max-width: 767px)"
+            srcSet={media('/images/building-corner-detail-dusk-wide-mobile.webp')}
+          />
+          <img
+            src={media('/images/building-corner-detail-dusk-wide.webp')}
+            alt="Corner residences at dusk · The Eastline New York"
+            loading="lazy"
+            decoding="async"
+            width={1920}
+            height={1080}
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
+        <div className="absolute bottom-6 left-6 md:left-12 z-10">
+          <span className="font-sora text-xs tracking-wider text-[#F4F5F8] bg-[#101535]/90 backdrop-blur-md px-5 py-2.5 rounded-none font-medium shadow-md border border-[#D6B585]/40">
+            Corner Residences • 355 East 86th Street
+          </span>
+        </div>
+      </section>
 
       <Footer onNavigateSection={() => {}} onOpenInquire={onOpenInquire} />
     </>
