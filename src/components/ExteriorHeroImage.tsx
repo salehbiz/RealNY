@@ -6,8 +6,8 @@ interface ExteriorHeroImageProps {
 }
 
 export const ExteriorHeroImage: React.FC<ExteriorHeroImageProps> = ({ onImageClick }) => {
-  const desktopImageSrc = media('/images/residences-upper-levels-exterior.webp');
-  const mobileImageSrc = media('/images/exterior-hero-mobile.webp');
+  const desktopImageSrc = media('/images/building-crown-dusk.webp');
+  const mobileImageSrc = media('/images/building-crown-dusk-mobile.webp');
   const title = 'Twilight exterior view of upper terrace setbacks and penthouse residences';
 
   const handleClick = () => {

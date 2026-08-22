@@ -18,8 +18,8 @@ export const SkylineSection: React.FC<SkylineSectionProps> = ({
       tabLabel: 'Architecture',
       title: 'Architecture',
       description: 'Twenty-three stories of floor-to-ceiling glass, with double exposures in select residences. The striking facade is adorned with a rich shade of deep blue & accents of royal gold, all while paying respects to the fabric of the neighborhood.',
-      image: media('/images/building-entrance.webp'),
-      imageMobile: media('/images/building-entrance-mobile.webp'),
+      image: media('/images/building-street-level-dusk.webp'),
+      imageMobile: media('/images/building-street-level-dusk-mobile.webp'),
     },
     {
       id: 'interiors',

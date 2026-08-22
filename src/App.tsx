@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
+import { media } from './lib/media';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import type { PageType } from './components/Navbar';
@@ -146,7 +147,7 @@ export function App() {
                 />
 
                 {/* Inquiry Form */}
-                <InquireSection initialResidence={inquireResidenceName} sideImage={'/images/skyline-architecture.webp'} />
+                <InquireSection initialResidence={inquireResidenceName} sideImage={media('/images/building-corner-detail-dusk.webp')} />
 
 
                 {/* Footer */}
