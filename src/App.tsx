@@ -6,7 +6,6 @@ import type { PageType } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { IntroSection } from './components/IntroSection';
 import { SkylineSection } from './components/SkylineSection';
-import { EntranceHeroImage } from './components/EntranceHeroImage';
 import { LifestyleSection } from './components/LifestyleSection';
 import { ExteriorHeroImage } from './components/ExteriorHeroImage';
 import { NeighborhoodSection } from './components/NeighborhoodSection';
@@ -136,15 +135,8 @@ export function App() {
                   onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
                 />
 
-                {/* Neighborhood Highlights */}
-                <NeighborhoodSection
-                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
-                />
-
-                {/* Entrance Hero Full-Width Image */}
-                <EntranceHeroImage
-                  onImageClick={(src, title, groupImages) => setLightBoxImage({ src, title, groupImages })}
-                />
+                {/* Neighbourhood — interactive map */}
+                <NeighborhoodSection />
 
                 {/* Inquiry Form */}
                 <InquireSection initialResidence={inquireResidenceName} sideImage={media('/images/building-corner-detail-dusk.webp')} />
