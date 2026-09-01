@@ -324,7 +324,7 @@ export const InquireSection: React.FC<InquireSectionProps> = ({ initialResidence
 
                 {/* Legal Consent Disclaimer */}
                 <p className="font-sora text-[11px] leading-relaxed text-[#101535]/60 pt-1">
-                  By providing your information, you consent to receiving communications from Corcoran New Development regarding The Eastline New York.
+                  By providing your information, you consent to receiving communications from REAL New York regarding The Eastline New York.
                 </p>
 
                 {/* Submit Button */}
