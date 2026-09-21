@@ -197,16 +197,23 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         {/* Frame 118 - 178: Step into Luxury Text Overlay */}
         <div
           ref={lobbyRef}
-          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-36 sm:bottom-28 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
+          className="absolute left-0 right-0 mx-auto sm:left-12 sm:right-auto sm:mx-0 bottom-24 sm:bottom-20 md:bottom-24 z-30 w-full sm:w-auto max-w-xl sm:max-w-3xl space-y-1 sm:space-y-1.5 pointer-events-none transition-opacity duration-300 ease-out text-center sm:text-left px-4 sm:px-0"
           style={{ opacity: 0 }}
         >
           <h2
             data-typo-id="hero-f4-h2"
             data-typo-label="[Hero Section] Heading 4: Step into Luxury"
-            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-white uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
+            className="font-rexton text-[11px] sm:text-sm md:text-base font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B585] uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            Ready to Experience<br />a New Line of Luxury?
+            Ready to Experience<br className="sm:hidden" /> a New Line of Luxury?
           </h2>
+          <p
+            data-typo-id="hero-f4-p"
+            data-typo-label="[Hero Section] Paragraph 4: Step into Luxury"
+            className="font-sora text-xs sm:text-xs md:text-sm font-light tracking-tight sm:tracking-wide text-[#F4F5F8] leading-snug sm:leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] max-w-2xl"
+          >
+            Rising across two connected 23-story towers on the Upper East Side, The Eastline introduces a sophisticated new expression of New York living. Designed by S. Wieder Architect PC with interiors by Durukan Design, the building comprises 198 studio through three-bedroom residences, composed with an emphasis on light, proportion, and effortless comfort.
+          </p>
         </div>
 
         {/* Top-only header overlay for button & logo clarity */}

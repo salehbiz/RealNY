@@ -17,7 +17,7 @@ export interface ResidenceRoomConfig {
   description?: string;
 }
 
-// 6 spaces in fixed order (all left-to-right lateral moves).
+// 5 spaces in fixed order (all left-to-right lateral moves).
 // Note: startFrame indices are initial placeholders evenly distributed across 180 total frames.
 // Adjust these frame numbers manually against actual video footage.
 export const RESIDENCE_ROOMS: ResidenceRoomConfig[] = [
@@ -26,14 +26,14 @@ export const RESIDENCE_ROOMS: ResidenceRoomConfig[] = [
     name: 'Kitchen & Dining',
     subLabel: 'The Materials',
     startFrame: 1,
-    description: 'Pale fluted upper cabinetry over light oak below, with stone countertops — or grey fluted uppers over grey lowers, same stone, same architecture.',
+    description: 'Kitchens are offered in two refined palettes: one featuring all-white fluted upper cabinetry with matching white lower cabinets, and the other pairing grey fluted uppers with warm light oak lowers. Both are complemented by stone countertops and backsplashes.',
   },
   {
     id: 'kitchen-island',
     name: 'Kitchen Appliances',
     subLabel: 'The Features',
     startFrame: 31,
-    description: 'A full electric appliance suite: range, refrigerator, dishwasher, and countertop microwave from GE and LG, with Fisher & Paykel appliances in select residences.',
+    description: 'Full electric appliance suites from GE and LG, with select residences further elevated by Fisher & Paykel appliances.',
   },
   {
     id: 'living-room',
@@ -50,18 +50,11 @@ export const RESIDENCE_ROOMS: ResidenceRoomConfig[] = [
     description: 'Blackout shades installed before move-in, with individually controlled central heating and cooling.',
   },
   {
-    id: 'primary-bath',
-    name: 'Primary Bathroom',
+    id: 'bathrooms',
+    name: 'Bathrooms',
     subLabel: 'Spa-Like',
     startFrame: 121,
-    description: 'The same discipline, in two registers. A dark scheme in charcoal and black marble-look porcelain, carried floor to ceiling. A light scheme in pale marble-look porcelain, equally continuous, with lighter shower tiling.',
-  },
-  {
-    id: 'guest-bath',
-    name: 'Typical Bathroom',
-    subLabel: 'Refreshingly Calm',
-    startFrame: 151,
-    description: 'Typical bathrooms pair a dark charcoal floor with light marble-look walls and a darker lower band, or run light porcelain floor to ceiling throughout; Italian porcelain, specified for depth of veining rather than sheen.',
+    description: 'Bathrooms are a serene retreat, finished in marble-look porcelain with recessed mirrored medicine cabinets.',
   },
 ];
 
@@ -308,7 +301,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
             data-typo-label="Residences / Intro Paragraph"
             className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]"
           >
-            198 residences, studio through three-bedroom, designed around the two things Manhattan apartments most often surrender: light and storage. Ceilings reach up to nine feet over engineered prefinished hardwood. Every residence includes custom built-out closets, installed window treatments: blackout shades in the bedrooms, privacy shades in the living areas, individually controlled central heating and cooling, and a vented in-home LG washer and dryer. Select residences carry double exposures, private balconies, and/or terraces.*
+            198 residences, studio through three-bedroom, designed around the two things Manhattan apartments most often surrender: light and storage. Ceilings reach up to nine feet. Every residence includes custom built-out closets, installed window treatments: blackout shades in the bedrooms, privacy shades in the living areas, individually controlled central heating and cooling, and an in-home LG washer and dryer. Select residences carry double exposures, private balconies, and/or terraces.*
           </p>
         </div>
       </section>
@@ -446,7 +439,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
           {/* Text */}
           <div className="max-w-3xl mx-auto text-center space-y-5 pt-2">
             <p className="univ-p-body text-[#101535]/80 max-w-2xl mx-auto text-center [text-wrap:balance]">
-              Two palettes run through the building, each built on the same architecture of fluted cabinetry and stone. The first pairs pale fluted uppers with light oak below, warm, quiet, grain-forward. The second runs grey fluted uppers over grey lowers for something cooler and more graphic. Stone countertops in both, with a full electric appliance suite from GE and LG: range, refrigerator, dishwasher, and countertop microwave. Fisher &amp; Paykel appliances in select residences.*
+              Kitchens are offered in two refined palettes: one featuring all-white fluted upper cabinetry with matching white lower cabinets, and the other pairing grey fluted uppers with warm light oak lowers. Both are complemented by stone countertops and backsplashes, and full electric appliance suites from GE and LG, with select residences further elevated by Fisher &amp; Paykel appliances.
             </p>
           </div>
         </div>
@@ -474,7 +467,7 @@ export const ResidencesPage: React.FC<ResidencesPageProps> = ({
                 SPA-INSPIRED BATHROOMS
               </h3>
               <p className="univ-p-body text-[#101535]/80">
-                The same discipline, in two registers. Primary baths run either dark, charcoal and black marble-look porcelain, floor to ceiling, or light, in marble-look porcelain carried the same full height with lighter shower tiling. Typical baths pair a dark charcoal floor with light marble-look walls and a darker lower band, or run light porcelain floor to ceiling throughout, in Italgraniti tile. Walk-in showers are finished with frameless glass; select residences include soaking tubs with fixed glass panels.* Recessed medicine cabinets with integrated mirrors keep the wall plane clean.
+                Bathrooms are a serene retreat, finished in marble-look porcelain with recessed mirrored medicine cabinets.
               </p>
             </div>
           </div>
